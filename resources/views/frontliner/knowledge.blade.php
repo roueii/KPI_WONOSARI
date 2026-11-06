@@ -1,0 +1,2 @@
+@include('staff.knowledge')
+

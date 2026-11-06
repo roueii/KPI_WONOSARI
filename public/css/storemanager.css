@@ -1,0 +1,552 @@
+/* ==========================================================================
+   STORE MANAGER DASHBOARD & FORM STYLES (SESUAI DOKUMENTASI FIGMA STORE MANAGER)
+   KPI TOKO ROTI WONOSARI - CAPAIAN.ID
+   ========================================================================== */
+
+@import url('frontliner.css');
+
+/* ==========================================================================
+   1. Segmented Tab Bar (KPI Saya & KPI Tim) Sesuai Figma
+   ========================================================================== */
+.sm-tab-container {
+  display: flex;
+  align-items: center;
+  background: #f4ebe2;
+  border: 1px solid #ebdcd0;
+  border-radius: 16px;
+  padding: 4px;
+  margin-bottom: 20px;
+  gap: 4px;
+}
+
+.sm-tab-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: none;
+  background: transparent;
+  color: #78716c;
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sm-tab-btn:hover {
+  color: #1c1917;
+}
+
+.sm-tab-btn.is-active {
+  background: #ffffff;
+  color: #1c1917;
+  border: 1px solid #ebdcd0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.sm-tab-badge {
+  background: #ffedd5;
+  color: #c2410c;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 1px 7px;
+  border-radius: 999px;
+  display: inline-block;
+  line-height: 1.3;
+}
+
+/* ==========================================================================
+   2. Donut Card with 5 Progress Bars (KPI Saya)
+   ========================================================================== */
+.sm-donut-inner-card {
+  background: #fbf5ee;
+  border: 1px solid #ebdcd0;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.sm-chart-left {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sm-donut-svg {
+  width: 96px;
+  height: 96px;
+  transform: rotate(-90deg);
+}
+
+.sm-donut-track {
+  fill: none;
+  stroke: #dfd7ce;
+  stroke-width: 9;
+}
+
+.sm-donut-progress {
+  fill: none;
+  stroke: #22c55e;
+  stroke-width: 9;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.8s ease;
+}
+
+.sm-donut-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1;
+}
+
+.sm-donut-val {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #1c1917;
+  letter-spacing: -0.02em;
+}
+
+.sm-donut-sub {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #78716c;
+  margin-top: 2px;
+}
+
+.sm-progress-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.sm-progress-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sm-progress-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: #1c1917;
+  line-height: 1.2;
+}
+
+.sm-progress-header strong {
+  font-weight: 700;
+  color: #1c1917;
+}
+
+.sm-progress-header span {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #78716c;
+}
+
+.sm-bar-track {
+  width: 100%;
+  height: 5px;
+  background: #eedfd2;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.sm-bar-fill {
+  height: 100%;
+  background: #f97316;
+  border-radius: 999px;
+  transition: width 0.6s ease;
+}
+
+/* ==========================================================================
+   3. KPI Tim Specific: Banner & Overview
+   ========================================================================== */
+.sm-team-pending-banner {
+  background: #fff8f3;
+  border: 1px solid #fed7aa;
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  color: inherit;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(249, 115, 22, 0.06);
+  transition: all 0.2s ease;
+}
+
+.sm-team-pending-banner:hover {
+  border-color: #f97316;
+  transform: translateY(-1px);
+}
+
+.sm-team-pending-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sm-team-pending-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #ffedd5;
+  color: #ea580c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sm-team-pending-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #1c1917;
+  margin: 0;
+}
+
+.sm-team-pending-sub {
+  font-size: 0.76rem;
+  color: #78716c;
+  margin-top: 2px;
+}
+
+.sm-team-arrow-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #ea580c;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Ringkasan Tim Card */
+.sm-team-summary-box {
+  background: #ffffff;
+  border: 1px solid #ebdcd0;
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 24px;
+}
+
+.sm-team-summary-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.sm-team-summary-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #1c1917;
+  margin: 0;
+}
+
+.sm-team-summary-shift {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #78716c;
+}
+
+.sm-team-summary-mid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  color: #1c1917;
+  margin-bottom: 8px;
+}
+
+.sm-team-summary-mid strong {
+  font-weight: 800;
+}
+
+.sm-team-bar-track {
+  width: 100%;
+  height: 8px;
+  background: #f4ebe2;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.sm-team-bar-fill {
+  height: 100%;
+  background: #f97316;
+  border-radius: 999px;
+  transition: width 0.6s ease;
+}
+
+.sm-team-counts-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 0.76rem;
+  color: #78716c;
+}
+
+.sm-team-count-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Daftar Karyawan */
+.sm-team-member-card {
+  background: #fff8f3;
+  border: 1px solid #ebdcd0;
+  border-radius: 16px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease;
+}
+
+.sm-team-member-card:hover {
+  background: #fbf5ee;
+  border-color: #f97316;
+  transform: translateY(-1px);
+}
+
+.sm-team-member-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sm-team-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #eedfd2;
+  color: #78716c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sm-team-member-name {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #1c1917;
+  margin: 0;
+}
+
+.sm-team-member-role {
+  font-size: 0.76rem;
+  color: #78716c;
+  margin-top: 2px;
+}
+
+.sm-team-member-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sm-badge-approval {
+  background: #f97316;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+
+.sm-badge-disetujui {
+  background: #22c55e;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+
+.sm-badge-belum {
+  background: #8c7b6d;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+
+/* ==========================================================================
+   4. Halaman Approval Tim Specific
+   ========================================================================== */
+.sm-approval-card {
+  background: #fffdfa;
+  border: 1px solid #ebdcd0;
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.sm-approval-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.sm-approval-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sm-approval-name {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #1c1917;
+  margin: 0;
+}
+
+.sm-approval-role-badge {
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  color: #9a3412;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.sm-approval-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.76rem;
+  color: #78716c;
+  margin-top: 4px;
+}
+
+.sm-approval-status-pill {
+  display: inline-block;
+  background: #fff5ed;
+  border: 1px solid #fed7aa;
+  color: #9a3412;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-top: 8px;
+}
+
+.sm-photo-proof-card {
+  background: #fbf5ee;
+  border: 1px solid #ebdcd0;
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.sm-photo-proof-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: #f5ebe0;
+  border: 1px solid #ebdcd0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #b45309;
+  flex-shrink: 0;
+}
+
+.sm-photo-proof-name {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #1c1917;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sm-photo-proof-sub {
+  font-size: 0.7rem;
+  color: #78716c;
+}
+
+.sm-photo-proof-link {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #ea580c;
+  margin-top: 2px;
+  display: block;
+}
+
+.sm-btn-reject {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1.5px solid #ef4444;
+  background: #ffffff;
+  color: #ef4444;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.sm-btn-reject:hover {
+  background: #fef2f2;
+}
+
+.sm-btn-approve {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  background: #22c55e;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.28);
+  transition: all 0.2s ease;
+}
+
+.sm-btn-approve:hover {
+  background: #16a34a;
+}
+

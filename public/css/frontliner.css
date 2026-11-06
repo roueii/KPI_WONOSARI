@@ -1,0 +1,2969 @@
+/* ==========================================================================
+   FRONTLINER DASHBOARD STYLES (Sesuai Desain Figma)
+   KPI TOKO ROTI WONOSARI - CAPAIAN.ID
+   ========================================================================== */
+
+:root {
+  --fl-bg-canvas: #f5ede6;
+  --fl-bg-app: #fbf9f6;
+  --fl-card-bg: #ffffff;
+  --fl-card-border: #ebdcd0;
+  --fl-card-inner-border: #f0e6dc;
+  
+  --fl-text-main: #1c1917;
+  --fl-text-muted: #78716c;
+  --fl-text-subtle: #a8a29e;
+  
+  --fl-orange: #f97316;
+  --fl-orange-vibrant: #ff6a00;
+  --fl-orange-hover: #ea580c;
+  
+  --fl-peach-bg: #fdf5ee;
+  --fl-peach-border: #eddcd0;
+  --fl-peach-hover: #fbeee3;
+  
+  --fl-green: #22c55e;
+  --fl-green-bg: #ecfdf5;
+  --fl-green-text: #15803d;
+  
+  --fl-amber: #f59e0b;
+  --fl-amber-bg: #fffbeb;
+  --fl-amber-text: #b45309;
+  
+  --fl-red: #ef4444;
+  --fl-red-bg: #fef2f2;
+  --fl-red-text: #b91c1c;
+
+  --fl-radius-lg: 20px;
+  --fl-radius-md: 14px;
+  --fl-radius-sm: 10px;
+  --fl-radius-pill: 9999px;
+
+  --fl-shadow-card: 0 2px 10px rgba(50, 30, 20, 0.03);
+  --fl-shadow-hover: 0 6px 18px rgba(249, 115, 22, 0.12);
+}
+
+/* ==========================================================================
+   Header Card
+   ========================================================================== */
+.fl-header {
+  position: relative;
+  z-index: 10;
+  background: var(--fl-card-bg);
+  border: 1px solid var(--fl-card-border);
+  border-radius: var(--fl-radius-lg);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--fl-shadow-card);
+}
+
+.fl-profile-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fl-avatar-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #1c1917;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.fl-avatar-circle svg {
+  width: 24px;
+  height: 24px;
+}
+
+.fl-profile-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.fl-profile-name {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--fl-text-main);
+  letter-spacing: -0.02em;
+}
+
+.fl-profile-role {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--fl-text-muted);
+}
+
+/* ==========================================================================
+   Section 1: Ringkasan Hari Ini
+   ========================================================================== */
+.fl-summary-card {
+  background: var(--fl-card-bg);
+  border: 1px solid var(--fl-card-border);
+  border-radius: var(--fl-radius-lg);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: var(--fl-shadow-card);
+}
+
+.fl-summary-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.fl-title-group h2 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--fl-text-main);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.fl-title-group p {
+  font-size: 0.82rem;
+  color: var(--fl-text-muted);
+  margin-top: 3px;
+  margin-bottom: 0;
+}
+
+.fl-date-pill {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #ebdcd0;
+  background: #ffffff;
+  border-radius: var(--fl-radius-pill);
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #44403c;
+  white-space: nowrap;
+}
+
+/* Body Chart & Legend */
+.fl-chart-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 4px 0;
+}
+
+.fl-chart-container {
+  width: 110px;
+  height: 110px;
+  flex-shrink: 0;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.fl-donut-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.fl-donut-track {
+  fill: none;
+  stroke: #ede8e2;
+  stroke-width: 12;
+}
+
+.fl-donut-progress {
+  fill: none;
+  stroke: var(--fl-green);
+  stroke-width: 12;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.8s ease-in-out;
+}
+
+.fl-donut-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.fl-donut-count {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--fl-text-main);
+  letter-spacing: -0.02em;
+}
+
+.fl-donut-sub {
+  font-size: 0.75rem;
+  color: var(--fl-text-muted);
+  margin-top: 4px;
+}
+
+/* Legend */
+.fl-legend-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fl-legend-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.82rem;
+}
+
+.fl-legend-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #44403c;
+}
+
+.fl-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.fl-dot.green {
+  background-color: var(--fl-green);
+}
+
+.fl-dot.amber {
+  background-color: var(--fl-amber);
+}
+
+.fl-dot.red {
+  background-color: var(--fl-red);
+}
+
+.fl-legend-count {
+  font-weight: 700;
+  color: var(--fl-text-main);
+  font-size: 0.82rem;
+}
+
+/* Bottom status info pill */
+.fl-status-infobar {
+  border: 1px solid var(--fl-card-border);
+  background: #fffdfa;
+  border-radius: var(--fl-radius-pill);
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: #57534e;
+  gap: 6px;
+}
+
+.fl-status-note-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   Section 2: Tugas Harian
+   ========================================================================== */
+.fl-section-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fl-section-header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.fl-section-header h2 {
+  font-size: 1.18rem;
+  font-weight: 800;
+  color: var(--fl-text-main);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.fl-section-header p {
+  font-size: 0.82rem;
+  color: var(--fl-text-muted);
+  margin: 0;
+}
+
+/* Orange CTA Card */
+.fl-banner-cta {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  border-radius: var(--fl-radius-lg);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #ffffff;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.25);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+  border: none;
+  width: 100%;
+  text-align: left;
+}
+
+.fl-banner-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(249, 115, 22, 0.35);
+}
+
+.fl-banner-cta:active {
+  transform: translateY(0);
+}
+
+.fl-banner-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fl-banner-title {
+  font-size: 1.12rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+}
+
+.fl-banner-sub {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.fl-banner-sub svg {
+  width: 15px;
+  height: 15px;
+}
+
+.fl-banner-btn-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: grid;
+  place-items: center;
+  color: var(--fl-orange);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.fl-banner-cta:hover .fl-banner-btn-circle {
+  transform: translateX(3px);
+}
+
+.fl-banner-btn-circle svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Status Preview Box */
+.fl-preview-box {
+  background: var(--fl-card-bg);
+  border: 1px solid var(--fl-card-border);
+  border-radius: 18px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: var(--fl-shadow-card);
+}
+
+.fl-preview-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.82rem;
+}
+
+.fl-preview-title {
+  font-weight: 700;
+  color: var(--fl-text-main);
+}
+
+.fl-preview-autosave {
+  font-size: 0.76rem;
+  color: var(--fl-text-muted);
+}
+
+.fl-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.fl-preview-card {
+  background: var(--fl-peach-bg);
+  border: 1px solid var(--fl-peach-border);
+  border-radius: var(--fl-radius-md);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.fl-preview-card:hover {
+  background: var(--fl-peach-hover);
+  border-color: var(--fl-orange);
+  transform: translateY(-1px);
+}
+
+.fl-preview-card.card-full-width {
+  grid-column: 1 / 2;
+}
+
+.fl-item-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--fl-text-main);
+  line-height: 1.25;
+}
+
+.fl-badge-pill {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #ffffff;
+  border: 1px solid #ebdcd0;
+  border-radius: var(--fl-radius-pill);
+  padding: 3px 8px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.fl-badge-pill.success {
+  color: var(--fl-green-text);
+}
+
+.fl-badge-pill.warning {
+  color: var(--fl-amber-text);
+}
+
+/* ==========================================================================
+   Section 3: Rapor & Capaian
+   ========================================================================== */
+.fl-rapor-container {
+  background: var(--fl-card-bg);
+  border: 1px solid var(--fl-card-border);
+  border-radius: var(--fl-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--fl-shadow-card);
+}
+
+.fl-rapor-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.18s ease;
+  border-bottom: 1px solid #f2e9e2;
+}
+
+.fl-rapor-item:last-child {
+  border-bottom: none;
+}
+
+.fl-rapor-item:hover {
+  background: #fbf6f1;
+}
+
+.fl-rapor-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.fl-rapor-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--fl-text-main);
+}
+
+.fl-rapor-sub {
+  font-size: 0.8rem;
+  color: var(--fl-text-muted);
+}
+
+.fl-rapor-arrow {
+  color: var(--fl-text-subtle);
+  display: grid;
+  place-items: center;
+  font-size: 1.2rem;
+  line-height: 1;
+  transition: transform 0.18s ease, color 0.18s ease;
+}
+
+.fl-rapor-item:hover .fl-rapor-arrow {
+  color: var(--fl-orange);
+  transform: translateX(3px);
+}
+
+/* ==========================================================================
+   Section 4: Capaian Terbaru
+   ========================================================================== */
+.fl-recent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fl-recent-card {
+  background: var(--fl-peach-bg);
+  border: 1px solid var(--fl-peach-border);
+  border-radius: 16px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.18s ease;
+}
+
+.fl-recent-card:hover {
+  border-color: var(--fl-orange);
+  transform: translateX(2px);
+  background: var(--fl-peach-hover);
+}
+
+.fl-recent-left {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.fl-recent-date {
+  font-size: 0.78rem;
+  color: var(--fl-text-muted);
+}
+
+.fl-recent-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--fl-text-main);
+  line-height: 1.3;
+}
+
+.fl-status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--fl-radius-pill);
+  padding: 4px 14px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.fl-status-badge.badge-green {
+  background-color: var(--fl-green);
+}
+
+.fl-status-badge.badge-amber {
+  background-color: #ea8c00;
+}
+
+/* ==========================================================================
+   Footer Card
+   ========================================================================== */
+.fl-footer-card {
+  background: var(--fl-card-bg);
+  border: 1px solid var(--fl-card-border);
+  border-radius: var(--fl-radius-lg);
+  padding: 22px 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  box-shadow: var(--fl-shadow-card);
+  margin-top: 6px;
+}
+
+.fl-footer-brand {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #292524;
+  letter-spacing: 0.04em;
+}
+
+.fl-footer-sub {
+  font-size: 0.78rem;
+  color: var(--fl-text-muted);
+  margin-bottom: 8px;
+}
+
+.fl-footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: #57534e;
+}
+
+.fl-footer-link {
+  color: #57534e;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.15s ease;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.fl-footer-link:hover {
+  color: var(--fl-orange);
+  text-decoration: underline;
+}
+
+.fl-footer-dot {
+  color: var(--fl-text-subtle);
+}
+
+/* ==========================================================================
+   Interactive Modal / Bottom Sheet
+   ========================================================================== */
+.fl-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1050;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.fl-modal-overlay.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.fl-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(25, 18, 14, 0.45);
+  backdrop-filter: blur(2px);
+}
+
+.fl-modal-sheet {
+  position: relative;
+  z-index: 1051;
+  width: 100%;
+  max-width: 480px;
+  background: #ffffff;
+  border-radius: 24px 24px 0 0;
+  padding: 20px 20px 32px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.15);
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fl-modal-overlay.is-active .fl-modal-sheet {
+  transform: translateY(0);
+}
+
+.fl-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--fl-card-inner-border);
+  margin-bottom: 16px;
+}
+
+.fl-modal-title-group h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--fl-text-main);
+  margin: 0;
+}
+
+.fl-modal-title-group p {
+  font-size: 0.8rem;
+  color: var(--fl-text-muted);
+  margin-top: 3px;
+  margin-bottom: 0;
+}
+
+.fl-modal-close-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid var(--fl-card-border);
+  background: #ffffff;
+  display: grid;
+  place-items: center;
+  color: #44403c;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.fl-modal-close-btn:hover {
+  background: #fbf5ef;
+  color: var(--fl-orange);
+  border-color: var(--fl-orange);
+}
+
+/* Form controls in modal */
+.fl-form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.fl-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fl-form-group label {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--fl-text-main);
+}
+
+.fl-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: #fdfaf7;
+  border: 1px solid #eddcd0;
+  border-radius: 12px;
+  font-size: 0.84rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.fl-checkbox-label:hover {
+  background: #fff5ee;
+  border-color: var(--fl-orange);
+}
+
+.fl-checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--fl-orange);
+  cursor: pointer;
+}
+
+.fl-modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.fl-btn-submit {
+  flex: 1;
+  background: var(--fl-orange);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.25);
+  transition: all 0.18s ease;
+}
+
+.fl-btn-submit:hover {
+  background: var(--fl-orange-hover);
+  transform: translateY(-1px);
+}
+
+.fl-btn-cancel {
+  background: #ffffff;
+  color: var(--fl-text-muted);
+  border: 1px solid var(--fl-card-border);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+
+.fl-btn-cancel:hover {
+  background: #fbf5ef;
+  color: var(--fl-text-main);
+}
+
+/* Toast alert notification */
+.fl-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #1c1917;
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fl-toast.is-show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ==========================================================================
+   Drawer Logout Button
+   ========================================================================== */
+.drawer-logout-btn {
+  width: 100%;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.drawer-logout-btn:hover {
+  background: #fee2e2;
+  border-color: #f87171;
+}
+
+.drawer-logout-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ==========================================================================
+   Halaman Isi Capaian Frontliner (Multi-Step Form - Pelayanan)
+   Sesuai Desain Figma Gambar 2
+   ========================================================================== */
+
+/* Top Navigation Bar */
+.fl-step-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.fl-step-close-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  border: 1px solid var(--fl-card-border);
+  background: #ffffff;
+  display: grid;
+  place-items: center;
+  color: #44403c;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  box-shadow: var(--fl-shadow-card);
+}
+
+.fl-step-close-btn:hover {
+  background: #fbf5ef;
+  border-color: var(--fl-orange);
+  color: var(--fl-orange);
+  transform: translateY(-1px);
+}
+
+.fl-step-close-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.fl-step-badge {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #fed7aa;
+  background: #fffcf9;
+  border-radius: var(--fl-radius-pill);
+  padding: 4px 14px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #9a3412;
+}
+
+/* 3-Segment Stepper Progress */
+.fl-stepper-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 16px 0 10px;
+}
+
+.fl-step-pill {
+  height: 10px;
+  flex: 1;
+  max-width: 80px;
+  border-radius: var(--fl-radius-pill);
+  transition: all 0.25s ease;
+}
+
+.fl-step-pill.is-active,
+.fl-step-pill.is-completed {
+  border: 2px solid var(--fl-orange);
+  background: var(--fl-orange);
+}
+
+.fl-step-pill.is-inactive {
+  border: 1.5px solid #e7ded6;
+  background: #ffffff;
+}
+
+/* Step Meta Row */
+.fl-step-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.fl-step-current-text {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--fl-text-main);
+}
+
+.fl-step-category-text {
+  font-size: 0.82rem;
+  color: var(--fl-text-muted);
+}
+
+/* Page Title & Subtitle */
+.fl-step-page-title {
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: var(--fl-text-main);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.fl-step-page-sub {
+  font-size: 0.82rem;
+  color: var(--fl-text-muted);
+  margin-top: 4px;
+  margin-bottom: 18px;
+  line-height: 1.4;
+}
+
+/* Step Card (Kartu dengan border oranye tebal sesuai Figma) */
+.fl-step-card {
+  background: var(--fl-card-bg);
+  border: 2px solid var(--fl-orange);
+  border-radius: 22px;
+  padding: 18px 16px;
+  box-shadow: 0 2px 10px rgba(249, 115, 22, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.fl-step-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.fl-step-card-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.fl-step-card-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--fl-text-main);
+}
+
+.fl-step-card-sub {
+  font-size: 0.8rem;
+  color: var(--fl-text-muted);
+  margin-top: 3px;
+  line-height: 1.35;
+}
+
+/* Checklist Items */
+.fl-check-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.fl-check-card {
+  border: 1.5px solid var(--fl-card-border);
+  border-radius: 14px;
+  background: #ffffff;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  user-select: none;
+}
+
+.fl-check-card:hover {
+  background: #fffcf9;
+  border-color: #fdba74;
+}
+
+.fl-custom-box {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border: 2px solid #c2410c;
+  background: #ffffff;
+  transition: all 0.18s ease;
+}
+
+.fl-custom-box svg {
+  display: none;
+  width: 16px;
+  height: 16px;
+}
+
+.fl-check-card.is-checked .fl-custom-box {
+  background: #c2410c;
+  border-color: #c2410c;
+}
+
+.fl-check-card.is-checked .fl-custom-box svg {
+  display: block;
+}
+
+.fl-check-text {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--fl-text-main);
+  line-height: 1.25;
+}
+
+/* Required Pill Badge di Card 2 */
+.fl-step-required-badge {
+  border: 1.5px solid #c2410c;
+  background: #fff7ed;
+  color: #9a3412;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: var(--fl-radius-pill);
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+/* Upload Drop Area */
+.fl-upload-zone {
+  border: 2px dashed #9a3412;
+  border-radius: 16px;
+  background: #faf8f5;
+  padding: 22px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 4px;
+}
+
+.fl-upload-zone:hover {
+  background: #fdf5ee;
+  border-color: #ea580c;
+}
+
+.fl-camera-circle {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1.5px solid #9ca3af;
+  display: grid;
+  place-items: center;
+  color: #6b7280;
+  margin-bottom: 2px;
+}
+
+.fl-camera-circle svg {
+  width: 22px;
+  height: 22px;
+}
+
+.fl-upload-title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--fl-text-main);
+  margin-top: 2px;
+}
+
+.fl-upload-sub {
+  font-size: 0.75rem;
+  color: var(--fl-text-muted);
+}
+
+/* Chips file terunggah */
+.fl-chips-scroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 0 6px;
+  scrollbar-width: thin;
+}
+
+.fl-chip-item {
+  border: 1px solid var(--fl-card-border);
+  border-radius: 12px;
+  background: #fdfaf7;
+  padding: 8px 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+
+.fl-chip-item:hover {
+  background: #ffffff;
+  border-color: #fdba74;
+}
+
+.fl-chip-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: #f3ece5;
+  display: grid;
+  place-items: center;
+  color: #78716c;
+}
+
+.fl-chip-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.fl-chip-name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--fl-text-main);
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fl-chip-remove {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #78716c;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  transition: all 0.15s ease;
+}
+
+.fl-chip-remove:hover {
+  color: #ef4444;
+  background: #fee2e2;
+}
+
+.fl-chip-remove svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* Link Lihat Contoh */
+.fl-link-guideline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #44403c;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  margin-top: 4px;
+  background: none;
+  border: none;
+  font-family: inherit;
+  transition: color 0.15s ease;
+  width: 100%;
+}
+
+.fl-link-guideline:hover {
+  color: var(--fl-orange);
+}
+
+.fl-link-guideline svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Info Box */
+.fl-info-card {
+  background: #fffdfa;
+  border: 1px solid #f3d8c2;
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.fl-info-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--fl-text-muted);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.fl-info-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.fl-info-text {
+  font-size: 0.78rem;
+  color: #57534e;
+  line-height: 1.45;
+}
+
+.fl-info-text strong {
+  color: var(--fl-text-main);
+  font-weight: 700;
+}
+
+/* Step Footer */
+.fl-step-footer {
+  border-top: 1px solid #f3ece5;
+  padding-top: 18px;
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.fl-btn-next {
+  width: 100%;
+  height: 52px;
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.25);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+}
+
+.fl-btn-next:hover {
+  box-shadow: 0 8px 22px rgba(249, 115, 22, 0.35);
+  transform: translateY(-1px);
+}
+
+.fl-btn-next:active {
+  transform: translateY(0);
+}
+
+.fl-btn-next svg {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.18s ease;
+}
+
+.fl-btn-next:hover svg {
+  transform: translateX(3px);
+}
+
+.fl-step-btn-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.fl-btn-back {
+  height: 52px;
+  padding: 0 24px;
+  background: #ffffff;
+  border: 1.5px solid var(--fl-card-border);
+  border-radius: 14px;
+  color: var(--fl-text-main);
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+  box-shadow: var(--fl-shadow-card);
+}
+
+.fl-btn-back:hover {
+  background: #fbf5ef;
+  border-color: #fdba74;
+  color: var(--fl-orange);
+  transform: translateY(-1px);
+}
+
+.fl-btn-back:active {
+  transform: translateY(0);
+}
+
+.fl-step-btn-row .fl-btn-next {
+  flex: 1;
+}
+
+.fl-step-footer-text {
+  font-size: 0.75rem;
+  color: var(--fl-text-subtle);
+  text-align: center;
+}
+
+.fl-link-draft {
+  display: inline-block;
+  font-size: 0.78rem;
+  color: #78716c;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.15s ease;
+  border: none;
+  background: none;
+  font-family: inherit;
+  margin-top: 4px;
+  text-align: center;
+}
+
+.fl-link-draft:hover {
+  color: var(--fl-orange);
+}
+
+/* ==========================================================================
+   Halaman Detail Rapor: Penjualan
+   Sesuai Desain Figma Gambar 4
+   ========================================================================== */
+
+/* Header Halaman Detail Penjualan */
+.fl-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.fl-detail-page-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--fl-text-main);
+  letter-spacing: -0.02em;
+  margin: 18px 0 16px;
+}
+
+/* Badge Otomatis */
+.fl-badge-auto {
+  display: inline-flex;
+  align-items: center;
+  border: 1.5px solid #c2410c;
+  background: #fff7ed;
+  color: #9a3412;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: var(--fl-radius-pill);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+/* Big Number Omzet */
+.fl-omzet-big-number {
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: var(--fl-text-main);
+  letter-spacing: -0.02em;
+  margin: 10px 0 4px;
+  line-height: 1.1;
+}
+
+/* Meta Omzet */
+.fl-omzet-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.fl-omzet-target-text {
+  font-size: 0.82rem;
+  color: var(--fl-text-muted);
+}
+
+.fl-omzet-target-text strong {
+  color: #9a5525;
+  font-weight: 700;
+}
+
+.fl-target-pill {
+  border: 1px solid #fed7aa;
+  background: #fffcf9;
+  color: #9a5525;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+/* Progress Bar Omzet */
+.fl-omzet-progress-bar {
+  margin: 14px 0 8px;
+  height: 8px;
+  background: #f3ece5;
+  border-radius: var(--fl-radius-pill);
+  overflow: hidden;
+  position: relative;
+}
+
+.fl-omzet-progress-fill {
+  height: 100%;
+  background: var(--fl-orange);
+  border-radius: var(--fl-radius-pill);
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fl-omzet-sub-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  margin-top: 4px;
+}
+
+.fl-omzet-remain-text {
+  color: var(--fl-text-muted);
+}
+
+.fl-omzet-shift-text {
+  color: var(--fl-text-subtle);
+  font-weight: 500;
+}
+
+/* Kalkulasi Sistem Rows */
+.fl-calc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 4px;
+}
+
+.fl-calc-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+
+.fl-calc-label {
+  font-size: 0.85rem;
+  color: var(--fl-text-muted);
+}
+
+.fl-calc-value {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--fl-text-main);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.fl-calc-footnote {
+  font-size: 0.72rem;
+  color: var(--fl-text-subtle);
+  font-style: italic;
+  margin-top: 4px;
+  line-height: 1.35;
+}
+
+/* Riwayat 7 Hari Rows */
+.fl-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.fl-history-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+}
+
+.fl-history-day {
+  font-size: 0.82rem;
+  color: #44403c;
+  min-width: 105px;
+}
+
+.fl-history-day.is-bold {
+  font-weight: 700;
+  color: var(--fl-text-main);
+}
+
+.fl-history-bar-track {
+  flex: 1;
+  max-width: 85px;
+  height: 8px;
+  background: #f5ede6;
+  border-radius: var(--fl-radius-pill);
+  overflow: hidden;
+  margin: 0 10px;
+}
+
+.fl-history-bar-fill {
+  height: 100%;
+  background: var(--fl-orange);
+  border-radius: var(--fl-radius-pill);
+  transition: width 0.6s ease;
+}
+
+.fl-history-amount {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--fl-text-main);
+  text-align: right;
+  min-width: 105px;
+}
+
+/* ==========================================================================
+   Halaman Detail Rapor: Akurasi Kasir
+   Sesuai Desain Figma Gambar 5
+   ========================================================================== */
+
+/* Badge Akurat */
+.fl-badge-akurat {
+  display: inline-block;
+  border: 1.5px solid #c2410c;
+  background: #fffcf9;
+  color: #9a3412;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 6px;
+  letter-spacing: 0.02em;
+  width: fit-content;
+  margin: 6px 0 12px;
+}
+
+/* Checklist Verifikasi Hari Ini */
+.fl-kasir-check-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  font-size: 0.88rem;
+  color: #44403c;
+  border-top: 1px solid #f2e9e2;
+}
+
+.fl-icon-circle-check {
+  width: 22px;
+  height: 22px;
+  color: var(--fl-green);
+  flex-shrink: 0;
+}
+
+.fl-icon-circle-cross {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ea580c;
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.fl-icon-circle-cross svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* Verifier Meta Bawah Card 1 */
+.fl-kasir-verifier-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: var(--fl-text-muted);
+  padding-top: 12px;
+  border-top: 1px solid #f2e9e2;
+  margin-top: 4px;
+}
+
+.fl-kasir-verifier-row svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Riwayat 7 Hari Akurasi Kasir */
+.fl-kasir-history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 0;
+  border-bottom: 1px solid #f3ece5;
+}
+
+.fl-kasir-history-item:last-child {
+  border-bottom: none;
+}
+
+.fl-kasir-item-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.fl-kasir-item-day {
+  font-size: 0.85rem;
+  color: #44403c;
+}
+
+.fl-kasir-item-day.is-bold {
+  font-weight: 700;
+  color: var(--fl-text-main);
+}
+
+.fl-kasir-item-sub {
+  font-size: 0.72rem;
+  color: var(--fl-text-muted);
+  margin-top: 2px;
+}
+
+.fl-kasir-item-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fl-kasir-amount-text {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--fl-text-main);
+}
+
+.fl-kasir-amount-text.is-negative {
+  color: var(--fl-text-main);
+  font-weight: 800;
+}
+
+/* ==========================================================================
+   Halaman Detail Rapor: Product Knowledge
+   Sesuai Desain Figma Gambar 6
+   ========================================================================== */
+
+/* Big Score 88/100 */
+.fl-knowledge-big-score {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin: 10px 0 6px;
+}
+
+.fl-knowledge-score-val {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: var(--fl-text-main);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.fl-knowledge-score-max {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #44403c;
+}
+
+/* Badge Grade (BAIK, CUKUP) */
+.fl-badge-grade {
+  display: inline-flex;
+  align-items: center;
+  border: 1.5px solid #c2410c;
+  background: #fff7ed;
+  color: #9a3412;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+/* Kriteria Rincian Item */
+.fl-knowledge-criteria-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 6px;
+}
+
+.fl-knowledge-criteria-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fl-criteria-top-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.fl-criteria-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--fl-text-main);
+  line-height: 1.3;
+}
+
+.fl-criteria-bars-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 2px;
+}
+
+.fl-criteria-pill-segment {
+  height: 6px;
+  width: 26px;
+  border-radius: var(--fl-radius-pill);
+  transition: background-color 0.2s ease;
+}
+
+.fl-criteria-pill-segment.is-active {
+  background: var(--fl-orange);
+}
+
+.fl-criteria-pill-segment.is-inactive {
+  background: #e7ded6;
+}
+
+.fl-criteria-score-text {
+  font-size: 0.75rem;
+  color: var(--fl-text-muted);
+  margin-left: 6px;
+  font-weight: 500;
+}
+
+/* Card Penilaian Berikutnya */
+.fl-next-eval-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--fl-text-main);
+  margin: 6px 0 4px;
+}
+
+.fl-next-eval-desc {
+  font-size: 0.8rem;
+  color: var(--fl-text-muted);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* ==========================================================================
+   HALAMAN RIWAYAT CAPAIAN FRONTLINER (SESUAI DESAIN FIGMA)
+   ========================================================================== */
+
+/* 1. Header Riwayat */
+.fl-riwayat-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.fl-riwayat-header-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.fl-riwayat-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--fl-text-main);
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+.fl-riwayat-subtitle {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--fl-text-muted);
+  margin: 2px 0 0;
+}
+
+/* 2. Top Summary Metric Cards (3 Kolom: Disetujui, Menunggu, Revisi) */
+.fl-riwayat-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.fl-riwayat-metric-card {
+  background: #fffdfa;
+  border: 1px solid var(--fl-card-border);
+  border-radius: 16px;
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.fl-riwayat-metric-card:hover {
+  transform: translateY(-2px);
+  border-color: #d1c4b7;
+  box-shadow: 0 4px 12px rgba(50, 30, 20, 0.05);
+}
+
+.fl-riwayat-metric-card.is-active {
+  background: #fff8f2;
+  border-color: var(--fl-orange);
+  box-shadow: 0 0 0 1px var(--fl-orange);
+}
+
+.fl-riwayat-metric-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 6px;
+}
+
+.fl-dot-circle {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+.fl-dot-circle.dot-green {
+  background-color: #22c55e;
+}
+
+.fl-dot-circle.dot-gray {
+  background-color: #9ca3af;
+}
+
+.fl-dot-circle.dot-amber {
+  background-color: #f59e0b;
+}
+
+.fl-riwayat-metric-label {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #57534e;
+}
+
+.fl-riwayat-metric-value {
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: var(--fl-text-main);
+  line-height: 1;
+}
+
+/* 3. Filter Pills Tabs */
+.fl-filter-chips-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 2px;
+  margin-bottom: 16px;
+  scrollbar-width: none;
+}
+
+.fl-filter-chips-row::-webkit-scrollbar {
+  display: none;
+}
+
+.fl-filter-chip {
+  padding: 7px 16px;
+  border-radius: var(--fl-radius-pill);
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  border: 1px solid #ebdcd0;
+  background: #fffdfa;
+  color: #57534e;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  border: 1px solid #ebdcd0;
+}
+
+.fl-filter-chip:hover {
+  background: #fdf5ee;
+  border-color: #d1c4b7;
+}
+
+.fl-filter-chip.is-active {
+  background: var(--fl-orange);
+  border-color: var(--fl-orange);
+  color: #ffffff !important;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(249, 115, 22, 0.28);
+}
+
+/* 4. History Cards List */
+.fl-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.fl-history-card-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fffdfa;
+  border: 1px solid var(--fl-card-border);
+  border-radius: 16px;
+  padding: 13px 16px;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  color: inherit;
+}
+
+.fl-history-card-item:hover {
+  transform: translateY(-2px);
+  border-color: #d6c5b6;
+  box-shadow: 0 4px 14px rgba(50, 30, 20, 0.05);
+}
+
+.fl-history-item-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.fl-history-date-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  flex-shrink: 0;
+  line-height: 1.15;
+}
+
+.fl-history-day-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #78716c;
+  text-transform: capitalize;
+}
+
+.fl-history-day-num {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--fl-text-main);
+  letter-spacing: -0.02em;
+}
+
+.fl-history-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.fl-history-full-date {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--fl-text-main);
+  letter-spacing: -0.01em;
+}
+
+.fl-history-category-info {
+  font-size: 0.77rem;
+  font-weight: 500;
+  color: #78716c;
+}
+
+.fl-history-item-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.fl-history-badge {
+  padding: 4px 12px;
+  border-radius: var(--fl-radius-pill);
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.01em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fl-history-badge.badge-disetujui {
+  background-color: #22c55e;
+}
+
+.fl-history-badge.badge-menunggu {
+  background-color: #8b8580;
+}
+
+.fl-history-badge.badge-revisi {
+  background-color: #f59e0b;
+}
+
+.fl-history-chevron {
+  color: #a8a29e;
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+/* 5. Bottom Legend Card (Indikator Bentuk Status) */
+.fl-history-legend-card {
+  background: #fffdfa;
+  border: 1px solid var(--fl-card-border);
+  border-radius: 16px;
+  padding: 14px 16px;
+  margin-top: 4px;
+  margin-bottom: 24px;
+}
+
+.fl-history-legend-title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #57534e;
+  margin-bottom: 8px;
+}
+
+.fl-history-legend-items {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.77rem;
+  color: #44403c;
+  font-weight: 500;
+}
+
+.fl-history-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Empty State */
+.fl-history-empty {
+  display: none;
+  text-align: center;
+  padding: 36px 16px;
+  background: #fffdfa;
+  border: 1px dashed var(--fl-card-border);
+  border-radius: 16px;
+  color: var(--fl-text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+}
+
+/* ==========================================================================
+   HALAMAN DETAIL RIWAYAT CAPAIAN FRONTLINER (SESUAI DESAIN FIGMA)
+   ========================================================================== */
+
+/* 1. Header Card Summary (Riwayat - 24 Okt & Badge Perlu Revisi) */
+.fl-dr-summary-card {
+  background: #fffdfa;
+  border: 1px solid var(--fl-card-border);
+  border-radius: 18px;
+  padding: 16px 18px;
+  margin-bottom: 16px;
+}
+
+.fl-dr-summary-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.fl-dr-summary-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--fl-text-main);
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+.fl-dr-badge-revisi-outline {
+  padding: 4px 10px;
+  border: 1px solid #c2410c;
+  border-radius: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #c2410c;
+  background: #fff8f5;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.fl-dr-summary-time {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: var(--fl-text-muted);
+}
+
+.fl-dr-summary-time svg {
+  color: #a8a29e;
+  flex-shrink: 0;
+}
+
+/* 2. Kartu Catatan Revisi Sesuai Desain Figma (Border Oranye Tebal) */
+.fl-dr-revision-card {
+  background: #fffdfa;
+  border: 2px solid var(--fl-orange);
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 22px;
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.08);
+}
+
+.fl-dr-revision-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.fl-dr-revision-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.fl-dr-revision-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #78716c;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.fl-dr-revision-author {
+  font-size: 0.9rem;
+  color: var(--fl-text-main);
+  line-height: 1.3;
+}
+
+.fl-dr-revision-author strong {
+  font-weight: 800;
+}
+
+.fl-dr-revision-time-chip {
+  padding: 4px 8px;
+  border: 1px solid #ebdcd0;
+  border-radius: 8px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: #78716c;
+  background: #ffffff;
+  white-space: nowrap;
+}
+
+.fl-dr-revision-bubble {
+  background: #ffffff;
+  border: 1px solid var(--fl-card-border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin: 14px 0 16px;
+  font-size: 0.86rem;
+  color: #292524;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.fl-dr-btn-repair {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  background: var(--fl-orange);
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 13px 18px;
+  border-radius: 12px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.28);
+}
+
+.fl-dr-btn-repair:hover {
+  background: var(--fl-orange-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(249, 115, 22, 0.38);
+}
+
+/* 3. Section Ringkasan Laporan Harian */
+.fl-dr-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.fl-dr-section-title {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #78716c;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.fl-dr-section-count {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #78716c;
+}
+
+.fl-dr-categories-container {
+  background: #fffdfa;
+  border: 1px solid var(--fl-card-border);
+  border-radius: 18px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.fl-dr-category-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border: 1px solid var(--fl-card-border);
+  border-radius: 14px;
+  padding: 12px 14px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.18s ease;
+}
+
+.fl-dr-category-item:hover {
+  border-color: #d1c4b7;
+  transform: translateY(-1px);
+}
+
+.fl-dr-category-item.is-highlighted {
+  border: 2px solid var(--fl-orange);
+  box-shadow: 0 2px 8px rgba(249, 115, 22, 0.12);
+}
+
+.fl-dr-category-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fl-dr-category-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #fdfaf6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--fl-text-main);
+}
+
+.fl-dr-category-icon-box.is-orange {
+  background: #fff8f2;
+  color: var(--fl-orange);
+}
+
+.fl-dr-category-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.fl-dr-category-title-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.fl-dr-category-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--fl-text-main);
+}
+
+.fl-dr-category-badge-warning {
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: #ea580c;
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.fl-dr-category-sub {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #78716c;
+}
+
+.fl-dr-category-chevron {
+  color: #a8a29e;
+  display: flex;
+  align-items: center;
+  font-size: 1.15rem;
+}
+
+/* 4. Bottom Info / Notice Card */
+.fl-dr-notice-card {
+  background: #fffbf8;
+  border: 1px solid var(--fl-orange);
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.fl-dr-notice-icon {
+  flex-shrink: 0;
+  color: #78716c;
+  margin-top: 1px;
+}
+
+.fl-dr-notice-text {
+  font-size: 0.79rem;
+  color: #57534e;
+  line-height: 1.5;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   HALAMAN PROFIL FRONTLINER (SESUAI DESAIN FIGMA)
+   ========================================================================== */
+
+/* 1. Header Bar Profil */
+.fl-profile-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.fl-profile-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fl-profile-header-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--fl-text-main);
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+/* 2. Top Profile Card */
+.fl-user-profile-card {
+  background: #fffdfa;
+  border: 1px solid var(--fl-card-border);
+  border-radius: 20px;
+  padding: 32px 20px 26px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.fl-user-profile-avatar {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  border: 1px solid #ebdcd0;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8c7b6d;
+  margin-bottom: 14px;
+}
+
+.fl-user-profile-avatar svg {
+  width: 34px;
+  height: 34px;
+}
+
+.fl-user-profile-name {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--fl-text-main);
+  margin: 0 0 8px 0;
+  letter-spacing: -0.02em;
+}
+
+.fl-user-profile-badge {
+  border: 1px solid #b45309;
+  border-radius: var(--fl-radius-pill);
+  padding: 3px 14px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #b45309;
+  background: #fff8f5;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: inline-block;
+}
+
+.fl-user-profile-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #57534e;
+}
+
+.fl-user-profile-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--fl-orange);
+  display: inline-block;
+}
+
+/* 3. Section Informasi Akun */
+.fl-account-info-heading {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #78716c;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.fl-account-info-card {
+  background: #fffdfa;
+  border: 1px solid var(--fl-card-border);
+  border-radius: 18px;
+  padding: 0 18px;
+  margin-bottom: 24px;
+}
+
+.fl-account-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  font-size: 0.88rem;
+}
+
+.fl-account-info-row:not(:last-child) {
+  border-bottom: 1px solid #f0e6dc;
+}
+
+.fl-account-info-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #57534e;
+  font-weight: 500;
+}
+
+.fl-account-info-icon {
+  width: 20px;
+  height: 20px;
+  color: #8c7b6d;
+  flex-shrink: 0;
+}
+
+.fl-account-info-val {
+  font-weight: 600;
+  color: var(--fl-text-main);
+  text-align: right;
+}
+
+/* 4. Action Button Logout */
+.fl-btn-logout {
+  width: 100%;
+  background: var(--fl-orange);
+  color: #ffffff;
+  border: none;
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.28);
+  text-decoration: none;
+}
+
+.fl-btn-logout:hover {
+  background: var(--fl-orange-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(249, 115, 22, 0.38);
+}
+
+.fl-profile-footer-brand {
+  text-align: center;
+  margin-top: 24px;
+  margin-bottom: 30px;
+}
+
+.fl-profile-footer-name {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #78716c;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  display: block;
+}
+
+.fl-profile-footer-sub {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #a8a29e;
+  margin-top: 3px;
+  display: block;
+}
+
+
+/* ==========================================================================
+   REVISI FRONTLINER (SESUAI DOKUMENTASI FIGMA FRONTLINER - REVISI)
+   ========================================================================== */
+
+/* 1. 6-Segment Stepper Progress */
+.fl-stepper-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 14px 0 10px;
+}
+
+.fl-stepper-progress .fl-step-pill {
+  height: 8px;
+  flex: 1;
+  max-width: 52px;
+  border-radius: var(--fl-radius-pill);
+  transition: all 0.25s ease;
+}
+
+/* 2. Donut Card with 6 Right Progress Bars */
+.fl-revised-donut-card {
+  background: #fbf5ee;
+  border: 1px solid #ebdcd0;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.fl-revised-chart-left {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fl-revised-donut-svg {
+  width: 96px;
+  height: 96px;
+  transform: rotate(-90deg);
+}
+
+.fl-revised-donut-track {
+  fill: none;
+  stroke: #dfd7ce;
+  stroke-width: 9;
+}
+
+.fl-revised-donut-progress {
+  fill: none;
+  stroke: #22c55e;
+  stroke-width: 9;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.8s ease;
+}
+
+.fl-revised-donut-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1;
+}
+
+.fl-revised-donut-val {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #1c1917;
+  letter-spacing: -0.02em;
+}
+
+.fl-revised-donut-sub {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #78716c;
+  margin-top: 2px;
+}
+
+.fl-revised-progress-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.fl-revised-progress-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.fl-revised-progress-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: #1c1917;
+  line-height: 1.2;
+}
+
+.fl-revised-progress-header strong {
+  font-weight: 700;
+  color: #1c1917;
+}
+
+.fl-revised-progress-header span {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #78716c;
+}
+
+.fl-revised-bar-track {
+  width: 100%;
+  height: 5px;
+  background: #eedfd2;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.fl-revised-bar-fill {
+  height: 100%;
+  background: #f97316;
+  border-radius: 999px;
+  transition: width 0.6s ease;
+}
+
+/* 3. Legend Bar Bawah Donut */
+.fl-legend-bar-revised {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px 14px;
+  background: #ffffff;
+  border: 1px solid #ebdcd0;
+  border-radius: 12px;
+  margin-top: 12px;
+  font-size: 0.72rem;
+  color: #78716c;
+}
+
+.fl-legend-note-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 4. Badges (Success, Warning, Danger) */
+.fl-badge-pill.danger,
+.fl-badge-pill.red {
+  color: var(--fl-red-text);
+  border-color: #fecaca;
+  background: #fef2f2;
+}
+
+.fl-badge-pill.danger .fl-dot,
+.fl-badge-pill.red .fl-dot {
+  background: var(--fl-red);
+}
+
+.fl-badge-pill.success {
+  color: var(--fl-green-text);
+  border-color: #bbf7d0;
+  background: #f0fdf4;
+}
+
+.fl-badge-pill.success .fl-dot {
+  background: var(--fl-green);
+}
+
+.fl-badge-pill.warning {
+  color: var(--fl-amber-text);
+  border-color: #fed7aa;
+  background: #fffbeb;
+}
+
+.fl-badge-pill.warning .fl-dot {
+  background: var(--fl-amber);
+}
+
+/* 5. Detail Riwayat 6 Categories & Perlu Revisi */
+.fl-detail-category-card {
+  background: #ffffff;
+  border: 1px solid #ebdcd0;
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.fl-detail-category-card:hover {
+  background: #fbf5ee;
+  border-color: #f97316;
+  transform: translateY(-1px);
+}
+
+.fl-detail-category-card.is-revisi {
+  border: 2px solid #f97316;
+  background: #fffdfa;
+}
+
+.fl-detail-cat-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fl-detail-cat-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #fdf5ee;
+  border: 1px solid #ebdcd0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1c1917;
+  flex-shrink: 0;
+}
+
+.fl-detail-cat-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.fl-detail-cat-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fl-detail-cat-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #1c1917;
+  margin: 0;
+}
+
+.fl-detail-cat-sub {
+  font-size: 0.76rem;
+  color: #78716c;
+  margin: 0;
+}
+
+.fl-detail-cat-sub.text-revisi {
+  color: #b45309;
+  font-weight: 600;
+}
+
+/* 6. Revised Drawer Menu */
+.drawer-menu-revised-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid #ebdcd0;
+  background: #ffffff;
+  color: #1c1917;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.92rem;
+  transition: all 0.2s ease;
+}
+
+.drawer-menu-revised-item:hover {
+  background: #fbf5ee;
+  border-color: #f97316;
+}
+
+.drawer-menu-revised-item.is-active {
+  background: #fff8f5;
+  border: 1.5px solid #f97316;
+  color: #ea580c;
+}
+
+.drawer-menu-revised-item-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.drawer-menu-revised-footer-pill {
+  background: #f5f0eb;
+  border: 1px solid #ebdcd0;
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #78716c;
+  margin-top: auto;
+}
