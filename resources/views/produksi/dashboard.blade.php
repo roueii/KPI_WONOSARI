@@ -53,7 +53,7 @@
                 <div class="produksi-chart-left" aria-label="{{ $metricsSummary['completed'] }} dari {{ $metricsSummary['total'] }} indikator tuntas">
                     <svg class="produksi-donut-svg" viewBox="0 0 100 100">
                         <circle class="produksi-donut-track" cx="50" cy="50" r="40"></circle>
-                        <circle class="produksi-donut-progress" cx="50" cy="50" r="40" stroke-dasharray="{{ round(251.3 * $metricsSummary['completed'] / max($metricsSummary['total'], 1), 1) }} 251.3" stroke-dashoffset="0"></circle>
+                        <circle class="produksi-donut-progress" cx="50" cy="50" r="40" stroke-dasharray="{{ round(251.3 * $metricsSummary['completed'] / max($metricsSummary['total'], 1), 1) }} 251.3" stroke-dashoffset="0" @if($metricsSummary['completed'] == 0) stroke-opacity="0" @endif></circle>
                     </svg>
                     <div class="produksi-donut-center">
                         <span class="produksi-donut-val">{{ $metricsSummary['completed'] }}/{{ $metricsSummary['total'] }}</span>

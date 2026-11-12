@@ -37,6 +37,9 @@ Route::get('/admin/tinjau-revisi', [AdminController::class, 'revisi'])->name('ad
 Route::get('/admin/revisi', [AdminController::class, 'revisi']); // Alias
 Route::get('/admin/kelola-akun', [AdminController::class, 'kelolaAkun'])->name('admin.accounts');
 Route::get('/admin/accounts', [AdminController::class, 'kelolaAkun']); // Alias
+Route::post('/admin/kelola-akun', [AdminController::class, 'simpanAkun'])->name('admin.accounts.store');
+Route::post('/admin/kelola-akun/{id}', [AdminController::class, 'ubahAkun'])->whereNumber('id')->name('admin.accounts.update');
+Route::post('/admin/kelola-akun/{id}/status', [AdminController::class, 'ubahStatusAkun'])->whereNumber('id')->name('admin.accounts.status');
 Route::get('/admin/akun', [AdminController::class, 'kelolaAkun']); // Alias
 Route::get('/admin/kelola-kpi', [AdminController::class, 'kelolaKpi'])->name('admin.kpi');
 Route::get('/admin/kpi', [AdminController::class, 'kelolaKpi']); // Alias

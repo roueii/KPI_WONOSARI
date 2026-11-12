@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\KpiDashboardService;
 
 class FrontlinerController extends Controller
 {
@@ -19,7 +20,7 @@ class FrontlinerController extends Controller
         ]);
 
         // Badge tanggal hari ini sesuai Figma Revisi
-        $todayBadge = 'Hari ini, 30 Sep';
+        $todayBadge = 'Hari ini, ' . now()->locale('id')->translatedFormat('j M');
 
         // Ringkasan Indikator Capaian Harian (Donut 5/22 Tuntas)
         $metricsSummary = [
@@ -158,6 +159,25 @@ class FrontlinerController extends Controller
                 'route' => route('frontliner.riwayat.detail', ['id' => 3]),
             ],
         ];
+
+        // Data nyata dari Backend (GET /api/my-kpis) jika login lewat Backend
+        if ($live = KpiDashboardService::myKpis()) {
+            $metricsSummary = $live['summary'];
+            $progressRows = array_map(fn ($g) => [
+                'title' => $g['name'],
+                'current' => $g['completed'],
+                'target' => $g['total'],
+                'percent' => $g['percentage'],
+            ], $live['groups']);
+            $dailyTask['banner_sub'] = count($live['groups']) . ' kategori · 5–10 menit';
+            $dailyTask['preview_items'] = array_map(fn ($g) => [
+                'title' => $g['name'],
+                'status' => $g['status'],
+                'status_label' => $g['status_label'],
+                'badge_type' => $g['badge_type'],
+                'route' => $dailyTask['start_route'],
+            ], $live['groups']);
+        }
 
         return view('staff.dashboard', compact(
             'user',

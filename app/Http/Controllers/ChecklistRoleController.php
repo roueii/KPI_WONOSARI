@@ -113,6 +113,22 @@ abstract class ChecklistRoleController extends Controller
 
         $firstStep = array_key_first($cfg['steps']);
 
+        // Data nyata dari Backend (GET /api/my-kpis) jika login lewat Backend.
+        // Kategori mengikuti Backend, bukan langkah form Figma.
+        if ($live = \App\Services\KpiDashboardService::myKpis()) {
+            $summary = $live['summary'];
+            $categories = array_map(fn ($g) => [
+                'slug' => null,
+                'name' => $g['name'],
+                'preview_title' => $g['name'],
+                'completed' => $g['completed'],
+                'total' => $g['total'],
+                'percentage' => $g['percentage'],
+                'status' => $g['status'],
+                'url' => route($cfg['route'] . '.step', $firstStep),
+            ], $live['groups']);
+        }
+
         return view('checklist.dashboard', $this->viewData([
             'todayBadge' => 'Hari ini, ' . now()->locale('id')->translatedFormat('j M'),
             'summary' => $summary,

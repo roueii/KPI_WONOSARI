@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\KpiDashboardService;
 
 class DriverController extends Controller
 {
@@ -18,7 +19,7 @@ class DriverController extends Controller
             'email' => 'user@capaian.id',
         ]);
 
-        $todayBadge = 'Hari ini, 30 Sep';
+        $todayBadge = 'Hari ini, ' . now()->locale('id')->translatedFormat('j M');
 
         // 4 Indikator Capaian Driver untuk Donut & Progress List
         $metricsSummary = [
@@ -125,6 +126,26 @@ class DriverController extends Controller
                 'url' => route('driver.riwayat.detail', ['id' => 3]),
             ],
         ];
+
+        // Data nyata dari Backend (GET /api/my-kpis) jika login lewat Backend
+        if ($live = KpiDashboardService::myKpis()) {
+            $metricsSummary = array_merge($live['summary'], [
+                'indicators' => array_map(fn ($g) => [
+                    'name' => $g['name'],
+                    'completed' => $g['completed'],
+                    'total' => $g['total'],
+                    'percentage' => $g['percentage'],
+                ], $live['groups']),
+            ]);
+            $dailyTask['banner_sub'] = count($live['groups']) . ' kategori · 5–10 menit';
+            $dailyTask['preview_items'] = array_map(fn ($g) => [
+                'title' => $g['name'],
+                'status' => $g['status'],
+                'status_label' => $g['status_label'],
+                'badge_type' => $g['badge_type'],
+                'url' => route('driver.pengiriman'),
+            ], $live['groups']);
+        }
 
         return view('driver.dashboard', compact('user', 'todayBadge', 'metricsSummary', 'dailyTask', 'recentAchievements'));
     }

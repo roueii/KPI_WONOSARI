@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\BackendApiService;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -142,7 +143,31 @@ class AdminController extends Controller
     }
 
     /**
-     * Tampilkan halaman Kelola Akun
+     * Pemetaan nama jabatan Backend -> label, kunci filter, dan kelas warna di UI.
+     */
+    private function divisionMeta(?string $position): array
+    {
+        return match (strtolower((string) $position)) {
+            'store manager' => ['Store Manager', 'store_manager', 'store-manager'],
+            'frontliner' => ['Frontliner', 'frontliner', 'frontliner'],
+            'produksi' => ['Produksi', 'produksi', 'produksi'],
+            'driver' => ['Driver', 'driver', 'driver'],
+            'sales' => ['Sales & Marketing', 'sales', 'frontliner'],
+            'spv' => ['Supervisor', 'supervisor', 'store-manager'],
+            '' => ['Admin', 'admin', 'outline'],
+            default => [(string) $position, \Illuminate\Support\Str::slug((string) $position, '_'), 'outline'],
+        };
+    }
+
+    private function initials(string $name): string
+    {
+        $parts = preg_split('/\s+/', trim(preg_replace('/\(.*?\)/', '', $name)));
+        return strtoupper(mb_substr($parts[0] ?? '', 0, 1) . mb_substr($parts[1] ?? '', 0, 1));
+    }
+
+    /**
+     * Tampilkan halaman Kelola Akun.
+     * Data dari Backend: GET /api/admin/users & /api/admin/positions (fallback: data contoh).
      */
     public function kelolaAkun()
     {
@@ -152,19 +177,153 @@ class AdminController extends Controller
             'email' => 'User@capaian.id',
         ]);
 
+        $usersJson = BackendApiService::fetch('admin/users', ['per_page' => 100]);
+        $positionsJson = BackendApiService::fetch('admin/positions');
+        $isLive = $usersJson !== null && $positionsJson !== null;
+
+        if ($isLive) {
+            $positions = array_map(fn ($p) => [
+                'id' => $p['id'],
+                'label' => $this->divisionMeta($p['name'])[0],
+            ], $positionsJson['data'] ?? $positionsJson);
+
+            $raw = array_map(fn ($u) => [
+                'id' => $u['id'],
+                'name' => $u['name'],
+                'email' => $u['email'],
+                'active' => (bool) $u['is_active'],
+                'position' => $u['position']['name'] ?? null,
+                'position_id' => $u['position']['id'] ?? null,
+                'is_admin' => strtolower($u['role']['name'] ?? '') === 'admin',
+                'created_at' => $u['created_at'] ?? null,
+            ], $usersJson['data'] ?? []);
+        } else {
+            // Data contoh (mode demo / Backend tidak tersedia)
+            $positions = array_map(fn ($n, $i) => ['id' => $i + 1, 'label' => $this->divisionMeta($n)[0]],
+                ['Store Manager', 'Frontliner', 'Produksi', 'Driver', 'Sales', 'SPV'], range(0, 5));
+            $raw = [
+                ['id' => 1, 'name' => 'Budi Santoso', 'email' => 'budi.frontliner@capaian.id', 'active' => true, 'position' => 'Frontliner', 'position_id' => 2, 'is_admin' => false, 'created_at' => '2024-01-10'],
+                ['id' => 2, 'name' => 'Siti Rahma', 'email' => 'siti@capaian.id', 'active' => true, 'position' => 'Store Manager', 'position_id' => 1, 'is_admin' => false, 'created_at' => '2023-08-01'],
+                ['id' => 3, 'name' => 'Joko Prasetyo', 'email' => 'joko@capaian.id', 'active' => true, 'position' => 'Produksi', 'position_id' => 3, 'is_admin' => false, 'created_at' => '2024-03-01'],
+                ['id' => 4, 'name' => 'Agus Hermawan', 'email' => 'agus@capaian.id', 'active' => true, 'position' => 'Driver', 'position_id' => 4, 'is_admin' => false, 'created_at' => '2024-05-01'],
+                ['id' => 5, 'name' => 'Dewi Lestari', 'email' => 'dewi@capaian.id', 'active' => true, 'position' => 'Frontliner', 'position_id' => 2, 'is_admin' => false, 'created_at' => '2024-06-01'],
+                ['id' => 6, 'name' => 'Hendra Wijaya', 'email' => 'hendra@capaian.id', 'active' => false, 'position' => 'Produksi', 'position_id' => 3, 'is_admin' => false, 'created_at' => '2024-11-01'],
+            ];
+        }
+
+        $accounts = array_map(function ($u) {
+            [$label, $key, $pill] = $this->divisionMeta($u['position']);
+            return array_merge($u, [
+                'division' => $label,
+                'category' => $key,
+                'pill_class' => $pill,
+                'initials' => $this->initials($u['name']),
+                'joined' => $u['created_at']
+                    ? 'Bergabung ' . \Carbon\Carbon::parse($u['created_at'])->locale('id')->translatedFormat('M Y')
+                    : 'Tanggal bergabung tidak tersedia',
+            ]);
+        }, $raw);
+
+        // Hitung jumlah per divisi untuk chip filter
+        $divisions = [];
+        foreach ($accounts as $acc) {
+            $divisions[$acc['category']] ??= ['key' => $acc['category'], 'label' => $acc['division'], 'count' => 0];
+            $divisions[$acc['category']]['count']++;
+        }
+
+        $nonAdmin = array_filter($accounts, fn ($a) => ! $a['is_admin']);
         $summary = [
-            'total_karyawan' => 23,
-            'total_divisi' => 6,
+            'total_karyawan' => count($nonAdmin),
+            'total_divisi' => count(array_unique(array_column($nonAdmin, 'category'))),
         ];
 
         $filterCounts = [
-            'all' => 23,
-            'store_manager' => 2,
-            'frontliner' => 6,
-            'produksi' => 8,
+            'all' => count($accounts),
+            'divisions' => array_values($divisions),
         ];
 
-        return view('admin.accounts', compact('user', 'summary', 'filterCounts'));
+        return view('admin.accounts', compact('user', 'summary', 'filterCounts', 'accounts', 'positions', 'isLive'));
+    }
+
+    /**
+     * Role Backend ditentukan dari jabatan: Store Manager -> Manager, selain itu -> Karyawan.
+     */
+    private function roleIdForPosition(int $positionId): ?int
+    {
+        $positions = BackendApiService::fetch('admin/positions');
+        $roles = BackendApiService::fetch('admin/roles');
+        if (! $positions || ! $roles) {
+            return null;
+        }
+
+        $posName = collect($positions['data'] ?? $positions)->firstWhere('id', $positionId)['name'] ?? '';
+        $wanted = strtolower($posName) === 'store manager' ? 'manager' : 'karyawan';
+
+        return collect($roles['data'] ?? $roles)->first(fn ($r) => strtolower($r['name']) === $wanted)['id'] ?? null;
+    }
+
+    private function backendResult(array $res, string $okMessage)
+    {
+        if ($res['ok']) {
+            return redirect()->route('admin.accounts')->with('status', $okMessage);
+        }
+
+        return back()->withInput()->with('error', $res['first_error'] ?? $res['message'])
+            ->withErrors($res['errors'] ?: ['backend' => $res['message']]);
+    }
+
+    /**
+     * Tambah akun baru (POST /api/admin/users)
+     */
+    public function simpanAkun(Request $request)
+    {
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
+            'password' => ['required', 'string', 'min:8'],
+            'position_id' => ['required', 'integer'],
+        ]);
+
+        $roleId = $this->roleIdForPosition((int) $data['position_id']);
+        if (! $roleId) {
+            return back()->withInput()->with('error', 'Tidak dapat terhubung ke Backend. Akun belum dibuat.');
+        }
+
+        $res = BackendApiService::send('POST', 'admin/users', $data + ['role_id' => $roleId, 'is_active' => true]);
+
+        return $this->backendResult($res, "Akun {$data['name']} berhasil dibuat.");
+    }
+
+    /**
+     * Ubah data akun (PUT /api/admin/users/{id})
+     */
+    public function ubahAkun(Request $request, int $id)
+    {
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
+            'position_id' => ['nullable', 'integer'],
+        ]);
+
+        $payload = array_filter($data, fn ($v) => $v !== null);
+        if (! empty($payload['position_id'])) {
+            $payload['role_id'] = $this->roleIdForPosition((int) $payload['position_id']);
+        }
+
+        $res = BackendApiService::send('PUT', "admin/users/{$id}", $payload);
+
+        return $this->backendResult($res, "Data {$data['name']} berhasil diperbarui.");
+    }
+
+    /**
+     * Aktif / nonaktifkan akun (PATCH /api/admin/users/{id}/status)
+     */
+    public function ubahStatusAkun(Request $request, int $id)
+    {
+        $active = $request->boolean('is_active');
+        $res = BackendApiService::send('PATCH', "admin/users/{$id}/status", ['is_active' => $active]);
+
+        return $this->backendResult($res, $active ? 'Akun berhasil diaktifkan kembali.' : 'Akun berhasil dinonaktifkan.');
     }
 
     /**
@@ -396,7 +555,71 @@ class AdminController extends Controller
             ],
         ];
 
+        // Data nyata dari Backend: indikator aktif per jabatan (GET /api/positions/{id}/kpis)
+        if ($live = $this->liveKpiGroups()) {
+            [$divisions, $kpiGroups] = $live;
+            $activeDivision = $divisions[0];
+        }
+
         return view('admin.kpi', compact('user', 'divisions', 'activeDivision', 'kpiGroups'));
+    }
+
+    /**
+     * @return array{0: array<int,string>, 1: array<string,array>}|null
+     */
+    private function liveKpiGroups(): ?array
+    {
+        $positions = BackendApiService::fetch('admin/positions');
+        if (! $positions) {
+            return null;
+        }
+
+        $freq = ['DAILY' => 'Harian', 'WEEKLY' => 'Mingguan', 'MONTHLY' => 'Bulanan'];
+        $fmt = fn ($n) => str_ends_with($s = number_format((float) $n, 2, ',', '.'), ',00') ? substr($s, 0, -3) : $s;
+
+        $divisions = [];
+        $kpiGroups = [];
+        foreach ($positions['data'] ?? [] as $pos) {
+            $label = $this->divisionMeta($pos['name'])[0];
+            $items = BackendApiService::fetch("positions/{$pos['id']}/kpis")['data'] ?? null;
+            if ($items === null) {
+                continue;
+            }
+
+            $groups = [];
+            foreach ($items as $pk) {
+                $ind = $pk['indicator'] ?? [];
+                $cat = $ind['category']['name'] ?? 'Lainnya';
+                $isYesNo = ($pk['input_type'] ?? '') === 'YES_NO';
+                $unit = $ind['unit'] ?? '';
+
+                $groups[$cat] ??= [
+                    'id' => \Illuminate\Support\Str::slug($cat),
+                    'title' => $cat,
+                    'count_text' => null,
+                    'expanded' => true,
+                    'items' => [],
+                ];
+                $groups[$cat]['items'][] = [
+                    'id' => $pk['id'],
+                    'name' => $ind['name'] ?? '-',
+                    'subtitle' => ($isYesNo ? 'Target: Ya' : (($pk['calculation_type'] ?? '') === 'LOWER_IS_BETTER' ? 'Maksimal ' : 'Target: ') . $fmt($pk['target']) . ' ' . $unit)
+                        . ' · Bobot ' . $fmt($pk['weight']) . '% · ' . ($freq[$pk['frequency']] ?? $pk['frequency']),
+                    'badge' => $isYesNo ? 'Ceklis' : 'Angka · ' . $unit,
+                    'type' => $isYesNo ? 'checklist' : 'number',
+                ];
+            }
+
+            foreach ($groups as &$g) {
+                $g['count_text'] = count($g['items']) . ' indikator';
+            }
+            unset($g);
+
+            $divisions[] = $label;
+            $kpiGroups[$label] = array_values($groups);
+        }
+
+        return $divisions ? [$divisions, $kpiGroups] : null;
     }
 
     /**

@@ -44,7 +44,7 @@
             </a>
             <a href="{{ route('storemanager.dashboard', ['tab' => 'tim']) }}" class="sm-tab-btn {{ $activeTab === 'tim' ? 'is-active' : '' }}">
                 <span>KPI Tim</span>
-                <span class="sm-tab-badge">3</span>
+                @if(($teamSummary['pending_count'] ?? 0) > 0)<span class="sm-tab-badge">{{ $teamSummary['pending_count'] }}</span>@endif
             </a>
         </div>
 
@@ -114,12 +114,15 @@
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
                 <div style="display: flex; align-items: center; gap: 8px;">
                     <h3 id="heading-daftar-karyawan" style="font-size: 1.15rem; font-weight: 800; color: #1c1917; margin: 0;">Daftar Karyawan</h3>
-                    <span style="border: 1px solid #ebdcd0; background: #fffdfa; color: #78716c; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 999px;">8 Anggota</span>
+                    <span style="border: 1px solid #ebdcd0; background: #fffdfa; color: #78716c; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 999px;">{{ count($teamMembers) }} Anggota</span>
                 </div>
                 <span style="font-size: 0.78rem; font-weight: 600; color: #78716c; cursor: pointer;">Urutkan ⇅</span>
             </div>
 
             <div style="display: flex; flex-direction: column; gap: 10px;">
+                @if(count($teamMembers) === 0)
+                <p style="text-align: center; color: #78716c; font-size: 0.82rem; padding: 12px 0; margin: 0;">Belum ada laporan karyawan yang menunggu persetujuan.</p>
+                @endif
                 @foreach($teamMembers as $member)
                 <a href="{{ $member['link'] ?? '#' }}" class="sm-team-member-card">
                     <div class="sm-team-member-left">

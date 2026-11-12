@@ -37,6 +37,16 @@
         </header>
 
         <!-- 2. Kotak Ringkasan Jumlah Akun -->
+        @if(session('status'))
+            <div class="toast-inline success" role="status" style="background: #ecfdf5; border: 1px solid #86efac; color: #15803d; border-radius: 12px; padding: 10px 14px; font-size: 0.82rem; font-weight: 600; margin-bottom: 12px;">{{ session('status') }}</div>
+        @endif
+        @if(session('error') && (old('_edit_id') || ! old('name')))
+            <div role="alert" style="background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; border-radius: 12px; padding: 10px 14px; font-size: 0.82rem; font-weight: 600; margin-bottom: 12px;">{{ session('error') }}</div>
+        @endif
+        @unless($isLive)
+            <div role="note" style="background: #fffbeb; border: 1px dashed #f59e0b; color: #92400e; border-radius: 12px; padding: 10px 14px; font-size: 0.78rem; margin-bottom: 12px;">Mode demo: data di bawah adalah contoh. Login dengan akun Backend agar daftar akun bisa dikelola.</div>
+        @endunless
+
         <div class="account-summary-card">
             <div class="summary-card-left">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -47,7 +57,7 @@
                 </svg>
                 <strong class="summary-card-title">Daftar Akun</strong>
             </div>
-            <span class="summary-card-badge">23 Karyawan &middot; 6 Divisi</span>
+            <span class="summary-card-badge">{{ $summary['total_karyawan'] }} Karyawan &middot; {{ $summary['total_divisi'] }} Divisi</span>
         </div>
 
         <!-- 3. Pencarian & Tombol Tambah -->
@@ -71,10 +81,10 @@
 
         <!-- 4. Filter Tabs Kategori -->
         <div class="filter-tabs-row" role="tablist">
-            <button class="filter-chip is-active" data-filter="all">Semua (23)</button>
-            <button class="filter-chip" data-filter="store_manager">Store Manager (2)</button>
-            <button class="filter-chip" data-filter="frontliner">Frontliner (6)</button>
-            <button class="filter-chip" data-filter="produksi">Produksi (8)</button>
+            <button class="filter-chip is-active" data-filter="all">Semua ({{ $filterCounts['all'] }})</button>
+            @foreach($filterCounts['divisions'] as $div)
+                <button class="filter-chip" data-filter="{{ $div['key'] }}">{{ $div['label'] }} ({{ $div['count'] }})</button>
+            @endforeach
         </div>
 
         <!-- 5. Daftar Akun Pengguna -->
@@ -82,234 +92,97 @@
             <span class="section-subheading">DAFTAR AKUN PENGGUNA</span>
 
             <div class="accounts-cards-container" id="accountsCardsContainer">
-
-                <!-- ITEM 1: Budi Santoso (Expanded Edit State) -->
-                <div class="employee-account-wrapper is-expanded-mode" id="item-budi" data-name="budi santoso" data-category="frontliner">
-                    <!-- Header Kartu -->
-                    <div class="employee-card-header highlighted" onclick="toggleEditCard('budi')">
-                        <div class="employee-left-group">
-                            <div class="employee-avatar-circle">BS</div>
-                            <div class="employee-name-meta">
-                                <div class="employee-title-row">
-                                    <strong class="employee-name">Budi Santoso</strong>
-                                    <span class="role-pill frontliner">Frontliner</span>
+                @forelse($accounts as $acc)
+                    @php $open = (string) old('_edit_id') === (string) $acc['id']; @endphp
+                    <div class="employee-account-wrapper {{ $acc['active'] ? '' : 'is-inactive-account' }} {{ $open ? 'is-expanded-mode' : '' }}" id="item-{{ $acc['id'] }}" data-name="{{ strtolower($acc['name']) }}" data-category="{{ $acc['category'] }}">
+                        <div class="employee-card-header {{ $open ? 'highlighted' : '' }}" onclick="toggleEditCard('{{ $acc['id'] }}')" role="button" tabindex="0" aria-expanded="{{ $open ? 'true' : 'false' }}" aria-controls="panel-{{ $acc['id'] }}">
+                            <div class="employee-left-group">
+                                <div class="employee-avatar-circle {{ $acc['active'] ? '' : 'muted' }}">{{ $acc['initials'] }}</div>
+                                <div class="employee-name-meta">
+                                    <div class="employee-title-row">
+                                        <strong class="employee-name {{ $acc['active'] ? '' : 'muted' }}">{{ $acc['name'] }}</strong>
+                                        <span class="role-pill {{ $acc['pill_class'] }} {{ $acc['active'] ? '' : 'outline' }}">{{ $acc['division'] }}</span>
+                                    </div>
+                                    <span class="employee-join-date">{{ $acc['joined'] }}</span>
                                 </div>
-                                <span class="employee-join-date">Bergabung Jan 2024</span>
+                            </div>
+
+                            <div class="employee-right-group">
+                                <span class="status-pill {{ $acc['active'] ? 'active' : 'inactive' }}">{{ $acc['active'] ? 'Aktif' : 'Nonaktif' }}</span>
+                                <span class="expand-caret-icon" id="caret-{{ $acc['id'] }}">{!! $open ? '&#9650;' : '&#9660;' !!}</span>
                             </div>
                         </div>
 
-                        <div class="employee-right-group">
-                            <span class="status-pill active">Aktif</span>
-                            <span class="expand-caret-icon" id="caret-budi">&#9650;</span>
+                        <div class="edit-employee-panel" id="panel-{{ $acc['id'] }}" style="display: {{ $open ? 'block' : 'none' }};">
+                            <div class="edit-panel-header">
+                                <div class="panel-header-left">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                        <polyline points="14 2 14 8 20 8"></polyline>
+                                    </svg>
+                                    <strong>EDIT DATA KARYAWAN: {{ strtoupper($acc['name']) }}</strong>
+                                </div>
+                                <button type="button" class="panel-close-btn" onclick="toggleEditCard('{{ $acc['id'] }}')" aria-label="Tutup form edit">&times;</button>
+                            </div>
+
+                            <form class="edit-employee-form" method="POST" action="{{ route('admin.accounts.update', $acc['id']) }}">
+                                @csrf
+                                <input type="hidden" name="_edit_id" value="{{ $acc['id'] }}" />
+
+                                <div class="form-group-item">
+                                    <label for="name-{{ $acc['id'] }}">Nama Lengkap</label>
+                                    <input type="text" id="name-{{ $acc['id'] }}" name="name" value="{{ $open ? old('name', $acc['name']) : $acc['name'] }}" required maxlength="255" />
+                                </div>
+
+                                <div class="form-group-item">
+                                    <label for="email-{{ $acc['id'] }}">Email Akun</label>
+                                    <input type="email" id="email-{{ $acc['id'] }}" name="email" value="{{ $open ? old('email', $acc['email']) : $acc['email'] }}" required />
+                                </div>
+
+                                <div class="form-group-item">
+                                    <label for="divisi-{{ $acc['id'] }}">Divisi Kerja</label>
+                                    <div class="select-wrapper">
+                                        <select id="divisi-{{ $acc['id'] }}" name="position_id" {{ $acc['is_admin'] ? 'disabled' : '' }}>
+                                            @if($acc['is_admin'])
+                                                <option>Admin (tanpa divisi)</option>
+                                            @endif
+                                            @foreach($positions as $pos)
+                                                <option value="{{ $pos['id'] }}" @selected($acc['position_id'] == $pos['id'])>{{ $pos['label'] }}</option>
+                                            @endforeach
+                                        </select>
+                                        <span class="select-chevron">&#9662;</span>
+                                    </div>
+                                </div>
+
+                                <div class="edit-form-actions">
+                                    <button type="button" class="btn-form-cancel" onclick="toggleEditCard('{{ $acc['id'] }}')">Batal</button>
+                                    <button type="submit" class="btn-form-save">Simpan Perubahan</button>
+                                </div>
+                            </form>
+
+                            <form method="POST" action="{{ route('admin.accounts.status', $acc['id']) }}" onsubmit="return confirm(@js(($acc['active'] ? 'Nonaktifkan' : 'Aktifkan') . ' akun ' . $acc['name'] . '?'))">
+                                @csrf
+                                <input type="hidden" name="is_active" value="{{ $acc['active'] ? 0 : 1 }}" />
+                                <button type="submit" class="btn-deactivate-dashed" @unless($acc['active']) style="border-color: #22c55e; color: #15803d;" @endunless>
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                                        <line x1="12" y1="9" x2="12" y2="13"></line>
+                                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                    </svg>
+                                    <span>{{ $acc['active'] ? 'Nonaktifkan Akun Karyawan' : 'Aktifkan Kembali Akun' }}</span>
+                                </button>
+                            </form>
                         </div>
                     </div>
-
-                    <!-- Form Edit Data Karyawan (Expanded) -->
-                    <div class="edit-employee-panel" id="panel-budi">
-                        <div class="edit-panel-header">
-                            <div class="panel-header-left">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                    <polyline points="14 2 14 8 20 8"></polyline>
-                                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                                    <polyline points="10 9 9 9 8 9"></polyline>
-                                </svg>
-                                <strong>EDIT DATA KARYAWAN: BUDI SANTOSO</strong>
-                            </div>
-                            <button type="button" class="panel-close-btn" onclick="toggleEditCard('budi')" aria-label="Tutup form edit">&times;</button>
-                        </div>
-
-                        <form class="edit-employee-form" onsubmit="handleSaveEdit(event, 'Budi Santoso')">
-                            <!-- Field: Nama Lengkap -->
-                            <div class="form-group-item">
-                                <label for="name-budi">Nama Lengkap</label>
-                                <input type="text" id="name-budi" value="Budi Santoso" required />
-                            </div>
-
-                            <!-- Field: Nomor HP -->
-                            <div class="form-group-item">
-                                <label for="phone-budi">Nomor HP / WhatsApp</label>
-                                <input type="text" id="phone-budi" value="0812-3456-7890" required />
-                            </div>
-
-                            <!-- Field: Email Akun -->
-                            <div class="form-group-item">
-                                <label for="email-budi">Email Akun</label>
-                                <input type="email" id="email-budi" value="budi.frontliner@capaian.id" required />
-                            </div>
-
-                            <!-- Field: Divisi Kerja -->
-                            <div class="form-group-item">
-                                <label for="divisi-budi">Divisi Kerja</label>
-                                <div class="select-wrapper">
-                                    <select id="divisi-budi">
-                                        <option value="Frontliner" selected>Frontliner</option>
-                                        <option value="Store Manager">Store Manager</option>
-                                        <option value="Produksi">Produksi</option>
-                                        <option value="Driver">Driver</option>
-                                        <option value="Sales & Marketing">Sales &amp; Marketing</option>
-                                        <option value="SPV">SPV</option>
-                                    </select>
-                                    <span class="select-chevron">&#9662;</span>
-                                </div>
-                            </div>
-
-                            <!-- Field: Penempatan Outlet / Cabang -->
-                            <div class="form-group-item">
-                                <label for="outlet-budi">Penempatan Outlet / Cabang</label>
-                                <div class="select-wrapper">
-                                    <select id="outlet-budi">
-                                        <option value="Outlet Malioboro" selected>Outlet Malioboro</option>
-                                        <option value="Outlet Kaliurang">Outlet Kaliurang</option>
-                                        <option value="Dapur Pusat Wonosari">Dapur Pusat Wonosari</option>
-                                    </select>
-                                    <span class="select-chevron">&#9662;</span>
-                                </div>
-                            </div>
-
-                            <!-- Toggle Status Akun Aktif -->
-                            <div class="toggle-status-row">
-                                <div class="toggle-status-info">
-                                    <strong>Status Akun Aktif</strong>
-                                    <span>Karyawan dapat login dan mengisi KPI harian</span>
-                                </div>
-                                <label class="switch-toggle" aria-label="Toggle status akun aktif">
-                                    <input type="checkbox" id="toggle-active-budi" checked />
-                                    <span class="switch-slider"></span>
-                                </label>
-                            </div>
-
-                            <!-- Tombol Aksi Form -->
-                            <div class="edit-form-actions">
-                                <button type="button" class="btn-form-cancel" onclick="toggleEditCard('budi')">Batal</button>
-                                <button type="submit" class="btn-form-save">Simpan Perubahan</button>
-                            </div>
-
-                            <!-- Tombol Nonaktifkan Akun -->
-                            <button type="button" class="btn-deactivate-dashed" onclick="handleDeactivate('Budi Santoso', 'item-budi')">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-                                    <line x1="12" y1="9" x2="12" y2="13"></line>
-                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                                </svg>
-                                <span>Nonaktifkan Akun Karyawan</span>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- ITEM 2: Siti Rahma (Store Manager) -->
-                <div class="employee-account-wrapper" id="item-siti" data-name="siti rahma" data-category="store_manager">
-                    <div class="employee-card-header" onclick="showToast('Membuka edit data Siti Rahma...');">
-                        <div class="employee-left-group">
-                            <div class="employee-avatar-circle">SR</div>
-                            <div class="employee-name-meta">
-                                <div class="employee-title-row">
-                                    <strong class="employee-name">Siti Rahma</strong>
-                                    <span class="role-pill store-manager">Store Manager</span>
-                                </div>
-                                <span class="employee-join-date">Bergabung Agt 2023</span>
-                            </div>
-                        </div>
-
-                        <div class="employee-right-group">
-                            <span class="status-pill active">Aktif</span>
-                            <span class="chevron-right-icon">&#8250;</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ITEM 3: Joko Prasetyo (Produksi) -->
-                <div class="employee-account-wrapper" id="item-joko" data-name="joko prasetyo" data-category="produksi">
-                    <div class="employee-card-header" onclick="showToast('Membuka edit data Joko Prasetyo...');">
-                        <div class="employee-left-group">
-                            <div class="employee-avatar-circle">JP</div>
-                            <div class="employee-name-meta">
-                                <div class="employee-title-row">
-                                    <strong class="employee-name">Joko Prasetyo</strong>
-                                    <span class="role-pill produksi">Produksi</span>
-                                </div>
-                                <span class="employee-join-date">Bergabung Mar 2023</span>
-                            </div>
-                        </div>
-
-                        <div class="employee-right-group">
-                            <span class="status-pill active">Aktif</span>
-                            <span class="chevron-right-icon">&#8250;</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ITEM 4: Agus Hermawan (Driver) -->
-                <div class="employee-account-wrapper" id="item-agus" data-name="agus hermawan" data-category="driver">
-                    <div class="employee-card-header" onclick="showToast('Membuka edit data Agus Hermawan...');">
-                        <div class="employee-left-group">
-                            <div class="employee-avatar-circle">AH</div>
-                            <div class="employee-name-meta">
-                                <div class="employee-title-row">
-                                    <strong class="employee-name">Agus Hermawan</strong>
-                                    <span class="role-pill driver">Driver</span>
-                                </div>
-                                <span class="employee-join-date">Bergabung Mei 2023</span>
-                            </div>
-                        </div>
-
-                        <div class="employee-right-group">
-                            <span class="status-pill active">Aktif</span>
-                            <span class="chevron-right-icon">&#8250;</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ITEM 5: Dewi Lestari (Frontliner) -->
-                <div class="employee-account-wrapper" id="item-dewi" data-name="dewi lestari" data-category="frontliner">
-                    <div class="employee-card-header" onclick="showToast('Membuka edit data Dewi Lestari...');">
-                        <div class="employee-left-group">
-                            <div class="employee-avatar-circle">DL</div>
-                            <div class="employee-name-meta">
-                                <div class="employee-title-row">
-                                    <strong class="employee-name">Dewi Lestari</strong>
-                                    <span class="role-pill frontliner">Frontliner</span>
-                                </div>
-                                <span class="employee-join-date">Bergabung Feb 2024</span>
-                            </div>
-                        </div>
-
-                        <div class="employee-right-group">
-                            <span class="status-pill active">Aktif</span>
-                            <span class="chevron-right-icon">&#8250;</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ITEM 6: Hendra Wijaya (Produksi - Nonaktif) -->
-                <div class="employee-account-wrapper is-inactive-account" id="item-hendra" data-name="hendra wijaya" data-category="produksi">
-                    <div class="employee-card-header" onclick="showToast('Akun Hendra Wijaya berstatus nonaktif.');">
-                        <div class="employee-left-group">
-                            <div class="employee-avatar-circle muted">HW</div>
-                            <div class="employee-name-meta">
-                                <div class="employee-title-row">
-                                    <strong class="employee-name muted">Hendra Wijaya</strong>
-                                    <span class="role-pill produksi outline">Produksi</span>
-                                </div>
-                                <span class="employee-join-date">Bergabung Nov 2024</span>
-                            </div>
-                        </div>
-
-                        <div class="employee-right-group">
-                            <span class="status-pill inactive">Nonaktif</span>
-                            <span class="chevron-right-icon">&#8250;</span>
-                        </div>
-                    </div>
-                </div>
-
+                @empty
+                    <p style="text-align: center; color: #78716c; font-size: 0.85rem; padding: 18px 0;">Belum ada akun.</p>
+                @endforelse
             </div>
         </section>
 
-        <!-- 6. Form Tambah Karyawan Baru (Preview Sesuai Gambar) -->
+        <!-- 6. Form Tambah Karyawan Baru -->
         <section class="add-employee-section" id="addEmployeeSection">
-            <span class="section-subheading">PREVIEW: FORM TAMBAH KARYAWAN</span>
+            <span class="section-subheading">FORM TAMBAH KARYAWAN</span>
 
             <div class="add-employee-card">
                 <div class="add-card-header">
@@ -317,60 +190,42 @@
                         <h2 class="add-card-title">Tambah Karyawan Baru</h2>
                         <span class="add-card-subtitle">Buat kredensial akun staf bakery</span>
                     </div>
-                    <button type="button" class="add-close-btn" onclick="showToast('Form dapat diisi di bawah');" aria-label="Tutup form">&times;</button>
                 </div>
 
-                <form class="add-employee-form" onsubmit="handleAddNewEmployee(event)">
-                    <!-- Nama Lengkap -->
+                <form class="add-employee-form" method="POST" action="{{ route('admin.accounts.store') }}">
+                    @csrf
+                    @if($errors->any() && ! old('_edit_id') && old('name'))
+                        <div role="alert" style="background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; border-radius: 10px; padding: 8px 12px; font-size: 0.78rem; margin-bottom: 10px;">{{ $errors->first() }}</div>
+                    @endif
+
                     <div class="form-group-item">
                         <label for="new-employee-name">Nama Lengkap</label>
-                        <input type="text" id="new-employee-name" placeholder="Nama lengkap karyawan" required />
+                        <input type="text" id="new-employee-name" name="name" value="{{ old('_edit_id') ? '' : old('name') }}" placeholder="Nama lengkap karyawan" required maxlength="255" />
                     </div>
 
-                    <!-- Nomor HP / WhatsApp -->
-                    <div class="form-group-item">
-                        <label for="new-employee-phone">Nomor HP / WhatsApp</label>
-                        <input type="text" id="new-employee-phone" placeholder="Contoh: 08123456789" required />
-                    </div>
-
-                    <!-- Email Akun -->
                     <div class="form-group-item">
                         <label for="new-employee-email">Email Akun</label>
-                        <input type="email" id="new-employee-email" placeholder="nama@capaian.id" required />
+                        <input type="email" id="new-employee-email" name="email" value="{{ old('_edit_id') ? '' : old('email') }}" placeholder="nama@capaian.id" required />
                     </div>
 
-                    <!-- Divisi -->
+                    <div class="form-group-item">
+                        <label for="new-employee-password">Kata Sandi Awal</label>
+                        <input type="password" id="new-employee-password" name="password" placeholder="Minimal 8 karakter" minlength="8" required autocomplete="new-password" />
+                    </div>
+
                     <div class="form-group-item">
                         <label for="new-employee-divisi">Divisi</label>
                         <div class="select-wrapper">
-                            <select id="new-employee-divisi" required>
-                                <option value="" disabled selected>Pilih divisi...</option>
-                                <option value="Store Manager">Store Manager</option>
-                                <option value="Frontliner">Frontliner</option>
-                                <option value="Produksi">Produksi</option>
-                                <option value="Driver">Driver</option>
-                                <option value="Sales & Marketing">Sales &amp; Marketing</option>
-                                <option value="SPV">SPV</option>
+                            <select id="new-employee-divisi" name="position_id" required>
+                                <option value="" disabled @selected(! old('position_id'))>Pilih divisi...</option>
+                                @foreach($positions as $pos)
+                                    <option value="{{ $pos['id'] }}" @selected(old('position_id') == $pos['id'])>{{ $pos['label'] }}</option>
+                                @endforeach
                             </select>
                             <span class="select-chevron">&#9662;</span>
                         </div>
                     </div>
 
-                    <!-- Outlet / Cabang -->
-                    <div class="form-group-item">
-                        <label for="new-employee-outlet">Outlet / Cabang</label>
-                        <div class="select-wrapper">
-                            <select id="new-employee-outlet" required>
-                                <option value="" disabled selected>Pilih outlet penempatan...</option>
-                                <option value="Outlet Malioboro">Outlet Malioboro</option>
-                                <option value="Outlet Kaliurang">Outlet Kaliurang</option>
-                                <option value="Dapur Pusat Wonosari">Dapur Pusat Wonosari</option>
-                            </select>
-                            <span class="select-chevron">&#9662;</span>
-                        </div>
-                    </div>
-
-                    <!-- Tombol Simpan Akun Baru -->
                     <button type="submit" class="btn-save-new-account">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <polyline points="20 6 9 17 4 12"></polyline>
@@ -436,6 +291,19 @@
             }
         }
 
+        // Header kartu bisa dibuka lewat keyboard (Enter / Spasi)
+        document.querySelectorAll('.employee-card-header[role="button"]').forEach(header => {
+            header.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    header.click();
+                }
+            });
+            header.addEventListener('click', () => {
+                header.setAttribute('aria-expanded', header.classList.contains('highlighted') ? 'true' : 'false');
+            });
+        });
+
         // Filter Tabs
         const filterChips = document.querySelectorAll('.filter-chip');
         const accountCards = document.querySelectorAll('.employee-account-wrapper');
@@ -480,39 +348,6 @@
                 addSection.scrollIntoView({ behavior: 'smooth' });
                 document.getElementById('new-employee-name').focus();
             }
-        }
-
-        // Handle Save Edit
-        function handleSaveEdit(e, name) {
-            e.preventDefault();
-            showToast(`Perubahan data ${name} berhasil disimpan!`);
-            setTimeout(() => {
-                toggleEditCard('budi');
-            }, 600);
-        }
-
-        // Handle Deactivate Account
-        function handleDeactivate(name, wrapperId) {
-            if (confirm(`Apakah Anda yakin ingin menonaktifkan akun ${name}?`)) {
-                showToast(`Akun ${name} telah dinonaktifkan.`);
-                const wrapper = document.getElementById(wrapperId);
-                if (wrapper) {
-                    wrapper.classList.add('is-inactive-account');
-                    const statusPill = wrapper.querySelector('.status-pill');
-                    if (statusPill) {
-                        statusPill.className = 'status-pill inactive';
-                        statusPill.textContent = 'Nonaktif';
-                    }
-                }
-            }
-        }
-
-        // Handle Add New Employee
-        function handleAddNewEmployee(e) {
-            e.preventDefault();
-            const name = document.getElementById('new-employee-name').value;
-            showToast(`Akun karyawan baru (${name}) berhasil dibuat!`);
-            e.target.reset();
         }
 
         function showToast(message) {

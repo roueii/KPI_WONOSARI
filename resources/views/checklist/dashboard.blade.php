@@ -50,7 +50,7 @@
             <div class="driver-chart-left" role="img" aria-label="{{ $summary['completed'] }} dari {{ $summary['total'] }} indikator tuntas">
                 <svg class="driver-donut-svg" viewBox="0 0 100 100">
                     <circle class="driver-donut-track" cx="50" cy="50" r="40"></circle>
-                    <circle class="driver-donut-progress" cx="50" cy="50" r="40" stroke-dasharray="{{ $dash }} {{ round($circumference, 1) }}"></circle>
+                    <circle class="driver-donut-progress" cx="50" cy="50" r="40" stroke-dasharray="{{ $dash }} {{ round($circumference, 1) }}" @if($summary['completed'] == 0) stroke-opacity="0" @endif></circle>
                 </svg>
                 <div class="driver-donut-center">
                     <span class="driver-donut-val">{{ $summary['completed'] }}/{{ $summary['total'] }}</span>

@@ -41,10 +41,16 @@
         </div>
         @endif
 
+        @if(session('error'))
+        <div role="alert" style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 14px; padding: 12px 16px; margin-bottom: 16px; color: #b91c1c; font-size: 0.82rem; font-weight: 700;">
+            {{ session('error') }}
+        </div>
+        @endif
+
         <!-- 2. Filter Chips Sesuai Figma -->
         <div class="sm-filter-row" style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 18px; -webkit-overflow-scrolling: touch; scrollbar-width: none;">
             <button type="button" class="sm-filter-chip is-active" data-filter="semua" style="padding: 7px 16px; border-radius: 999px; border: none; background: #f97316; color: #ffffff; font-size: 0.8rem; font-weight: 700; white-space: nowrap; cursor: pointer;">
-                Semua (5)
+                Semua ({{ count($approvalItems) }})
             </button>
             <button type="button" class="sm-filter-chip" data-filter="frontliner" style="padding: 7px 16px; border-radius: 999px; border: 1px solid #ebdcd0; background: #ffffff; color: #78716c; font-size: 0.8rem; font-weight: 700; white-space: nowrap; cursor: pointer;">
                 Frontliner
@@ -65,6 +71,12 @@
 
         <!-- 3. Daftar Kartu Persetujuan Tim -->
         <div class="sm-approval-list" style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px;">
+            @if(count($approvalItems) === 0)
+            <div style="background: #ffffff; border: 1px dashed #ebdcd0; border-radius: 18px; padding: 28px 18px; text-align: center; color: #78716c; font-size: 0.85rem;">
+                <strong style="display: block; color: #1c1917; font-size: 0.95rem; margin-bottom: 4px;">Tidak ada laporan yang menunggu persetujuan</strong>
+                Laporan karyawan yang sudah dikirim akan muncul di sini.
+            </div>
+            @endif
             @foreach($approvalItems as $item)
             <div class="sm-approval-card" data-category="{{ $item['role_category'] ?? 'frontliner' }}" id="approvalCard-{{ $item['id'] }}" style="background: #fffdfa; border: 1px solid #ebdcd0; border-radius: 18px; padding: 16px; transition: all 0.2s ease;">
                 <!-- Header Kartu Accordion -->
@@ -112,7 +124,7 @@
                                 <div style="overflow: hidden;">
                                     <span style="display: block; font-size: 0.78rem; font-weight: 700; color: #1c1917; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">{{ $photo['title'] }}</span>
                                     <span style="display: block; font-size: 0.68rem; color: #78716c;">{{ $photo['time'] }}</span>
-                                    <button type="button" onclick="alert('Pratinjau foto akan tersedia setelah terhubung ke Backend.')" style="display: block; padding: 0; margin-top: 2px; border: none; background: none; font: inherit; font-size: 0.7rem; font-weight: 700; color: #ea580c; text-decoration: underline; cursor: pointer;">Ketuk untuk lihat foto</button>
+                                    <button type="button" onclick="{{ !empty($photo['url']) ? "window.open('" . e($photo['url']) . "', '_blank')" : "alert('Pratinjau foto belum tersedia untuk data contoh.')" }}" style="display: block; padding: 0; margin-top: 2px; border: none; background: none; font: inherit; font-size: 0.7rem; font-weight: 700; color: #ea580c; text-decoration: underline; cursor: pointer;">Ketuk untuk lihat foto</button>
                                 </div>
                             </div>
                         </div>
@@ -181,6 +193,7 @@
             @endforeach
         </div>
 
+        @if(count($approvalItems) > 0)
         <!-- 4. Tombol Setujui Semua Capaian Sekaligus Sesuai Figma -->
         <section style="background: #ffffff; border: 1.5px solid #bbf7d0; border-radius: 18px; padding: 18px; margin-bottom: 28px; text-align: center;">
             <div style="width: 44px; height: 44px; border-radius: 50%; background: #dcfce7; color: #16a34a; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;">
@@ -202,6 +215,7 @@
                 </button>
             </form>
         </section>
+        @endif
     </div>
 
     <!-- Script Accordion & Filtering -->

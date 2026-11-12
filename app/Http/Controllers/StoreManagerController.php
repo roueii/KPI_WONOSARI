@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\KpiDashboardService;
+use App\Services\BackendApiService;
 
 class StoreManagerController extends Controller
 {
@@ -24,7 +26,7 @@ class StoreManagerController extends Controller
         // ==========================================
         // DATA TAB: KPI SAYA (Dashboard KPI Store Manager.png)
         // ==========================================
-        $todayBadge = 'Hari ini, 30 Sep';
+        $todayBadge = 'Hari ini, ' . now()->locale('id')->translatedFormat('j M');
 
         // Donut Chart: 5/16 Tuntas (~31.25%)
         $metricsSummary = [
@@ -237,6 +239,47 @@ class StoreManagerController extends Controller
                 'link' => '#',
             ],
         ];
+
+        // Data nyata dari Backend (GET /api/my-kpis) jika login lewat Backend
+        if ($live = KpiDashboardService::myKpis()) {
+            $metricsSummary = $live['summary'];
+            $progressRows = array_map(fn ($g) => [
+                'title' => $g['name'],
+                'current' => $g['completed'],
+                'target' => $g['total'],
+                'percent' => $g['percentage'],
+            ], $live['groups']);
+            $dailyTask['banner_sub'] = count($live['groups']) . ' kategori · 5–10 menit';
+            $dailyTask['preview_items'] = array_map(fn ($g) => [
+                'title' => $g['name'],
+                'status' => $g['status'],
+                'status_label' => $g['status_label'],
+                'badge_type' => $g['badge_type'],
+                'route' => $dailyTask['start_route'],
+            ], $live['groups']);
+        }
+
+        // Tab KPI Tim: laporan yang menunggu persetujuan (GET /api/reviews/reports)
+        if ($pending = $this->pendingReports()) {
+            $teamSummary = array_merge($teamSummary, [
+                'pending_count' => $pending['total'],
+                // Rekap laporan seluruh tim belum ada endpoint-nya di Backend
+                'reported_text' => 'Rekap laporan tim belum tersedia dari Backend',
+                'percentage' => '–',
+                'percent_val' => 0,
+                'approved_count' => '–',
+                'not_reported_count' => '–',
+            ]);
+            $teamMembers = array_map(fn ($r) => [
+                'id' => $r['user']['id'],
+                'name' => $r['user']['name'],
+                'role' => ($r['user']['position'] ?? '-') . ' · ' . $r['report_date'],
+                'status' => 'approval',
+                'status_label' => 'Approval',
+                'badge_class' => 'badge-orange',
+                'link' => route('storemanager.approval'),
+            ], $pending['data']);
+        }
 
         return view('storemanager.dashboard', compact(
             'user',
@@ -609,6 +652,123 @@ class StoreManagerController extends Controller
     }
 
     // =========================================================================
+    // INTEGRASI BACKEND: APPROVAL TIM (GET/POST /api/reviews/reports)
+    // =========================================================================
+
+    /**
+     * Laporan karyawan berstatus SUBMITTED yang menunggu keputusan.
+     * @return array{total:int, data:array}|null  null jika belum terhubung ke Backend
+     */
+    protected function pendingReports(): ?array
+    {
+        $json = BackendApiService::fetch('reviews/reports', ['per_page' => 50]);
+        if ($json === null) {
+            return null;
+        }
+
+        return [
+            'total' => (int) ($json['total'] ?? count($json['data'] ?? [])),
+            'data' => $json['data'] ?? [],
+        ];
+    }
+
+    /**
+     * Ubah laporan Backend menjadi bentuk kartu di halaman Approval Tim.
+     */
+    protected function liveApprovalItems(): ?array
+    {
+        $pending = $this->pendingReports();
+        if ($pending === null) {
+            return null;
+        }
+
+        $categoryOf = fn (?string $position) => match (strtolower((string) $position)) {
+            'frontliner' => 'frontliner',
+            'produksi' => 'produksi',
+            'driver' => 'driver',
+            'sales' => 'sales',
+            'spv' => 'supervisor',
+            default => 'lainnya',
+        };
+
+        $items = [];
+        foreach ($pending['data'] as $i => $report) {
+            $userId = $report['user']['id'];
+            $date = $report['report_date'];
+            $detail = BackendApiService::fetch("reviews/reports/{$userId}/{$date}")['data'] ?? [];
+
+            $photos = [];
+            $rows = [];
+            foreach ($detail as $sub) {
+                foreach ($sub['evidences'] ?? [] as $ev) {
+                    $photos[] = ['title' => $ev['file_name'], 'time' => $sub['indicator']['name'] ?? '', 'url' => $ev['url']];
+                }
+
+                $ind = $sub['indicator'] ?? [];
+                if (($ind['input_type'] ?? '') === 'YES_NO') {
+                    $label = $ind['name'];
+                    $met = (bool) $sub['answer_yes_no'];
+                } else {
+                    $value = $sub['numeric_value'];
+                    $target = $ind['target'] ?? 0;
+                    $unit = $ind['unit'] ?? '';
+                    $label = sprintf('%s: %s %s (target %s)', $ind['name'], $this->fmt($value), $unit, $this->fmt($target));
+                    $met = ($ind['calculation_type'] ?? '') === 'LOWER_IS_BETTER' ? $value <= $target : $value >= $target;
+                }
+                $rows[] = ['label' => $label, 'checked' => $met];
+            }
+
+            $metCount = count(array_filter($rows, fn ($r) => $r['checked']));
+
+            $items[] = [
+                'id' => $userId . '_' . $date,
+                'name' => $report['user']['name'],
+                'role' => $report['user']['position'] ?? '-',
+                'role_category' => $categoryOf($report['user']['position'] ?? null),
+                'submission_meta' => $report['total_indicators'] . ' indikator · ' . \Carbon\Carbon::parse($date)->locale('id')->translatedFormat('j M Y'),
+                'status_label' => 'Menunggu Persetujuan Anda',
+                'is_expanded' => $i === 0,
+                'photos' => $photos,
+                'categories' => $rows ? [[
+                    'name' => 'INDIKATOR KPI',
+                    'ratio' => $metCount . '/' . count($rows) . ' Memenuhi target',
+                    'items' => $rows,
+                ]] : [],
+            ];
+        }
+
+        return $items;
+    }
+
+    private function fmt($n): string
+    {
+        $s = number_format((float) $n, 2, ',', '.');
+        return str_ends_with($s, ',00') ? substr($s, 0, -3) : $s;
+    }
+
+    /**
+     * Kirim keputusan satu laporan ke Backend. $id = "{userId}_{YYYY-mm-dd}".
+     */
+    protected function decideReport(string $id, string $decision, ?string $notes)
+    {
+        if (! BackendApiService::connected()) {
+            return null; // mode demo: pakai perilaku dummy lama
+        }
+
+        if (! preg_match('/^(\d+)_(\d{4}-\d{2}-\d{2})$/', $id, $m)) {
+            return redirect()->route('storemanager.approval')->with('error', 'Laporan tidak dikenali.');
+        }
+
+        $res = BackendApiService::send('POST', "reviews/reports/{$m[1]}/{$m[2]}", [
+            'decision' => $decision,
+            'notes' => $notes ?: null,
+        ]);
+
+        return redirect()->route('storemanager.approval')
+            ->with($res['ok'] ? 'status' : 'error', $res['ok'] ? $res['message'] : $res['first_error']);
+    }
+
+    // =========================================================================
     // HALAMAN TRAINING KARYAWAN (Figma: "Detail Training" & "Card Catat Training Baru")
     // =========================================================================
 
@@ -806,6 +966,11 @@ class StoreManagerController extends Controller
             ],
         ];
 
+        // Data nyata dari Backend jika login lewat Backend
+        if (($live = $this->liveApprovalItems()) !== null) {
+            $approvalItems = $live;
+        }
+
         return view('storemanager.approval', compact('user', 'approvalItems', 'filter'));
     }
 
@@ -814,6 +979,10 @@ class StoreManagerController extends Controller
      */
     public function approveCapaian($id)
     {
+        if ($resp = $this->decideReport((string) $id, 'APPROVED', null)) {
+            return $resp;
+        }
+
         return redirect()->route('storemanager.approval')->with('status', 'Capaian karyawan berhasil disetujui!');
     }
 
@@ -823,6 +992,14 @@ class StoreManagerController extends Controller
     public function rejectCapaian(Request $request, $id)
     {
         $catatan = $request->input('catatan', 'Foto bukti kurang jelas, mohon perbaiki.');
+
+        if (BackendApiService::connected() && trim((string) $request->input('catatan')) === '') {
+            return redirect()->route('storemanager.approval')->with('error', 'Alasan penolakan wajib diisi pada kolom catatan.');
+        }
+        if ($resp = $this->decideReport((string) $id, 'REJECTED', $catatan)) {
+            return $resp;
+        }
+
         return redirect()->route('storemanager.approval')->with('status', 'Permintaan revisi berhasil dikirim ke karyawan.');
     }
 
@@ -831,6 +1008,27 @@ class StoreManagerController extends Controller
      */
     public function approveAllCapaian()
     {
+        if (($pending = $this->pendingReports()) !== null) {
+            $ok = 0;
+            $failed = [];
+            foreach ($pending['data'] as $r) {
+                $res = BackendApiService::send('POST', "reviews/reports/{$r['user']['id']}/{$r['report_date']}", ['decision' => 'APPROVED']);
+                if ($res['ok']) {
+                    $ok++;
+                } else {
+                    $failed[] = $r['user']['name'];
+                }
+            }
+
+            if ($failed) {
+                return redirect()->route('storemanager.approval')->with('error', "{$ok} laporan disetujui, gagal: " . implode(', ', $failed));
+            }
+
+            return redirect()->route('storemanager.approval')->with('status', $ok
+                ? "{$ok} laporan berhasil disetujui sekaligus."
+                : 'Tidak ada laporan yang menunggu persetujuan.');
+        }
+
         return redirect()->route('storemanager.approval')->with('status', 'Semua capaian tim berhasil disetujui sekaligus!');
     }
 

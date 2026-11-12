@@ -53,7 +53,7 @@
                 <div class="driver-chart-left" aria-label="{{ $metricsSummary['completed'] }} dari {{ $metricsSummary['total'] }} indikator tuntas">
                     <svg class="driver-donut-svg" viewBox="0 0 100 100">
                         <circle class="driver-donut-track" cx="50" cy="50" r="40"></circle>
-                        <circle class="driver-donut-progress" cx="50" cy="50" r="40" stroke-dasharray="{{ round(251.3 * $metricsSummary['completed'] / max($metricsSummary['total'], 1), 1) }} 251.3" stroke-dashoffset="0"></circle>
+                        <circle class="driver-donut-progress" cx="50" cy="50" r="40" stroke-dasharray="{{ round(251.3 * $metricsSummary['completed'] / max($metricsSummary['total'], 1), 1) }} 251.3" stroke-dashoffset="0" @if($metricsSummary['completed'] == 0) stroke-opacity="0" @endif></circle>
                     </svg>
                     <div class="driver-donut-center">
                         <span class="driver-donut-val">{{ $metricsSummary['completed'] }}/{{ $metricsSummary['total'] }}</span>
