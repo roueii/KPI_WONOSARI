@@ -116,6 +116,7 @@
                 const icon = this.querySelector('.sm-check-icon');
                 
                 if (e.target !== input) {
+                    e.preventDefault(); // cegah toggle ganda dari <label>
                     input.checked = !input.checked;
                 }
                 

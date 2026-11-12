@@ -566,6 +566,15 @@ class StoreManagerController extends Controller
             ['id' => 2, 'name' => 'foto_kerusakan_2.jpg'],
         ];
 
+        // Pulihkan centang dari draf / data tersimpan sebelumnya
+        $saved = session('sm_promosi_event') ?? session('sm_capaian_draft');
+        if (is_array($saved)) {
+            foreach ($indicators as &$indicator) {
+                $indicator['checked'] = !empty($saved['indicators'][$indicator['id']]);
+            }
+            unset($indicator);
+        }
+
         return view('storemanager.promosi_event', compact('user', 'stepInfo', 'indicators', 'existingPhotos'));
     }
 
@@ -591,9 +600,87 @@ class StoreManagerController extends Controller
      */
     public function simpanDraft(Request $request)
     {
-        session(['sm_capaian_draft' => true]);
+        session(['sm_capaian_draft' => [
+            'indicators' => $request->input('indicators', []),
+            'drafted_at' => now()->toDateTimeString(),
+        ]]);
 
         return redirect()->route('storemanager.dashboard')->with('status', 'Draf capaian Store Manager berhasil disimpan.');
+    }
+
+    // =========================================================================
+    // HALAMAN TRAINING KARYAWAN (Figma: "Detail Training" & "Card Catat Training Baru")
+    // =========================================================================
+
+    /**
+     * Daftar training: data dummy + training yang dicatat di session.
+     */
+    protected function trainingList(): array
+    {
+        $dummy = [
+            ['date' => '2026-10-20', 'topic' => 'Service Excellence', 'participants' => 8],
+            ['date' => '2026-09-15', 'topic' => 'Food Safety & Hygiene', 'participants' => 15],
+            ['date' => '2026-08-10', 'topic' => 'Basic Product Knowledge', 'participants' => 12],
+        ];
+
+        $list = array_merge(session('sm_trainings', []), $dummy);
+        usort($list, fn ($a, $b) => strcmp($b['date'], $a['date']));
+
+        return $list;
+    }
+
+    /**
+     * Halaman Training Karyawan
+     */
+    public function training()
+    {
+        $user = session('user', [
+            'name' => 'User',
+            'role' => 'store_manager',
+            'role_label' => 'Store Manager',
+            'email' => 'User@capaian.id',
+        ]);
+
+        $trainings = array_map(function ($t) {
+            $t['date_label'] = \Carbon\Carbon::parse($t['date'])->locale('id')->translatedFormat('j M Y');
+            return $t;
+        }, $this->trainingList());
+
+        $currentMonth = now()->format('Y-m');
+        $monthCount = count(array_filter($trainings, fn ($t) => str_starts_with($t['date'], $currentMonth)));
+
+        $summary = [
+            'done' => $monthCount,
+            'target' => 1,
+        ];
+
+        return view('storemanager.training', compact('user', 'trainings', 'summary'));
+    }
+
+    /**
+     * Simpan training baru
+     */
+    public function simpanTraining(Request $request)
+    {
+        $data = $request->validate([
+            'date' => ['required', 'date'],
+            'topic' => ['required', 'string', 'max:120'],
+            'participants' => ['required', 'integer', 'min:1', 'max:500'],
+        ], [], [
+            'date' => 'Tanggal Pelaksanaan',
+            'topic' => 'Topik Training',
+            'participants' => 'Jumlah Peserta',
+        ]);
+
+        $trainings = session('sm_trainings', []);
+        $trainings[] = [
+            'date' => $data['date'],
+            'topic' => $data['topic'],
+            'participants' => (int) $data['participants'],
+        ];
+        session(['sm_trainings' => $trainings]);
+
+        return redirect()->route('storemanager.training')->with('status', 'Training berhasil dicatat.');
     }
 
     // =========================================================================

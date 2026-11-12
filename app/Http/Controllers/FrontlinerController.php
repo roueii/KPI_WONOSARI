@@ -629,6 +629,18 @@ class FrontlinerController extends Controller
             ],
         ];
 
+        // Pulihkan centang dari draf / data tersimpan sebelumnya
+        $saved = session('capaian_kepatuhan') ?? session('capaian_frontliner_draft');
+        if (is_array($saved)) {
+            foreach ($sopIndicators as &$item) {
+                $item['checked'] = in_array($item['id'], $saved['sop'] ?? [], true);
+            }
+            foreach ($disiplinIndicators as &$item) {
+                $item['checked'] = in_array($item['id'], $saved['disiplin'] ?? [], true);
+            }
+            unset($item);
+        }
+
         return view('staff.kepatuhan', compact('user', 'stepInfo', 'sopIndicators', 'disiplinIndicators'));
     }
 
@@ -662,7 +674,11 @@ class FrontlinerController extends Controller
      */
     public function simpanDraft(Request $request)
     {
-        session(['capaian_frontliner_draft' => true]);
+        session(['capaian_frontliner_draft' => [
+            'sop' => $request->input('sop', []),
+            'disiplin' => $request->input('disiplin', []),
+            'drafted_at' => now()->toDateTimeString(),
+        ]]);
 
         if ($request->expectsJson() || $request->ajax()) {
             return response()->json([

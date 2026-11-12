@@ -288,6 +288,10 @@ class DriverController extends Controller
      */
     public function simpanDraft(Request $request)
     {
+        // Draf berasal dari langkah terakhir; simpan ke session langkah 4 agar
+        // centang muncul kembali saat halaman dibuka lagi.
+        session(['driver_capaian.step4' => $request->input('indicators', [])]);
+
         session([
             'driver_capaian_draft' => [
                 'indicators' => $request->input('indicators', []),

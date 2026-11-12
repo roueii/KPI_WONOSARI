@@ -7,6 +7,8 @@ use App\Http\Controllers\FrontlinerController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\ProduksiController;
 use App\Http\Controllers\StoreManagerController;
+use App\Http\Controllers\SalesMarketingController;
+use App\Http\Controllers\SupervisorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,6 +86,10 @@ Route::post('/store-manager/isi-capaian/promosi-event', [StoreManagerController:
 
 // Simpan Draf
 Route::post('/store-manager/isi-capaian/draft', [StoreManagerController::class, 'simpanDraft'])->name('storemanager.draft.post');
+
+// Training Karyawan (dari kategori Operasional & SDM)
+Route::get('/store-manager/training', [StoreManagerController::class, 'training'])->name('storemanager.training');
+Route::post('/store-manager/training', [StoreManagerController::class, 'simpanTraining'])->name('storemanager.training.post');
 
 // 3. Approval Tim
 Route::get('/store-manager/approval', [StoreManagerController::class, 'approvalTim'])->name('storemanager.approval');
@@ -304,3 +310,28 @@ Route::get('/produksi/profil', [ProduksiController::class, 'profil'])->name('pro
 Route::get('/produksi/profile', [ProduksiController::class, 'profil']); // Alias
 Route::get('/karyawan/produksi/profil', [ProduksiController::class, 'profil']); // Alias
 Route::get('/karyawan/produksi/profile', [ProduksiController::class, 'profil']); // Alias
+
+// =========================================================================
+// RUTE KARYAWAN SALES & MARKETING DAN SUPERVISOR (SESUAI FIGMA)
+// Kedua role memakai ChecklistRoleController + view bersama "checklist.*".
+// Langkah pengisian memakai slug dari roleConfig(), mis.
+// /sales-marketing/isi-capaian/penjualan-customer
+// =========================================================================
+foreach ([
+    ['sales-marketing', 'sales', SalesMarketingController::class],
+    ['supervisor', 'supervisor', SupervisorController::class],
+] as [$prefix, $name, $controller]) {
+    Route::prefix($prefix)->name($name . '.')->controller($controller)->group(function () {
+        Route::get('/', 'dashboard')->name('dashboard');
+        Route::get('/isi-capaian/{step}', 'step')->name('step');
+        Route::post('/isi-capaian/{step}', 'saveStep')->name('step.post');
+        Route::post('/draft', 'draft')->name('draft.post');
+        Route::get('/riwayat', 'riwayat')->name('riwayat');
+        Route::get('/riwayat/{id}', 'detailRiwayat')->whereNumber('id')->name('riwayat.detail');
+        Route::get('/profil', 'profil')->name('profile');
+    });
+}
+
+Route::redirect('/sales', '/sales-marketing');
+Route::redirect('/marketing', '/sales-marketing');
+Route::redirect('/spv', '/supervisor');

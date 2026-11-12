@@ -126,16 +126,11 @@
                     </button>
                 </div>
                 <div style="text-align: center; margin-top: 14px;">
-                    <button type="button" onclick="document.getElementById('draftForm').submit();" style="background: none; border: none; color: #78716c; font-size: 0.8rem; font-weight: 600; cursor: pointer; text-decoration: underline;">
+                    <button type="submit" form="formLangkah6" formaction="{{ route('frontliner.draft.post') }}" style="background: none; border: none; color: #78716c; font-size: 0.8rem; font-weight: 600; cursor: pointer; text-decoration: underline;">
                         Simpan sebagai Draf Sementara
                     </button>
                 </div>
             </div>
-        </form>
-
-        <!-- Hidden Form untuk Simpan Draf -->
-        <form action="{{ route('frontliner.draft.post') }}" method="POST" id="draftForm" style="display: none;">
-            @csrf
         </form>
     </div>
 
@@ -148,6 +143,7 @@
 
             card.addEventListener('click', function (e) {
                 if (e.target !== checkbox) {
+                    e.preventDefault(); // cegah toggle ganda dari <label>
                     checkbox.checked = !checkbox.checked;
                 }
                 if (checkbox.checked) {
