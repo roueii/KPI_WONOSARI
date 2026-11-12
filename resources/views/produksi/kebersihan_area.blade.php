@@ -237,6 +237,7 @@
             card.addEventListener('click', function(e) {
                 const input = this.querySelector('input[type="checkbox"]');
                 if (e.target !== input) {
+                    e.preventDefault(); // cegah toggle ganda dari <label>
                     input.checked = !input.checked;
                 }
                 if (input.checked) {
@@ -270,18 +271,21 @@
             fetch("{{ route('produksi.draft.post') }}", {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
-                body: JSON.stringify({
-                    saved: true
-                })
-            }).then(() => {
+                // Kirim checklist yang sedang dicentang (tanpa file foto)
+                body: (() => {
+                    const data = new FormData(document.getElementById('formKebersihanArea'));
+                    data.delete('photos[]');
+                    return data;
+                })()
+            }).then(res => {
+                if (!res.ok) throw new Error('Gagal menyimpan draf');
                 alert('Capaian produksi berhasil disimpan sebagai draf sementara!');
                 window.location.href = "{{ route('produksi.dashboard') }}";
             }).catch(() => {
-                alert('Draf berhasil disimpan secara lokal!');
-                window.location.href = "{{ route('produksi.dashboard') }}";
+                alert('Gagal menyimpan draf. Periksa koneksi Anda lalu coba lagi.');
             });
         }
     </script>

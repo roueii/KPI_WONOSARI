@@ -49,64 +49,31 @@
 
             <!-- Kartu Krem Dalam Berisi Donut Chart & 4 Progress Bars -->
             <div class="driver-chart-inner-card">
-                <!-- Sisi Kiri: Donut Chart 5/22 Tuntas -->
-                <div class="driver-chart-left" aria-label="Grafik pencapaian metrik driver: 5 dari 22 tuntas">
+                <!-- Sisi Kiri: Donut Chart (dari $metricsSummary) -->
+                <div class="driver-chart-left" aria-label="{{ $metricsSummary['completed'] }} dari {{ $metricsSummary['total'] }} indikator tuntas">
                     <svg class="driver-donut-svg" viewBox="0 0 100 100">
                         <circle class="driver-donut-track" cx="50" cy="50" r="40"></circle>
-                        <!-- 5/22 ~ 22.7% (Circumference 2 * PI * 40 = 251.3) => 57.1 / 251.3 -->
-                        <circle class="driver-donut-progress" cx="50" cy="50" r="40" stroke-dasharray="57.1 251.3" stroke-dashoffset="0"></circle>
+                        <circle class="driver-donut-progress" cx="50" cy="50" r="40" stroke-dasharray="{{ round(251.3 * $metricsSummary['completed'] / max($metricsSummary['total'], 1), 1) }} 251.3" stroke-dashoffset="0"></circle>
                     </svg>
                     <div class="driver-donut-center">
-                        <span class="driver-donut-val">5/22</span>
-                        <span class="driver-donut-sub">Tuntas</span>
+                        <span class="driver-donut-val">{{ $metricsSummary['completed'] }}/{{ $metricsSummary['total'] }}</span>
+                        <span class="driver-donut-sub">{{ $metricsSummary['status_text'] }}</span>
                     </div>
                 </div>
 
                 <!-- Sisi Kanan: 4 Progress Rows -->
                 <div class="driver-progress-list">
-                    <!-- 1. Pengiriman & Keamanan 3/3 -->
-                    <div class="driver-progress-item">
-                        <div class="driver-progress-header">
-                            <span>Pengiriman & Keamanan</span>
-                            <span class="driver-progress-count">3/3</span>
+                    @foreach ($metricsSummary['indicators'] as $indicator)
+                        <div class="driver-progress-item">
+                            <div class="driver-progress-header">
+                                <span>{{ $indicator['name'] }}</span>
+                                <span class="driver-progress-count">{{ $indicator['completed'] }}/{{ $indicator['total'] }}</span>
+                            </div>
+                            <div class="driver-progress-bar-bg">
+                                <div class="driver-progress-bar-fill" style="width: {{ $indicator['percentage'] }}%;"></div>
+                            </div>
                         </div>
-                        <div class="driver-progress-bar-bg">
-                            <div class="driver-progress-bar-fill" style="width: 100%;"></div>
-                        </div>
-                    </div>
-
-                    <!-- 2. SOP Administrasi 3/4 -->
-                    <div class="driver-progress-item">
-                        <div class="driver-progress-header">
-                            <span>SOP Administrasi</span>
-                            <span class="driver-progress-count">3/4</span>
-                        </div>
-                        <div class="driver-progress-bar-bg">
-                            <div class="driver-progress-bar-fill" style="width: 75%;"></div>
-                        </div>
-                    </div>
-
-                    <!-- 3. Kehadiran & Disiplin 0/3 -->
-                    <div class="driver-progress-item">
-                        <div class="driver-progress-header">
-                            <span>Kehadiran & Disiplin</span>
-                            <span class="driver-progress-count">0/3</span>
-                        </div>
-                        <div class="driver-progress-bar-bg">
-                            <div class="driver-progress-bar-fill" style="width: 0%;"></div>
-                        </div>
-                    </div>
-
-                    <!-- 4. Kepatuhan SOP 3/4 -->
-                    <div class="driver-progress-item">
-                        <div class="driver-progress-header">
-                            <span>Kepatuhan SOP</span>
-                            <span class="driver-progress-count">3/4</span>
-                        </div>
-                        <div class="driver-progress-bar-bg">
-                            <div class="driver-progress-bar-fill" style="width: 75%;"></div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
 
@@ -135,15 +102,15 @@
             </div>
 
             <!-- Banner Utama Oranye: Mulai Isi Capaian Hari Ini -->
-            <a href="{{ route('driver.pengiriman') }}" class="fl-task-banner" style="text-decoration: none;" aria-label="Mulai mengisi capaian driver hari ini">
+            <a href="{{ $dailyTask['preview_items'][0]['url'] }}" class="fl-task-banner" style="text-decoration: none;" aria-label="Mulai mengisi capaian driver hari ini">
                 <div class="fl-task-banner-content">
-                    <span class="fl-task-banner-title">Mulai Isi Capaian Hari Ini</span>
+                    <span class="fl-task-banner-title">{{ $dailyTask['banner_title'] }}</span>
                     <div class="fl-task-banner-meta">
                         <svg class="fl-task-clock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <circle cx="12" cy="12" r="10"></circle>
                             <polyline points="12 6 12 12 16 14"></polyline>
                         </svg>
-                        <span>4 kategori &middot; 5–10 menit</span>
+                        <span>{{ $dailyTask['banner_sub'] }}</span>
                     </div>
                 </div>
                 <div class="fl-task-arrow-btn" aria-hidden="true">
@@ -162,79 +129,36 @@
                 </div>
 
                 <div class="driver-preview-grid">
-                    <!-- Kartu 1: Pengiriman & Keamanan -->
-                    <a href="{{ route('driver.pengiriman') }}" class="driver-preview-card">
-                        <span class="driver-preview-card-title">Pengiriman & Keamanan</span>
-                        <span class="fl-badge-pill success">
-                            <span class="fl-dot green"></span>
-                            <span>Tercapai</span>
-                        </span>
-                    </a>
-
-                    <!-- Kartu 2: SOP Administrasi -->
-                    <a href="{{ route('driver.administrasi') }}" class="driver-preview-card">
-                        <span class="driver-preview-card-title">SOP Administrasi</span>
-                        <span class="fl-badge-pill success">
-                            <span class="fl-dot green"></span>
-                            <span>Tercapai</span>
-                        </span>
-                    </a>
-
-                    <!-- Kartu 3: Kendaraan & BBM -->
-                    <a href="{{ route('driver.kendaraan') }}" class="driver-preview-card">
-                        <span class="driver-preview-card-title">Kendaraan & BBM</span>
-                        <span class="fl-badge-pill warning">
-                            <span class="fl-dot amber"></span>
-                            <span>Belum diisi</span>
-                        </span>
-                    </a>
-
-                    <!-- Kartu 4: Disiplin & Pelayanan -->
-                    <a href="{{ route('driver.pelayanan') }}" class="driver-preview-card">
-                        <span class="driver-preview-card-title">Disiplin & Pelayanan</span>
-                        <span class="fl-badge-pill warning">
-                            <span class="fl-dot amber"></span>
-                            <span>Belum diisi</span>
-                        </span>
-                    </a>
+                    @foreach ($dailyTask['preview_items'] as $item)
+                        <a href="{{ $item['url'] }}" class="driver-preview-card">
+                            <span class="driver-preview-card-title">{{ $item['title'] }}</span>
+                            <span class="fl-badge-pill {{ $item['badge_type'] }}">
+                                <span class="fl-dot {{ ['success' => 'green', 'warning' => 'amber'][$item['badge_type']] ?? 'red' }}"></span>
+                                <span>{{ $item['status_label'] }}</span>
+                            </span>
+                        </a>
+                    @endforeach
                 </div>
             </div>
         </section>
 
         <!-- 4. Section: Capaian Terbaru Sesuai Dashboard KPI Driver.png -->
         <section class="fl-section-group" aria-labelledby="terbaru-heading">
-            <div class="fl-section-header" style="display: flex; align-items: center; justify-content: space-between;">
+            <div class="fl-section-header" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
                 <h2 id="terbaru-heading">Capaian Terbaru</h2>
                 <a href="{{ route('driver.riwayat') }}" style="font-size: 0.78rem; font-weight: 600; color: #f97316; text-decoration: none;">Lihat Semua &rarr;</a>
             </div>
 
             <div class="fl-recent-list">
-                <!-- Item 1: 24 Oktober 2024 (Menunggu) -->
-                <a href="{{ route('driver.riwayat.detail', ['id' => 1]) }}" class="fl-recent-card" style="text-decoration: none; color: inherit;">
-                    <div class="fl-recent-left">
-                        <span class="fl-recent-title" style="font-size: 0.92rem; font-weight: 700;">Riwayat 24 Oktober 2024</span>
-                        <span class="fl-recent-date" style="font-size: 0.78rem; color: #78716c;">4/16 kategori terisi</span>
-                    </div>
-                    <span class="fl-status-badge badge-amber">Menunggu</span>
-                </a>
-
-                <!-- Item 2: 23 Oktober 2024 (Disetujui) -->
-                <a href="{{ route('driver.riwayat.detail', ['id' => 2]) }}" class="fl-recent-card" style="text-decoration: none; color: inherit;">
-                    <div class="fl-recent-left">
-                        <span class="fl-recent-title" style="font-size: 0.92rem; font-weight: 700;">Riwayat 23 Oktober 2024</span>
-                        <span class="fl-recent-date" style="font-size: 0.78rem; color: #78716c;">10/16 kategori terisi</span>
-                    </div>
-                    <span class="fl-status-badge badge-green">Disetujui</span>
-                </a>
-
-                <!-- Item 3: 22 Oktober 2024 (Disetujui) -->
-                <a href="{{ route('driver.riwayat.detail', ['id' => 3]) }}" class="fl-recent-card" style="text-decoration: none; color: inherit;">
-                    <div class="fl-recent-left">
-                        <span class="fl-recent-title" style="font-size: 0.92rem; font-weight: 700;">Riwayat 22 Oktober 2024</span>
-                        <span class="fl-recent-date" style="font-size: 0.78rem; color: #78716c;">14/16 kategori terisi</span>
-                    </div>
-                    <span class="fl-status-badge badge-green">Disetujui</span>
-                </a>
+                @foreach ($recentAchievements as $item)
+                    <a href="{{ $item['url'] }}" class="fl-recent-card" style="text-decoration: none; color: inherit;">
+                        <div class="fl-recent-left">
+                            <span class="fl-recent-title" style="font-size: 0.92rem; font-weight: 700;">{{ $item['title'] }}</span>
+                            <span class="fl-recent-date" style="font-size: 0.78rem; color: #78716c;">{{ $item['sub'] }}</span>
+                        </div>
+                        <span class="fl-status-badge {{ $item['badge_class'] }}">{{ $item['status_label'] }}</span>
+                    </a>
+                @endforeach
             </div>
         </section>
 

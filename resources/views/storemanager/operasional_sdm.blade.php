@@ -96,15 +96,20 @@
                     </div>
                 </label>
                 @endforeach
+
+                <a href="{{ route('storemanager.training') }}" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border: 1.5px dashed #f97316; border-radius: 12px; background: #fffaf5; color: #c2410c; font-size: 0.8rem; font-weight: 700; text-decoration: none;">
+                    <span>Lihat &amp; catat training karyawan</span>
+                    <span aria-hidden="true">&rarr;</span>
+                </a>
             </section>
 
-            <!-- 4. KARTU FOTO BUKTI / DOKUMENTASI -->
+            <!-- 4. KARTU UNGGAH BUKTI FOTO -->
             <section class="fl-step-card" style="background: #ffffff; border: 1px solid #ebdcd0; border-radius: 18px; padding: 18px; margin-bottom: 20px;">
                 <div class="fl-step-card-header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
-                    <h2 class="fl-step-card-title" style="font-size: 0.82rem; font-weight: 800; letter-spacing: 0.05em; color: #1c1917; margin: 0;">FOTO BUKTI / DOKUMENTASI</h2>
-                    <span class="fl-step-card-tag" style="background: #f4ebe2; color: #78716c; font-size: 0.68rem; font-weight: 800; padding: 2px 8px; border-radius: 6px;">OPSIONAL</span>
+                    <h2 class="fl-step-card-title" style="font-size: 0.82rem; font-weight: 800; letter-spacing: 0.05em; color: #1c1917; margin: 0;">Unggah Bukti Foto</h2>
+                    <span class="fl-step-card-tag" style=" font-size: 0.68rem; font-weight: 800; padding: 2px 8px; border-radius: 6px;">WAJIB SEBELUM LANJUT</span>
                 </div>
-                <p class="fl-step-card-sub" style="font-size: 0.76rem; color: #78716c; margin: 0 0 16px;">Unggah foto display toko, briefing tim, atau bukti operasional hari ini.</p>
+                <p class="fl-step-card-sub" style="font-size: 0.76rem; color: #78716c; margin: 0 0 16px;">Dokumentasi Store Manager</p>
 
                 <!-- Upload Area -->
                 <div style="border: 1.5px dashed #ebdcd0; border-radius: 14px; background: #fbf5ee; padding: 20px; text-align: center; margin-bottom: 14px; cursor: pointer;" onclick="document.getElementById('photoInput').click()">
@@ -115,8 +120,8 @@
                             <circle cx="12" cy="13" r="4"></circle>
                         </svg>
                     </div>
-                    <span style="display: block; font-size: 0.84rem; font-weight: 700; color: #1c1917; margin-bottom: 2px;">Ambil foto atau pilih dari galeri</span>
-                    <span style="display: block; font-size: 0.72rem; color: #78716c;">Format JPG, PNG maks. 5MB per file</span>
+                    <span style="display: block; font-size: 0.84rem; font-weight: 700; color: #1c1917; margin-bottom: 2px;">Ketuk untuk unggah foto</span>
+                    <span style="display: block; font-size: 0.72rem; color: #78716c;">Format JPG/PNG, maks. 5MB.</span>
                 </div>
 
                 <!-- Existing Photos List -->
@@ -152,7 +157,7 @@
                     <line x1="12" y1="16" x2="12" y2="12"></line>
                     <line x1="12" y1="8" x2="12.01" y2="8"></line>
                 </svg>
-                <span>Ketuk baris untuk menandai ceklis selesai dikerjakan.</span>
+                <span>Semua indikator penilaian dan 1 foto bukti wajib dilengkapi sebelum Anda dapat melangkah ke tahap <strong>Selanjutnya</strong>.</span>
             </div>
 
             <!-- 6. Action Buttons (Kembali & Lanjut) Sesuai Figma -->
@@ -181,6 +186,7 @@
                 const icon = this.querySelector('.sm-check-icon');
                 
                 if (e.target !== input) {
+                    e.preventDefault(); // cegah toggle ganda dari <label>
                     input.checked = !input.checked;
                 }
                 

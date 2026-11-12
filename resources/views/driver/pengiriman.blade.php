@@ -186,6 +186,7 @@
             card.addEventListener('click', function(e) {
                 const input = this.querySelector('input[type="checkbox"]');
                 if (e.target !== input) {
+                    e.preventDefault(); // cegah toggle ganda dari <label>
                     input.checked = !input.checked;
                 }
                 if (input.checked) {

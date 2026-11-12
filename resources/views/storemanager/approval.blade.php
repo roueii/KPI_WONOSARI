@@ -58,6 +58,9 @@
             <button type="button" class="sm-filter-chip" data-filter="sales" style="padding: 7px 16px; border-radius: 999px; border: 1px solid #ebdcd0; background: #ffffff; color: #78716c; font-size: 0.8rem; font-weight: 700; white-space: nowrap; cursor: pointer;">
                 Sales/Marketing
             </button>
+            <button type="button" class="sm-filter-chip" data-filter="supervisor" style="padding: 7px 16px; border-radius: 999px; border: 1px solid #ebdcd0; background: #ffffff; color: #78716c; font-size: 0.8rem; font-weight: 700; white-space: nowrap; cursor: pointer;">
+                Supervisor
+            </button>
         </div>
 
         <!-- 3. Daftar Kartu Persetujuan Tim -->
@@ -109,9 +112,9 @@
                                 <div style="overflow: hidden;">
                                     <span style="display: block; font-size: 0.78rem; font-weight: 700; color: #1c1917; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">{{ $photo['title'] }}</span>
                                     <span style="display: block; font-size: 0.68rem; color: #78716c;">{{ $photo['time'] }}</span>
+                                    <button type="button" onclick="alert('Pratinjau foto akan tersedia setelah terhubung ke Backend.')" style="display: block; padding: 0; margin-top: 2px; border: none; background: none; font: inherit; font-size: 0.7rem; font-weight: 700; color: #ea580c; text-decoration: underline; cursor: pointer;">Ketuk untuk lihat foto</button>
                                 </div>
                             </div>
-                            <span style="font-size: 0.72rem; font-weight: 800; color: #ea580c; white-space: nowrap; cursor: pointer;">Lihat Foto &rarr;</span>
                         </div>
                         @endforeach
                     </div>
@@ -152,8 +155,8 @@
                     <form action="{{ route('storemanager.approval.reject', ['id' => $item['id']]) }}" method="POST" id="actionForm-{{ $item['id'] }}">
                         @csrf
                         <div style="margin-bottom: 14px;">
-                            <label for="catatan-{{ $item['id'] }}" style="display: block; font-size: 0.75rem; font-weight: 700; color: #1c1917; margin-bottom: 6px;">Catatan untuk Karyawan (Opsional / Wajib jika revisi)</label>
-                            <textarea id="catatan-{{ $item['id'] }}" name="catatan" rows="2" placeholder="Tuliskan catatan atau instruksi perbaikan..." style="width: 100%; box-sizing: border-box; border: 1.5px solid #ebdcd0; border-radius: 12px; padding: 10px 12px; font-family: inherit; font-size: 0.8rem; background: #ffffff; resize: none;"></textarea>
+                            <label for="catatan-{{ $item['id'] }}" style="display: block; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.04em; color: #1c1917; margin-bottom: 6px;">CATATAN DARI STORE MANAGER</label>
+                            <textarea id="catatan-{{ $item['id'] }}" name="catatan" rows="2" placeholder="Isi catatan untuk dikirim ke Admin" style="width: 100%; box-sizing: border-box; border: 1.5px solid #ebdcd0; border-radius: 12px; padding: 10px 12px; font-family: inherit; font-size: 0.8rem; background: #ffffff; resize: none;"></textarea>
                         </div>
 
                         <div style="display: flex; gap: 10px;">
@@ -186,8 +189,8 @@
                     <polyline points="22 4 12 14.01 9 11.01"></polyline>
                 </svg>
             </div>
-            <h2 style="font-size: 1.05rem; font-weight: 800; color: #1c1917; margin: 0 0 4px;">Setujui Semua Capaian Sekaligus</h2>
-            <p style="font-size: 0.76rem; color: #78716c; margin: 0 0 16px;">Konfirmasi persetujuan untuk seluruh laporan capaian anggota tim yang sudah masuk.</p>
+            <h2 style="font-size: 1.05rem; font-weight: 800; color: #1c1917; margin: 0 0 4px;">Persetujuan Capaian Sekaligus</h2>
+            <p style="font-size: 0.76rem; color: #78716c; margin: 0 0 16px;">Seluruh anggota tim di atas telah memenuhi verifikasi SOP minimum hari ini.</p>
 
             <form action="{{ route('storemanager.approval.approve_all') }}" method="POST">
                 @csrf

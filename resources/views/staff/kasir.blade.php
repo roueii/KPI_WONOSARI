@@ -115,6 +115,7 @@
 
             card.addEventListener('click', function (e) {
                 if (e.target !== checkbox) {
+                    e.preventDefault(); // cegah toggle ganda dari <label>
                     checkbox.checked = !checkbox.checked;
                 }
                 if (checkbox.checked) {

@@ -47,7 +47,7 @@
         <p class="fl-step-page-sub">Input total perolehan transaksi kasir shift hari ini.</p>
 
         <!-- Form Pengisian Langkah 5 -->
-        <form action="{{ route('frontliner.display.post') }}" method="POST" id="formLangkah5">
+        <form action="{{ route('frontliner.display.post') }}" method="POST" id="formLangkah5" enctype="multipart/form-data">
             @csrf
 
             <!-- Card 1: Indikator Penilaian -->
@@ -165,6 +165,7 @@
 
             card.addEventListener('click', function (e) {
                 if (e.target !== checkbox) {
+                    e.preventDefault(); // cegah toggle ganda dari <label>
                     checkbox.checked = !checkbox.checked;
                 }
                 if (checkbox.checked) {

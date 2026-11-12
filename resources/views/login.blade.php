@@ -114,6 +114,12 @@
                 <button type="button" class="demo-fill-btn" data-email="driver@gmail.com" style="padding: 5px 10px; border-radius: 8px; border: 1px solid #e2e8f0; background: #f8fafc; color: #334155; font-size: 0.72rem; font-weight: 700; cursor: pointer;">
                     Driver
                 </button>
+                <button type="button" class="demo-fill-btn" data-email="sales@capaian.id" style="padding: 5px 10px; border-radius: 8px; border: 1px solid #e2e8f0; background: #f8fafc; color: #334155; font-size: 0.72rem; font-weight: 700; cursor: pointer;">
+                    Sales &amp; Marketing
+                </button>
+                <button type="button" class="demo-fill-btn" data-email="supervisor@capaian.id" style="padding: 5px 10px; border-radius: 8px; border: 1px solid #e2e8f0; background: #f8fafc; color: #334155; font-size: 0.72rem; font-weight: 700; cursor: pointer;">
+                    Supervisor
+                </button>
                 <button type="button" class="demo-fill-btn" data-email="admin@gmail.com" style="padding: 5px 10px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f1f5f9; color: #0f172a; font-size: 0.72rem; font-weight: 700; cursor: pointer;">
                     Admin
                 </button>

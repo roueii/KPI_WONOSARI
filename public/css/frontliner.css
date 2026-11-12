@@ -2967,3 +2967,215 @@
   color: #78716c;
   margin-top: auto;
 }
+
+/* ==========================================================================
+   SHARED COMPONENTS (DRIVER, PRODUKSI, STORE MANAGER)
+   Class-class ini dipakai di Blade Driver/Produksi/Store Manager tetapi
+   sebelumnya belum punya style sama sekali.
+   ========================================================================== */
+
+/* Dashboard: CTA "Mulai Isi Capaian Hari Ini" */
+.fl-task-banner {
+  background: var(--fl-orange);
+  border-radius: 18px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #ffffff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.28);
+  margin-bottom: 16px;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.fl-task-banner:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(249, 115, 22, 0.35);
+}
+.fl-task-banner-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.fl-task-banner-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+.fl-task-banner-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.92);
+}
+.fl-task-clock-icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+.fl-task-arrow-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: var(--fl-orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.fl-task-arrow-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Dashboard: legenda warna di bawah donut */
+.fl-chart-legend-box {
+  margin-top: 14px;
+  border: 1px solid var(--fl-card-border);
+  border-radius: 14px;
+  background: #ffffff;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.fl-legend-bullet {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.68rem;
+  color: var(--fl-text-muted);
+  line-height: 1.25;
+}
+.fl-legend-bullet .fl-dot {
+  flex-shrink: 0;
+}
+
+/* Form: judul halaman langkah */
+.fl-step-title-group {
+  margin-bottom: 18px;
+}
+.fl-step-title {
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: var(--fl-text-main);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 0;
+}
+.fl-step-subtitle {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 4px 0 0;
+}
+
+/* Form: tag WAJIB / OPSIONAL */
+.fl-step-card-tag {
+  border: 1.5px solid #c2410c;
+  background: #fff7ed;
+  color: #9a3412;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 2px 8px;
+  border-radius: 5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Form: baris tombol Kembali + Lanjut/Kirim */
+.fl-btn-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+.fl-btn-row .fl-btn-back {
+  flex-shrink: 0;
+}
+.fl-btn-row .fl-btn-next {
+  flex: 1;
+  width: auto;
+}
+
+/* Form: area unggah foto */
+.fl-upload-icon-circle {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1.5px solid #a8a29e;
+  color: #78716c;
+  display: grid;
+  place-items: center;
+  margin-bottom: 4px;
+}
+.fl-upload-icon-circle svg {
+  width: 24px;
+  height: 24px;
+}
+.fl-upload-prompt-text {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--fl-text-main);
+}
+.fl-upload-subtext {
+  font-size: 0.76rem;
+  color: var(--fl-text-muted);
+}
+
+/* Form: chip file yang sudah dipilih */
+.fl-photo-chips-row {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 0;
+}
+.fl-photo-chips-row:empty {
+  display: none;
+}
+.fl-photo-chip {
+  border: 1.5px solid #c2410c;
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 8px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  max-width: 190px;
+}
+.fl-photo-chip-icon {
+  width: 26px;
+  height: 26px;
+  padding: 5px;
+  border-radius: 6px;
+  background: #f3ece5;
+  color: #78716c;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+.fl-photo-chip-name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--fl-text-main);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.fl-photo-chip-close {
+  background: none;
+  border: none;
+  color: #78716c;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 2px;
+  flex-shrink: 0;
+}
+.fl-photo-chip-close:hover {
+  color: var(--fl-red);
+}

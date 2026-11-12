@@ -328,6 +328,10 @@ class ProduksiController extends Controller
      */
     public function simpanDraft(Request $request)
     {
+        // Draf berasal dari langkah terakhir; simpan ke session langkah 5 agar
+        // centang muncul kembali saat halaman dibuka lagi.
+        session(['produksi_capaian.step5' => $request->input('indicators', [])]);
+
         session([
             'produksi_capaian_draft' => [
                 'indicators' => $request->input('indicators', []),
