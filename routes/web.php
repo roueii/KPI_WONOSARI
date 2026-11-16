@@ -1,330 +1,155 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\FrontlinerController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\FrontlinerController;
 use App\Http\Controllers\ProduksiController;
-use App\Http\Controllers\StoreManagerController;
 use App\Http\Controllers\SalesMarketingController;
+use App\Http\Controllers\StoreManagerController;
 use App\Http\Controllers\SupervisorController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
+| URL utama tiap halaman + nama route-nya. URL lama/alternatif ada di
+| bagian "Alias" paling bawah dan cukup diarahkan (redirect) ke URL utama.
 */
 
-// Landing Page
-Route::get('/', function () {
-    return view('landingpage');
-})->name('home');
+Route::view('/', 'landingpage')->name('home');
 
 // Autentikasi
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login.post');
-Route::match(['get', 'post'], '/logout', [AuthController::class, 'logout'])->name('logout');
+Route::controller(AuthController::class)->group(function () {
+    Route::get('/login', 'showLogin')->name('login');
+    Route::post('/login', 'login')->name('login.post');
+    Route::match(['get', 'post'], '/logout', 'logout')->name('logout');
+});
 
-// Halaman sesuai Akun / Role
-Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-Route::get('/admin/tinjau-revisi', [AdminController::class, 'revisi'])->name('admin.revisi');
-Route::get('/admin/revisi', [AdminController::class, 'revisi']); // Alias
-Route::get('/admin/kelola-akun', [AdminController::class, 'kelolaAkun'])->name('admin.accounts');
-Route::get('/admin/accounts', [AdminController::class, 'kelolaAkun']); // Alias
-Route::post('/admin/kelola-akun', [AdminController::class, 'simpanAkun'])->name('admin.accounts.store');
-Route::post('/admin/kelola-akun/{id}', [AdminController::class, 'ubahAkun'])->whereNumber('id')->name('admin.accounts.update');
-Route::post('/admin/kelola-akun/{id}/status', [AdminController::class, 'ubahStatusAkun'])->whereNumber('id')->name('admin.accounts.status');
-Route::get('/admin/akun', [AdminController::class, 'kelolaAkun']); // Alias
-Route::get('/admin/kelola-kpi', [AdminController::class, 'kelolaKpi'])->name('admin.kpi');
-Route::get('/admin/kpi', [AdminController::class, 'kelolaKpi']); // Alias
-Route::get('/admin/approve-laporan', [AdminController::class, 'approveLaporan'])->name('admin.approve');
-Route::get('/admin/approve', [AdminController::class, 'approveLaporan']); // Alias
-Route::get('/admin/approval', [AdminController::class, 'approveLaporan']); // Alias
-Route::get('/admin/profil', [AdminController::class, 'profile'])->name('admin.profile');
-Route::get('/admin/profile', [AdminController::class, 'profile']); // Alias
-Route::get('/profil', [AdminController::class, 'profile']); // Alias rute profil
+/**
+ * Daftarkan langkah-langkah form isi capaian sebuah role.
+ * $steps: [slug-url => [nama route, method tampil, method simpan]]
+ */
+$registerSteps = function (string $prefix, string $name, array $steps): void {
+    foreach ($steps as $slug => [$routeName, $show, $save]) {
+        Route::get("{$prefix}/isi-capaian/{$slug}", $show)->name("{$name}.{$routeName}");
+        Route::post("{$prefix}/isi-capaian/{$slug}", $save)->name("{$name}.{$routeName}.post");
+    }
+    Route::post("{$prefix}/isi-capaian/draft", 'simpanDraft')->name("{$name}.draft.post");
+};
 
-// =========================================================================
-// RUTE KHUSUS STORE MANAGER (SESUAI DOKUMENTASI FIGMA STORE MANAGER)
-// =========================================================================
-
-// 1. Dashboard Store Manager (Tab KPI Saya & Tab KPI Tim)
-Route::get('/store-manager', [StoreManagerController::class, 'dashboard'])->name('storemanager.dashboard');
-Route::get('/storemanager', [StoreManagerController::class, 'dashboard']); // Alias
-Route::get('/store-manager/tim', function () {
-    return redirect()->route('storemanager.dashboard', ['tab' => 'tim']);
-})->name('storemanager.tim');
-
-// 2. Multi-step Pengisian Capaian Store Manager (5 Langkah)
-// Langkah 1: Penjualan
-Route::get('/store-manager/isi-capaian/penjualan', [StoreManagerController::class, 'isiPenjualan'])->name('storemanager.penjualan');
-Route::get('/store-manager/penjualan', [StoreManagerController::class, 'isiPenjualan']); // Alias
-Route::post('/store-manager/isi-capaian/penjualan', [StoreManagerController::class, 'simpanPenjualan'])->name('storemanager.penjualan.post');
-
-// Langkah 2: Laba & Persediaan
-Route::get('/store-manager/isi-capaian/laba-persediaan', [StoreManagerController::class, 'isiLabaPersediaan'])->name('storemanager.laba_persediaan');
-Route::get('/store-manager/laba-persediaan', [StoreManagerController::class, 'isiLabaPersediaan']); // Alias
-Route::post('/store-manager/isi-capaian/laba-persediaan', [StoreManagerController::class, 'simpanLabaPersediaan'])->name('storemanager.laba_persediaan.post');
-
-// Langkah 3: Pelayanan
-Route::get('/store-manager/isi-capaian/pelayanan', [StoreManagerController::class, 'isiPelayanan'])->name('storemanager.pelayanan');
-Route::get('/store-manager/pelayanan', [StoreManagerController::class, 'isiPelayanan']); // Alias
-Route::post('/store-manager/isi-capaian/pelayanan', [StoreManagerController::class, 'simpanPelayanan'])->name('storemanager.pelayanan.post');
-
-// Langkah 4: Operasional & SDM
-Route::get('/store-manager/isi-capaian/operasional-sdm', [StoreManagerController::class, 'isiOperasionalSdm'])->name('storemanager.operasional_sdm');
-Route::get('/store-manager/operasional-sdm', [StoreManagerController::class, 'isiOperasionalSdm']); // Alias
-Route::post('/store-manager/isi-capaian/operasional-sdm', [StoreManagerController::class, 'simpanOperasionalSdm'])->name('storemanager.operasional_sdm.post');
-
-// Langkah 5: Promosi & Event
-Route::get('/store-manager/isi-capaian/promosi-event', [StoreManagerController::class, 'isiPromosiEvent'])->name('storemanager.promosi_event');
-Route::get('/store-manager/promosi-event', [StoreManagerController::class, 'isiPromosiEvent']); // Alias
-Route::post('/store-manager/isi-capaian/promosi-event', [StoreManagerController::class, 'simpanPromosiEvent'])->name('storemanager.promosi_event.post');
-
-// Simpan Draf
-Route::post('/store-manager/isi-capaian/draft', [StoreManagerController::class, 'simpanDraft'])->name('storemanager.draft.post');
-
-// Training Karyawan (dari kategori Operasional & SDM)
-Route::get('/store-manager/training', [StoreManagerController::class, 'training'])->name('storemanager.training');
-Route::post('/store-manager/training', [StoreManagerController::class, 'simpanTraining'])->name('storemanager.training.post');
-
-// 3. Approval Tim
-Route::get('/store-manager/approval', [StoreManagerController::class, 'approvalTim'])->name('storemanager.approval');
-Route::get('/store-manager/approval-tim', [StoreManagerController::class, 'approvalTim']); // Alias
-Route::post('/store-manager/approval/{id}/setujui', [StoreManagerController::class, 'approveCapaian'])->name('storemanager.approval.approve');
-Route::post('/store-manager/approval/{id}/tolak', [StoreManagerController::class, 'rejectCapaian'])->name('storemanager.approval.reject');
-Route::post('/store-manager/approval/setujui-semua', [StoreManagerController::class, 'approveAllCapaian'])->name('storemanager.approval.approve_all');
-
-// 4. Riwayat Capaian Store Manager
-Route::get('/store-manager/riwayat', [StoreManagerController::class, 'riwayatCapaian'])->name('storemanager.riwayat');
-Route::get('/storemanager/riwayat', [StoreManagerController::class, 'riwayatCapaian']); // Alias
-
-// 5. Detail Riwayat Capaian Store Manager (Disetujui & Perlu Revisi)
-Route::get('/store-manager/riwayat/detail', [StoreManagerController::class, 'detailRiwayat'])->name('storemanager.riwayat.detail');
-Route::get('/store-manager/riwayat/{id}', [StoreManagerController::class, 'detailRiwayat'])->where('id', '[0-9]+');
-Route::get('/storemanager/riwayat/detail', [StoreManagerController::class, 'detailRiwayat']); // Alias
-Route::get('/storemanager/riwayat/{id}', [StoreManagerController::class, 'detailRiwayat'])->where('id', '[0-9]+'); // Alias
-
-// 6. Profil Store Manager
-Route::get('/store-manager/profil', [StoreManagerController::class, 'profil'])->name('storemanager.profile');
-Route::get('/store-manager/profile', [StoreManagerController::class, 'profil']); // Alias
-Route::get('/storemanager/profil', [StoreManagerController::class, 'profil']); // Alias
-Route::get('/storemanager/profile', [StoreManagerController::class, 'profil']); // Alias
-
-// Halaman Karyawan (Frontliner)
-Route::get('/karyawan', [FrontlinerController::class, 'dashboard'])->name('staff.dashboard');
-Route::get('/frontliner', [FrontlinerController::class, 'dashboard'])->name('frontliner.dashboard');
-Route::post('/frontliner/simpan-tugas', [FrontlinerController::class, 'saveDailyTask'])->name('frontliner.save_task');
-
-// Pengisian Capaian Frontliner (Multi-Step Form - 6 Langkah Sesuai Figma Revisi)
-// Langkah 1: Penjualan
-Route::get('/karyawan/isi-capaian/penjualan', [FrontlinerController::class, 'isiPenjualan'])->name('frontliner.penjualan');
-Route::get('/frontliner/isi-capaian/penjualan', [FrontlinerController::class, 'isiPenjualan']); // Alias
-Route::get('/frontliner/penjualan', [FrontlinerController::class, 'isiPenjualan']); // Alias
-Route::get('/karyawan/penjualan', [FrontlinerController::class, 'isiPenjualan']); // Alias
-Route::post('/karyawan/isi-capaian/penjualan', [FrontlinerController::class, 'simpanPenjualan'])->name('frontliner.penjualan.post');
-Route::post('/frontliner/isi-capaian/penjualan', [FrontlinerController::class, 'simpanPenjualan']); // Alias
-
-// Langkah 2: Pelayanan
-Route::get('/karyawan/isi-capaian/pelayanan', [FrontlinerController::class, 'isiPelayanan'])->name('frontliner.pelayanan');
-Route::get('/frontliner/isi-capaian/pelayanan', [FrontlinerController::class, 'isiPelayanan']); // Alias
-Route::get('/frontliner/pelayanan', [FrontlinerController::class, 'isiPelayanan']); // Alias
-Route::get('/karyawan/pelayanan', [FrontlinerController::class, 'isiPelayanan']); // Alias
-Route::post('/karyawan/isi-capaian/pelayanan', [FrontlinerController::class, 'simpanPelayanan'])->name('frontliner.pelayanan.post');
-Route::post('/frontliner/isi-capaian/pelayanan', [FrontlinerController::class, 'simpanPelayanan']); // Alias
-
-// Langkah 3: Product Knowledge
-Route::get('/karyawan/isi-capaian/product-knowledge', [FrontlinerController::class, 'isiProductKnowledge'])->name('frontliner.knowledge');
-Route::get('/frontliner/isi-capaian/product-knowledge', [FrontlinerController::class, 'isiProductKnowledge']); // Alias
-Route::get('/karyawan/isi-capaian/knowledge', [FrontlinerController::class, 'isiProductKnowledge']); // Alias
-Route::get('/frontliner/product-knowledge', [FrontlinerController::class, 'isiProductKnowledge']); // Alias
-Route::get('/frontliner/knowledge', [FrontlinerController::class, 'isiProductKnowledge']); // Alias
-Route::get('/karyawan/product-knowledge', [FrontlinerController::class, 'isiProductKnowledge']); // Alias
-Route::post('/karyawan/isi-capaian/product-knowledge', [FrontlinerController::class, 'simpanProductKnowledge'])->name('frontliner.knowledge.post');
-Route::post('/frontliner/isi-capaian/product-knowledge', [FrontlinerController::class, 'simpanProductKnowledge']); // Alias
-
-// Langkah 4: Akurasi Kasir
-Route::get('/karyawan/isi-capaian/akurasi-kasir', [FrontlinerController::class, 'isiAkurasiKasir'])->name('frontliner.kasir');
-Route::get('/frontliner/isi-capaian/akurasi-kasir', [FrontlinerController::class, 'isiAkurasiKasir']); // Alias
-Route::get('/karyawan/isi-capaian/kasir', [FrontlinerController::class, 'isiAkurasiKasir']); // Alias
-Route::get('/frontliner/akurasi-kasir', [FrontlinerController::class, 'isiAkurasiKasir']); // Alias
-Route::get('/karyawan/akurasi-kasir', [FrontlinerController::class, 'isiAkurasiKasir']); // Alias
-Route::get('/karyawan/kasir', [FrontlinerController::class, 'isiAkurasiKasir']); // Alias
-Route::post('/karyawan/isi-capaian/akurasi-kasir', [FrontlinerController::class, 'simpanAkurasiKasir'])->name('frontliner.kasir.post');
-Route::post('/frontliner/isi-capaian/akurasi-kasir', [FrontlinerController::class, 'simpanAkurasiKasir']); // Alias
-
-// Langkah 5: Display & Kebersihan
-Route::get('/karyawan/isi-capaian/display-kebersihan', [FrontlinerController::class, 'isiDisplayKebersihan'])->name('frontliner.display');
-Route::get('/frontliner/isi-capaian/display-kebersihan', [FrontlinerController::class, 'isiDisplayKebersihan']); // Alias
-Route::get('/karyawan/isi-capaian/display', [FrontlinerController::class, 'isiDisplayKebersihan']); // Alias
-Route::get('/frontliner/display-kebersihan', [FrontlinerController::class, 'isiDisplayKebersihan']); // Alias
-Route::get('/karyawan/display-kebersihan', [FrontlinerController::class, 'isiDisplayKebersihan']); // Alias
-Route::post('/karyawan/isi-capaian/display-kebersihan', [FrontlinerController::class, 'simpanDisplayKebersihan'])->name('frontliner.display.post');
-Route::post('/frontliner/isi-capaian/display-kebersihan', [FrontlinerController::class, 'simpanDisplayKebersihan']); // Alias
-
-// Langkah 6: Kepatuhan SOP & Disiplin
-Route::get('/karyawan/isi-capaian/kepatuhan-sop', [FrontlinerController::class, 'isiKepatuhanSop'])->name('frontliner.kepatuhan');
-Route::get('/frontliner/isi-capaian/kepatuhan-sop', [FrontlinerController::class, 'isiKepatuhanSop']); // Alias
-Route::get('/karyawan/isi-capaian/kepatuhan', [FrontlinerController::class, 'isiKepatuhanSop']); // Alias
-Route::get('/frontliner/kepatuhan-sop', [FrontlinerController::class, 'isiKepatuhanSop']); // Alias
-Route::get('/karyawan/kepatuhan-sop', [FrontlinerController::class, 'isiKepatuhanSop']); // Alias
-Route::get('/karyawan/kepatuhan', [FrontlinerController::class, 'isiKepatuhanSop']); // Alias
-Route::post('/karyawan/isi-capaian/kepatuhan-sop', [FrontlinerController::class, 'simpanKepatuhanSop'])->name('frontliner.kepatuhan.post');
-Route::post('/frontliner/isi-capaian/kepatuhan-sop', [FrontlinerController::class, 'simpanKepatuhanSop']); // Alias
-
-// Simpan Draf Sementara
-Route::post('/karyawan/isi-capaian/draft', [FrontlinerController::class, 'simpanDraft'])->name('frontliner.draft.post');
-Route::post('/frontliner/isi-capaian/draft', [FrontlinerController::class, 'simpanDraft']); // Alias
-
-// Rapor & Detail Lama (Tetap didukung untuk kompatibilitas)
-Route::get('/karyawan/rapor/penjualan', [FrontlinerController::class, 'detailPenjualan'])->name('frontliner.rapor.penjualan');
-Route::get('/karyawan/rapor/akurasi-kasir', [FrontlinerController::class, 'detailAkurasiKasir'])->name('frontliner.rapor.kasir');
-Route::get('/karyawan/rapor/product-knowledge', [FrontlinerController::class, 'detailProductKnowledge'])->name('frontliner.rapor.knowledge');
-
-// Halaman Riwayat Capaian Frontliner Sesuai Figma
-Route::get('/karyawan/riwayat', [FrontlinerController::class, 'riwayatCapaian'])->name('frontliner.riwayat');
-Route::get('/frontliner/riwayat', [FrontlinerController::class, 'riwayatCapaian']); // Alias
-Route::get('/staff/riwayat', [FrontlinerController::class, 'riwayatCapaian']); // Alias
-
-// Halaman Detail Riwayat Capaian Frontliner Sesuai Figma (Disetujui & Perlu Revisi)
-Route::get('/karyawan/riwayat/detail', [FrontlinerController::class, 'detailRiwayat'])->name('frontliner.riwayat.detail');
-Route::get('/karyawan/riwayat/{id}', [FrontlinerController::class, 'detailRiwayat'])->where('id', '[0-9]+');
-Route::get('/frontliner/riwayat/detail', [FrontlinerController::class, 'detailRiwayat']); // Alias
-Route::get('/frontliner/riwayat/{id}', [FrontlinerController::class, 'detailRiwayat'])->where('id', '[0-9]+'); // Alias
-Route::get('/staff/riwayat/detail', [FrontlinerController::class, 'detailRiwayat']); // Alias
-
-// Halaman Profil Frontliner Sesuai Figma
-Route::get('/karyawan/profil', [FrontlinerController::class, 'profil'])->name('frontliner.profile');
-Route::get('/frontliner/profil', [FrontlinerController::class, 'profil']); // Alias
-Route::get('/karyawan/profile', [FrontlinerController::class, 'profil']); // Alias
-Route::get('/frontliner/profile', [FrontlinerController::class, 'profil']); // Alias
-Route::get('/staff/profil', [FrontlinerController::class, 'profil']); // Alias
+/** Daftarkan halaman riwayat, detail riwayat, dan profil sebuah role. */
+$registerCommon = function (string $prefix, string $name): void {
+    Route::get("{$prefix}/riwayat", 'riwayatCapaian')->name("{$name}.riwayat");
+    Route::get("{$prefix}/riwayat/detail", 'detailRiwayat')->name("{$name}.riwayat.detail");
+    Route::get("{$prefix}/riwayat/{id}", 'detailRiwayat')->whereNumber('id');
+    Route::get("{$prefix}/profil", 'profil')->name("{$name}.profile");
+};
 
 // =========================================================================
-// RUTE KHUSUS KARYAWAN DRIVER (SESUAI DOKUMENTASI FIGMA DRIVER)
+// ADMIN
 // =========================================================================
+Route::prefix('admin')->name('admin.')->controller(AdminController::class)->group(function () {
+    Route::get('/', 'dashboard')->name('dashboard');
+    Route::get('/tinjau-revisi', 'revisi')->name('revisi');
+    Route::get('/kelola-kpi', 'kelolaKpi')->name('kpi');
+    Route::get('/approve-laporan', 'approveLaporan')->name('approve');
+    Route::get('/profil', 'profile')->name('profile');
 
-// 1. Dashboard Driver
-Route::get('/driver', [DriverController::class, 'dashboard'])->name('driver.dashboard');
-Route::get('/karyawan/driver', [DriverController::class, 'dashboard']); // Alias
-Route::get('/karyawan-driver', [DriverController::class, 'dashboard']); // Alias
-
-// 2. Multi-step Pengisian Capaian Harian Driver
-// Langkah 1: Ketepatan & Pengiriman
-Route::get('/driver/isi-capaian/pengiriman', [DriverController::class, 'isiPengiriman'])->name('driver.pengiriman');
-Route::get('/driver/pengiriman', [DriverController::class, 'isiPengiriman']); // Alias
-Route::get('/karyawan/driver/pengiriman', [DriverController::class, 'isiPengiriman']); // Alias
-Route::post('/driver/isi-capaian/pengiriman', [DriverController::class, 'simpanPengiriman'])->name('driver.pengiriman.post');
-
-// Langkah 2: SOP Administrasi
-Route::get('/driver/isi-capaian/administrasi', [DriverController::class, 'isiAdministrasi'])->name('driver.administrasi');
-Route::get('/driver/administrasi', [DriverController::class, 'isiAdministrasi']); // Alias
-Route::get('/karyawan/driver/administrasi', [DriverController::class, 'isiAdministrasi']); // Alias
-Route::post('/driver/isi-capaian/administrasi', [DriverController::class, 'simpanAdministrasi'])->name('driver.administrasi.post');
-
-// Langkah 3: Kendaraan & BBM
-Route::get('/driver/isi-capaian/kendaraan', [DriverController::class, 'isiKendaraan'])->name('driver.kendaraan');
-Route::get('/driver/kendaraan', [DriverController::class, 'isiKendaraan']); // Alias
-Route::get('/karyawan/driver/kendaraan', [DriverController::class, 'isiKendaraan']); // Alias
-Route::post('/driver/isi-capaian/kendaraan', [DriverController::class, 'simpanKendaraan'])->name('driver.kendaraan.post');
-
-// Langkah 4: Disiplin & Pelayanan
-Route::get('/driver/isi-capaian/pelayanan', [DriverController::class, 'isiPelayanan'])->name('driver.pelayanan');
-Route::get('/driver/pelayanan', [DriverController::class, 'isiPelayanan']); // Alias
-Route::get('/karyawan/driver/pelayanan', [DriverController::class, 'isiPelayanan']); // Alias
-Route::post('/driver/isi-capaian/pelayanan', [DriverController::class, 'simpanPelayanan'])->name('driver.pelayanan.post');
-Route::post('/driver/isi-capaian/draft', [DriverController::class, 'simpanDraft'])->name('driver.draft.post');
-
-// 3. Riwayat Capaian Driver
-Route::get('/driver/riwayat', [DriverController::class, 'riwayatCapaian'])->name('driver.riwayat');
-Route::get('/karyawan/driver/riwayat', [DriverController::class, 'riwayatCapaian']); // Alias
-
-// 4. Detail Riwayat Capaian Driver (Mendukung Tampilan Disetujui & Perlu Revisi)
-Route::get('/driver/riwayat/detail', [DriverController::class, 'detailRiwayat'])->name('driver.riwayat.detail');
-Route::get('/driver/riwayat/{id}', [DriverController::class, 'detailRiwayat'])->where('id', '[0-9]+');
-Route::get('/karyawan/driver/riwayat/detail', [DriverController::class, 'detailRiwayat']); // Alias
-Route::get('/karyawan/driver/riwayat/{id}', [DriverController::class, 'detailRiwayat'])->where('id', '[0-9]+'); // Alias
-
-// 5. Profil Driver
-Route::get('/driver/profil', [DriverController::class, 'profil'])->name('driver.profile');
-Route::get('/driver/profile', [DriverController::class, 'profil']); // Alias
-Route::get('/karyawan/driver/profil', [DriverController::class, 'profil']); // Alias
-Route::get('/karyawan/driver/profile', [DriverController::class, 'profil']); // Alias
+    Route::get('/kelola-akun', 'kelolaAkun')->name('accounts');
+    Route::post('/kelola-akun', 'simpanAkun')->name('accounts.store');
+    Route::post('/kelola-akun/{id}', 'ubahAkun')->whereNumber('id')->name('accounts.update');
+    Route::post('/kelola-akun/{id}/status', 'ubahStatusAkun')->whereNumber('id')->name('accounts.status');
+});
 
 // =========================================================================
-// RUTE KHUSUS KARYAWAN PRODUKSI (SESUAI DOKUMENTASI FIGMA PRODUKSI)
+// STORE MANAGER
 // =========================================================================
+Route::controller(StoreManagerController::class)->group(function () use ($registerSteps, $registerCommon) {
+    Route::get('/store-manager', 'dashboard')->name('storemanager.dashboard');
 
-// 1. Dashboard Produksi
-Route::get('/produksi', [ProduksiController::class, 'dashboard'])->name('produksi.dashboard');
-Route::get('/karyawan/produksi', [ProduksiController::class, 'dashboard']); // Alias
-Route::get('/karyawan-produksi', [ProduksiController::class, 'dashboard']); // Alias
+    $registerSteps('/store-manager', 'storemanager', [
+        'penjualan' => ['penjualan', 'isiPenjualan', 'simpanPenjualan'],
+        'laba-persediaan' => ['laba_persediaan', 'isiLabaPersediaan', 'simpanLabaPersediaan'],
+        'pelayanan' => ['pelayanan', 'isiPelayanan', 'simpanPelayanan'],
+        'operasional-sdm' => ['operasional_sdm', 'isiOperasionalSdm', 'simpanOperasionalSdm'],
+        'promosi-event' => ['promosi_event', 'isiPromosiEvent', 'simpanPromosiEvent'],
+    ]);
 
-// 2. Multi-step Pengisian Capaian Harian Produksi (5 Langkah)
-// Langkah 1: Hasil Produksi
-Route::get('/produksi/isi-capaian/hasil-produksi', [ProduksiController::class, 'isiHasilProduksi'])->name('produksi.hasil_produksi');
-Route::get('/produksi/hasil-produksi', [ProduksiController::class, 'isiHasilProduksi']); // Alias
-Route::get('/karyawan/produksi/hasil-produksi', [ProduksiController::class, 'isiHasilProduksi']); // Alias
-Route::post('/produksi/isi-capaian/hasil-produksi', [ProduksiController::class, 'simpanHasilProduksi'])->name('produksi.hasil_produksi.post');
+    Route::get('/store-manager/training', 'training')->name('storemanager.training');
+    Route::post('/store-manager/training', 'simpanTraining')->name('storemanager.training.post');
 
-// Langkah 2: Waktu & Alat
-Route::get('/produksi/isi-capaian/waktu-alat', [ProduksiController::class, 'isiWaktuAlat'])->name('produksi.waktu_alat');
-Route::get('/produksi/waktu-alat', [ProduksiController::class, 'isiWaktuAlat']); // Alias
-Route::get('/karyawan/produksi/waktu-alat', [ProduksiController::class, 'isiWaktuAlat']); // Alias
-Route::post('/produksi/isi-capaian/waktu-alat', [ProduksiController::class, 'simpanWaktuAlat'])->name('produksi.waktu_alat.post');
+    Route::get('/store-manager/approval', 'approvalTim')->name('storemanager.approval');
+    Route::post('/store-manager/approval/setujui-semua', 'approveAllCapaian')->name('storemanager.approval.approve_all');
+    Route::post('/store-manager/approval/{id}/setujui', 'approveCapaian')->name('storemanager.approval.approve');
+    Route::post('/store-manager/approval/{id}/tolak', 'rejectCapaian')->name('storemanager.approval.reject');
 
-// Langkah 3: Kehadiran & Disiplin
-Route::get('/produksi/isi-capaian/kehadiran-disiplin', [ProduksiController::class, 'isiKehadiranDisiplin'])->name('produksi.kehadiran_disiplin');
-Route::get('/produksi/kehadiran-disiplin', [ProduksiController::class, 'isiKehadiranDisiplin']); // Alias
-Route::get('/karyawan/produksi/kehadiran-disiplin', [ProduksiController::class, 'isiKehadiranDisiplin']); // Alias
-Route::post('/produksi/isi-capaian/kehadiran-disiplin', [ProduksiController::class, 'simpanKehadiranDisiplin'])->name('produksi.kehadiran_disiplin.post');
-
-// Langkah 4: Kepatuhan SOP
-Route::get('/produksi/isi-capaian/kepatuhan-sop', [ProduksiController::class, 'isiKepatuhanSop'])->name('produksi.kepatuhan_sop');
-Route::get('/produksi/kepatuhan-sop', [ProduksiController::class, 'isiKepatuhanSop']); // Alias
-Route::get('/karyawan/produksi/kepatuhan-sop', [ProduksiController::class, 'isiKepatuhanSop']); // Alias
-Route::post('/produksi/isi-capaian/kepatuhan-sop', [ProduksiController::class, 'simpanKepatuhanSop'])->name('produksi.kepatuhan_sop.post');
-
-// Langkah 5: Kebersihan Area Kerja
-Route::get('/produksi/isi-capaian/kebersihan-area', [ProduksiController::class, 'isiKebersihanArea'])->name('produksi.kebersihan_area');
-Route::get('/produksi/kebersihan-area', [ProduksiController::class, 'isiKebersihanArea']); // Alias
-Route::get('/karyawan/produksi/kebersihan-area', [ProduksiController::class, 'isiKebersihanArea']); // Alias
-Route::post('/produksi/isi-capaian/kebersihan-area', [ProduksiController::class, 'simpanKebersihanArea'])->name('produksi.kebersihan_area.post');
-Route::post('/produksi/isi-capaian/draft', [ProduksiController::class, 'simpanDraft'])->name('produksi.draft.post');
-
-// 3. Riwayat Capaian Produksi
-Route::get('/produksi/riwayat', [ProduksiController::class, 'riwayatCapaian'])->name('produksi.riwayat');
-Route::get('/karyawan/produksi/riwayat', [ProduksiController::class, 'riwayatCapaian']); // Alias
-
-// 4. Detail Riwayat Capaian Produksi (Mendukung Tampilan Disetujui & Perlu Revisi)
-Route::get('/produksi/riwayat/detail', [ProduksiController::class, 'detailRiwayat'])->name('produksi.riwayat.detail');
-Route::get('/produksi/riwayat/{id}', [ProduksiController::class, 'detailRiwayat'])->where('id', '[0-9]+');
-Route::get('/karyawan/produksi/riwayat/detail', [ProduksiController::class, 'detailRiwayat']); // Alias
-Route::get('/karyawan/produksi/riwayat/{id}', [ProduksiController::class, 'detailRiwayat'])->where('id', '[0-9]+'); // Alias
-
-// 5. Profil Produksi
-Route::get('/produksi/profil', [ProduksiController::class, 'profil'])->name('produksi.profile');
-Route::get('/produksi/profile', [ProduksiController::class, 'profil']); // Alias
-Route::get('/karyawan/produksi/profil', [ProduksiController::class, 'profil']); // Alias
-Route::get('/karyawan/produksi/profile', [ProduksiController::class, 'profil']); // Alias
+    $registerCommon('/store-manager', 'storemanager');
+});
 
 // =========================================================================
-// RUTE KARYAWAN SALES & MARKETING DAN SUPERVISOR (SESUAI FIGMA)
-// Kedua role memakai ChecklistRoleController + view bersama "checklist.*".
-// Langkah pengisian memakai slug dari roleConfig(), mis.
-// /sales-marketing/isi-capaian/penjualan-customer
+// FRONTLINER (URL /karyawan)
+// =========================================================================
+Route::controller(FrontlinerController::class)->group(function () use ($registerSteps, $registerCommon) {
+    Route::get('/karyawan', 'dashboard')->name('staff.dashboard');
+    Route::get('/frontliner', 'dashboard')->name('frontliner.dashboard');
+
+    $registerSteps('/karyawan', 'frontliner', [
+        'penjualan' => ['penjualan', 'isiPenjualan', 'simpanPenjualan'],
+        'pelayanan' => ['pelayanan', 'isiPelayanan', 'simpanPelayanan'],
+        'product-knowledge' => ['knowledge', 'isiProductKnowledge', 'simpanProductKnowledge'],
+        'akurasi-kasir' => ['kasir', 'isiAkurasiKasir', 'simpanAkurasiKasir'],
+        'display-kebersihan' => ['display', 'isiDisplayKebersihan', 'simpanDisplayKebersihan'],
+        'kepatuhan-sop' => ['kepatuhan', 'isiKepatuhanSop', 'simpanKepatuhanSop'],
+    ]);
+
+    $registerCommon('/karyawan', 'frontliner');
+});
+
+// =========================================================================
+// DRIVER
+// =========================================================================
+Route::controller(DriverController::class)->group(function () use ($registerSteps, $registerCommon) {
+    Route::get('/driver', 'dashboard')->name('driver.dashboard');
+
+    $registerSteps('/driver', 'driver', [
+        'pengiriman' => ['pengiriman', 'isiPengiriman', 'simpanPengiriman'],
+        'administrasi' => ['administrasi', 'isiAdministrasi', 'simpanAdministrasi'],
+        'kendaraan' => ['kendaraan', 'isiKendaraan', 'simpanKendaraan'],
+        'pelayanan' => ['pelayanan', 'isiPelayanan', 'simpanPelayanan'],
+    ]);
+
+    $registerCommon('/driver', 'driver');
+});
+
+// =========================================================================
+// PRODUKSI
+// =========================================================================
+Route::controller(ProduksiController::class)->group(function () use ($registerSteps, $registerCommon) {
+    Route::get('/produksi', 'dashboard')->name('produksi.dashboard');
+
+    $registerSteps('/produksi', 'produksi', [
+        'hasil-produksi' => ['hasil_produksi', 'isiHasilProduksi', 'simpanHasilProduksi'],
+        'waktu-alat' => ['waktu_alat', 'isiWaktuAlat', 'simpanWaktuAlat'],
+        'kehadiran-disiplin' => ['kehadiran_disiplin', 'isiKehadiranDisiplin', 'simpanKehadiranDisiplin'],
+        'kepatuhan-sop' => ['kepatuhan_sop', 'isiKepatuhanSop', 'simpanKepatuhanSop'],
+        'kebersihan-area' => ['kebersihan_area', 'isiKebersihanArea', 'simpanKebersihanArea'],
+    ]);
+
+    $registerCommon('/produksi', 'produksi');
+});
+
+// =========================================================================
+// SALES & MARKETING DAN SUPERVISOR
+// Memakai ChecklistRoleController + view bersama "checklist.*".
+// Slug langkah diambil dari roleConfig(), mis. /sales-marketing/isi-capaian/penjualan-customer
 // =========================================================================
 foreach ([
     ['sales-marketing', 'sales', SalesMarketingController::class],
     ['supervisor', 'supervisor', SupervisorController::class],
 ] as [$prefix, $name, $controller]) {
-    Route::prefix($prefix)->name($name . '.')->controller($controller)->group(function () {
+    Route::prefix($prefix)->name("{$name}.")->controller($controller)->group(function () {
         Route::get('/', 'dashboard')->name('dashboard');
         Route::get('/isi-capaian/{step}', 'step')->name('step');
         Route::post('/isi-capaian/{step}', 'saveStep')->name('step.post');
@@ -335,6 +160,88 @@ foreach ([
     });
 }
 
-Route::redirect('/sales', '/sales-marketing');
-Route::redirect('/marketing', '/sales-marketing');
-Route::redirect('/spv', '/supervisor');
+// =========================================================================
+// ALIAS: URL lama / alternatif -> URL utama
+// =========================================================================
+$aliases = [
+    // Admin
+    '/profil' => '/admin/profil',
+    '/admin/profile' => '/admin/profil',
+    '/admin/revisi' => '/admin/tinjau-revisi',
+    '/admin/accounts' => '/admin/kelola-akun',
+    '/admin/akun' => '/admin/kelola-akun',
+    '/admin/kpi' => '/admin/kelola-kpi',
+    '/admin/approve' => '/admin/approve-laporan',
+    '/admin/approval' => '/admin/approve-laporan',
+
+    // Store Manager
+    '/storemanager' => '/store-manager',
+    '/store-manager/tim' => '/store-manager?tab=tim',
+    '/store-manager/approval-tim' => '/store-manager/approval',
+    '/store-manager/profile' => '/store-manager/profil',
+    '/storemanager/profil' => '/store-manager/profil',
+    '/storemanager/profile' => '/store-manager/profil',
+    '/storemanager/riwayat' => '/store-manager/riwayat',
+    '/storemanager/riwayat/detail' => '/store-manager/riwayat/detail',
+    '/storemanager/riwayat/{id}' => '/store-manager/riwayat/{id}',
+
+    // Frontliner
+    '/frontliner/riwayat' => '/karyawan/riwayat',
+    '/staff/riwayat' => '/karyawan/riwayat',
+    '/frontliner/riwayat/detail' => '/karyawan/riwayat/detail',
+    '/staff/riwayat/detail' => '/karyawan/riwayat/detail',
+    '/frontliner/riwayat/{id}' => '/karyawan/riwayat/{id}',
+    '/karyawan/profile' => '/karyawan/profil',
+    '/frontliner/profil' => '/karyawan/profil',
+    '/frontliner/profile' => '/karyawan/profil',
+    '/staff/profil' => '/karyawan/profil',
+
+    // Driver & Produksi (juga dapat diakses lewat /karyawan/driver/... dan /karyawan/produksi/...)
+    '/karyawan-driver' => '/driver',
+    '/driver/profile' => '/driver/profil',
+    '/karyawan-produksi' => '/produksi',
+    '/produksi/profile' => '/produksi/profil',
+
+    // Sales & Supervisor
+    '/sales' => '/sales-marketing',
+    '/marketing' => '/sales-marketing',
+    '/spv' => '/supervisor',
+];
+
+// /karyawan/driver/* -> /driver/*  dan  /karyawan/produksi/* -> /produksi/*
+foreach (['driver', 'produksi'] as $role) {
+    foreach (['', '/riwayat', '/riwayat/detail', '/riwayat/{id}', '/profil', '/profile'] as $path) {
+        $aliases["/karyawan/{$role}{$path}"] = "/{$role}" . ($path === '/profile' ? '/profil' : $path);
+    }
+}
+
+// Alias langkah form tanpa "/isi-capaian", mis. /driver/pengiriman -> /driver/isi-capaian/pengiriman
+// Format: [prefix alias, prefix tujuan, [slug alias => slug tujuan]]
+$frontlinerSteps = [
+    'penjualan' => 'penjualan', 'pelayanan' => 'pelayanan', 'product-knowledge' => 'product-knowledge',
+    'akurasi-kasir' => 'akurasi-kasir', 'display-kebersihan' => 'display-kebersihan', 'kepatuhan-sop' => 'kepatuhan-sop',
+];
+$driverSteps = array_combine($s = ['pengiriman', 'administrasi', 'kendaraan', 'pelayanan'], $s);
+$produksiSteps = array_combine($s = ['hasil-produksi', 'waktu-alat', 'kehadiran-disiplin', 'kepatuhan-sop', 'kebersihan-area'], $s);
+
+$stepAliases = [
+    ['/store-manager', '/store-manager', array_combine($s = ['penjualan', 'laba-persediaan', 'pelayanan', 'operasional-sdm', 'promosi-event'], $s)],
+    ['/karyawan', '/karyawan', $frontlinerSteps + ['kasir' => 'akurasi-kasir', 'kepatuhan' => 'kepatuhan-sop']],
+    ['/karyawan/isi-capaian', '/karyawan', ['knowledge' => 'product-knowledge', 'kasir' => 'akurasi-kasir', 'display' => 'display-kebersihan', 'kepatuhan' => 'kepatuhan-sop']],
+    ['/frontliner', '/karyawan', $frontlinerSteps + ['knowledge' => 'product-knowledge']],
+    ['/frontliner/isi-capaian', '/karyawan', $frontlinerSteps],
+    ['/driver', '/driver', $driverSteps],
+    ['/karyawan/driver', '/driver', $driverSteps],
+    ['/produksi', '/produksi', $produksiSteps],
+    ['/karyawan/produksi', '/produksi', $produksiSteps],
+];
+
+foreach ($stepAliases as [$from, $to, $slugs]) {
+    foreach ($slugs as $alias => $slug) {
+        $aliases["{$from}/{$alias}"] = "{$to}/isi-capaian/{$slug}";
+    }
+}
+
+foreach ($aliases as $from => $to) {
+    Route::redirect($from, $to);
+}

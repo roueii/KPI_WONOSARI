@@ -7,17 +7,14 @@ use App\Services\KpiDashboardService;
 
 class ProduksiController extends Controller
 {
+    protected array $defaultUser = ['name' => 'User', 'role' => 'produksi', 'role_label' => 'Produksi', 'email' => 'user@capaian.id'];
+
     /**
      * Tampilkan halaman utama Dashboard Karyawan Produksi
      */
     public function dashboard()
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'produksi',
-            'role_label' => 'Produksi',
-            'email' => 'user@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $todayBadge = 'Hari ini, ' . now()->locale('id')->translatedFormat('j M');
 
@@ -169,12 +166,7 @@ class ProduksiController extends Controller
      */
     public function isiHasilProduksi()
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'produksi',
-            'role_label' => 'Produksi',
-            'email' => 'user@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $stepData = session('produksi_capaian.step1', [
             'target_roti' => true,
@@ -201,12 +193,7 @@ class ProduksiController extends Controller
      */
     public function isiWaktuAlat()
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'produksi',
-            'role_label' => 'Produksi',
-            'email' => 'user@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $stepData = session('produksi_capaian.step2', [
             'selesai_sebelum_jadwal' => true,
@@ -235,12 +222,7 @@ class ProduksiController extends Controller
      */
     public function isiKehadiranDisiplin()
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'produksi',
-            'role_label' => 'Produksi',
-            'email' => 'user@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $stepData = session('produksi_capaian.step3', [
             'tidak_terlambat' => false,
@@ -267,12 +249,7 @@ class ProduksiController extends Controller
      */
     public function isiKepatuhanSop()
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'produksi',
-            'role_label' => 'Produksi',
-            'email' => 'user@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $stepData = session('produksi_capaian.step4', [
             'menimbang_resep' => false,
@@ -300,12 +277,7 @@ class ProduksiController extends Controller
      */
     public function isiKebersihanArea()
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'produksi',
-            'role_label' => 'Produksi',
-            'email' => 'user@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $stepData = session('produksi_capaian.step5', [
             'meja_bersih' => false,
@@ -372,12 +344,7 @@ class ProduksiController extends Controller
      */
     public function riwayatCapaian(Request $request)
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'produksi',
-            'role_label' => 'Produksi',
-            'email' => 'user@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $summaryCounts = [
             'disetujui' => 3,
@@ -510,12 +477,7 @@ class ProduksiController extends Controller
      */
     public function detailRiwayat(Request $request, $id = null)
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'produksi',
-            'role_label' => 'Produksi',
-            'email' => 'user@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $isRevision = $request->query('status') === 'revisi' || in_array($id, [3, 6, 'revisi']);
 

@@ -366,22 +366,6 @@ class AuthController extends Controller
     }
 
     /**
-     * Halaman Dashboard Store Manager (meneruskan ke StoreManagerController)
-     */
-    public function storeManagerDashboard()
-    {
-        return app(StoreManagerController::class)->dashboard(request());
-    }
-
-    /**
-     * Halaman Dashboard untuk Karyawan / Frontliner
-     */
-    public function karyawanDashboard()
-    {
-        return app(FrontlinerController::class)->dashboard();
-    }
-
-    /**
      * Logout pengguna
      */
     public function logout(Request $request)

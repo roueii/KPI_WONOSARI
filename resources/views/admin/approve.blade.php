@@ -515,6 +515,7 @@
     </div>
 
     <!-- Script Interaktif Approve Laporan -->
+    <script src="{{ asset('js/drawer.js') }}"></script>
     <script>
         let totalRemaining = 6;
 
@@ -630,38 +631,6 @@
 
         // Drawer navigation
         document.addEventListener('DOMContentLoaded', function () {
-            const menuToggle = document.getElementById('menuToggle');
-            const drawerOverlay = document.getElementById('drawerOverlay');
-            const drawerBackdrop = document.getElementById('drawerBackdrop');
-            const drawerCloseBtn = document.getElementById('drawerCloseBtn');
-
-            function openDrawer() {
-                if (drawerOverlay) {
-                    drawerOverlay.classList.add('is-open');
-                    drawerOverlay.setAttribute('aria-hidden', 'false');
-                    if (menuToggle) menuToggle.setAttribute('aria-expanded', 'true');
-                    document.body.style.overflow = 'hidden';
-                }
-            }
-
-            function closeDrawer() {
-                if (drawerOverlay) {
-                    drawerOverlay.classList.remove('is-open');
-                    drawerOverlay.setAttribute('aria-hidden', 'true');
-                    if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
-                    document.body.style.overflow = '';
-                }
-            }
-
-            if (menuToggle) menuToggle.addEventListener('click', openDrawer);
-            if (drawerBackdrop) drawerBackdrop.addEventListener('click', closeDrawer);
-            if (drawerCloseBtn) drawerCloseBtn.addEventListener('click', closeDrawer);
-
-            document.addEventListener('keydown', function (e) {
-                if (e.key === 'Escape' && drawerOverlay && drawerOverlay.classList.contains('is-open')) {
-                    closeDrawer();
-                }
-            });
         });
     </script>
 </body>

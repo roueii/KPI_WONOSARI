@@ -366,30 +366,10 @@
     <!-- Toast Notification Element -->
     <div class="toast-msg" id="toastMsg" role="alert" aria-live="polite"></div>
 
+    <script src="{{ asset('js/drawer.js') }}"></script>
     <script>
-        // Toggle Side Menu Drawer
-        const menuToggleBtn = document.getElementById('menuToggle');
-        const drawerOverlay = document.getElementById('drawerOverlay');
-        const drawerBackdrop = document.getElementById('drawerBackdrop');
-        const drawerCloseBtn = document.getElementById('drawerCloseBtn');
         const toastEl = document.getElementById('toastMsg');
         let toastTimeout;
-
-        function openDrawer() {
-            drawerOverlay.classList.add('is-open');
-            menuToggleBtn.setAttribute('aria-expanded', 'true');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeDrawer() {
-            drawerOverlay.classList.remove('is-open');
-            menuToggleBtn.setAttribute('aria-expanded', 'false');
-            document.body.style.overflow = '';
-        }
-
-        if (menuToggleBtn) menuToggleBtn.addEventListener('click', openDrawer);
-        if (drawerCloseBtn) drawerCloseBtn.addEventListener('click', closeDrawer);
-        if (drawerBackdrop) drawerBackdrop.addEventListener('click', closeDrawer);
 
         // Toggle Expand/Collapse Rincian Kartu
         function toggleCardDetail(cardKey) {

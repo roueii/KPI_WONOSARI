@@ -29,30 +29,7 @@
     </div>
 
     @hasSection('with-drawer')
-        <script>
-            (function () {
-                const toggle = document.getElementById('menuToggle');
-                const overlay = document.getElementById('drawerOverlay');
-                const open = () => {
-                    overlay.classList.add('is-open');
-                    overlay.setAttribute('aria-hidden', 'false');
-                    toggle?.setAttribute('aria-expanded', 'true');
-                    document.body.style.overflow = 'hidden';
-                };
-                const close = () => {
-                    overlay.classList.remove('is-open');
-                    overlay.setAttribute('aria-hidden', 'true');
-                    toggle?.setAttribute('aria-expanded', 'false');
-                    document.body.style.overflow = '';
-                };
-                toggle?.addEventListener('click', open);
-                document.getElementById('drawerCloseBtn')?.addEventListener('click', close);
-                document.getElementById('drawerBackdrop')?.addEventListener('click', close);
-                document.addEventListener('keydown', e => {
-                    if (e.key === 'Escape' && overlay.classList.contains('is-open')) close();
-                });
-            })();
-        </script>
+        <script src="{{ asset('js/drawer.js') }}"></script>
     @endif
 
     @stack('scripts')

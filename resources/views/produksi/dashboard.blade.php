@@ -183,39 +183,8 @@
     </div>
 
     <!-- Script Drawer Menu & Interaktivitas -->
+    <script src="{{ asset('js/drawer.js') }}"></script>
     <script>
-        const menuToggle = document.getElementById('menuToggle');
-        const drawerOverlay = document.getElementById('drawerOverlay');
-        const drawerCloseBtn = document.getElementById('drawerCloseBtn');
-        const drawerBackdrop = document.getElementById('drawerBackdrop');
-
-        function openDrawer() {
-            if (drawerOverlay) {
-                drawerOverlay.classList.add('is-open');
-                drawerOverlay.setAttribute('aria-hidden', 'false');
-                menuToggle?.setAttribute('aria-expanded', 'true');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
-        function closeDrawer() {
-            if (drawerOverlay) {
-                drawerOverlay.classList.remove('is-open');
-                drawerOverlay.setAttribute('aria-hidden', 'true');
-                menuToggle?.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = '';
-            }
-        }
-
-        menuToggle?.addEventListener('click', openDrawer);
-        drawerCloseBtn?.addEventListener('click', closeDrawer);
-        drawerBackdrop?.addEventListener('click', closeDrawer);
-
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape' && drawerOverlay?.classList.contains('is-open')) {
-                closeDrawer();
-            }
-        });
 
         function openHelpModal() {
             alert("Pusat Bantuan Produksi: Hubungi Store Manager atau Kepala Produksi Toko Roti Wonosari.");

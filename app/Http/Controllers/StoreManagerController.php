@@ -8,17 +8,14 @@ use App\Services\BackendApiService;
 
 class StoreManagerController extends Controller
 {
+    protected array $defaultUser = ['name' => 'User', 'role' => 'store_manager', 'role_label' => 'Store Manager', 'email' => 'User@capaian.id'];
+
     /**
      * Tampilkan halaman utama Dashboard Store Manager (Mendukung Tab "KPI Saya" dan "KPI Tim")
      */
     public function dashboard(Request $request)
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'store_manager',
-            'role_label' => 'Store Manager',
-            'email' => 'User@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         // Tab aktif: 'saya' atau 'tim'
         $activeTab = $request->query('tab', 'saya');
@@ -303,12 +300,7 @@ class StoreManagerController extends Controller
      */
     public function isiPenjualan()
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'store_manager',
-            'role_label' => 'Store Manager',
-            'email' => 'User@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $stepInfo = [
             'current' => 1,
@@ -364,12 +356,7 @@ class StoreManagerController extends Controller
      */
     public function isiLabaPersediaan()
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'store_manager',
-            'role_label' => 'Store Manager',
-            'email' => 'User@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $stepInfo = [
             'current' => 2,
@@ -435,12 +422,7 @@ class StoreManagerController extends Controller
      */
     public function isiPelayanan()
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'store_manager',
-            'role_label' => 'Store Manager',
-            'email' => 'User@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $stepInfo = [
             'current' => 3,
@@ -490,12 +472,7 @@ class StoreManagerController extends Controller
      */
     public function isiOperasionalSdm()
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'store_manager',
-            'role_label' => 'Store Manager',
-            'email' => 'User@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $stepInfo = [
             'current' => 4,
@@ -573,12 +550,7 @@ class StoreManagerController extends Controller
      */
     public function isiPromosiEvent()
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'store_manager',
-            'role_label' => 'Store Manager',
-            'email' => 'User@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $stepInfo = [
             'current' => 5,
@@ -794,12 +766,7 @@ class StoreManagerController extends Controller
      */
     public function training()
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'store_manager',
-            'role_label' => 'Store Manager',
-            'email' => 'User@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $trainings = array_map(function ($t) {
             $t['date_label'] = \Carbon\Carbon::parse($t['date'])->locale('id')->translatedFormat('j M Y');
@@ -852,12 +819,7 @@ class StoreManagerController extends Controller
      */
     public function approvalTim(Request $request)
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'store_manager',
-            'role_label' => 'Store Manager',
-            'email' => 'User@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $filter = $request->query('filter', 'semua');
 
@@ -1041,12 +1003,7 @@ class StoreManagerController extends Controller
      */
     public function riwayatCapaian()
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'store_manager',
-            'role_label' => 'Store Manager',
-            'email' => 'User@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $summary = [
             'disetujui' => 3,
@@ -1120,12 +1077,7 @@ class StoreManagerController extends Controller
      */
     public function detailRiwayat(Request $request, $id = null)
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'store_manager',
-            'role_label' => 'Store Manager',
-            'email' => 'User@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $isRevisi = $request->query('status') === 'revisi' || in_array($id, [3, 6, 'revisi']);
 

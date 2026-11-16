@@ -7,16 +7,14 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    protected array $defaultUser = ['name' => 'Admin', 'role' => 'admin', 'email' => 'User@capaian.id'];
+
     /**
      * Tampilkan halaman utama Admin Dashboard
      */
     public function dashboard()
     {
-        $user = session('user', [
-            'name' => 'Admin',
-            'role' => 'admin',
-            'email' => 'User@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $attentionItems = [
             [
@@ -126,11 +124,7 @@ class AdminController extends Controller
      */
     public function revisi()
     {
-        $user = session('user', [
-            'name' => 'Admin',
-            'role' => 'admin',
-            'email' => 'User@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $filterCounts = [
             'all' => 3,
@@ -171,11 +165,7 @@ class AdminController extends Controller
      */
     public function kelolaAkun()
     {
-        $user = session('user', [
-            'name' => 'Admin',
-            'role' => 'admin',
-            'email' => 'User@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $usersJson = BackendApiService::fetch('admin/users', ['per_page' => 100]);
         $positionsJson = BackendApiService::fetch('admin/positions');
@@ -331,11 +321,7 @@ class AdminController extends Controller
      */
     public function kelolaKpi()
     {
-        $user = session('user', [
-            'name' => 'Admin',
-            'role' => 'admin',
-            'email' => 'User@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $divisions = ['Store Manager', 'Frontliner', 'Produksi', 'Driver'];
         $activeDivision = 'Produksi';
@@ -627,11 +613,7 @@ class AdminController extends Controller
      */
     public function approveLaporan()
     {
-        $user = session('user', [
-            'name' => 'Admin',
-            'role' => 'admin',
-            'email' => 'User@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $filterCounts = [
             'total' => 6,

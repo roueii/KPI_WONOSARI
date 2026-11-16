@@ -7,17 +7,14 @@ use App\Services\KpiDashboardService;
 
 class DriverController extends Controller
 {
+    protected array $defaultUser = ['name' => 'User', 'role' => 'driver', 'role_label' => 'Driver', 'email' => 'user@capaian.id'];
+
     /**
      * Tampilkan halaman utama Dashboard Driver (Karyawan Driver)
      */
     public function dashboard()
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'driver',
-            'role_label' => 'Driver',
-            'email' => 'user@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $todayBadge = 'Hari ini, ' . now()->locale('id')->translatedFormat('j M');
 
@@ -155,12 +152,7 @@ class DriverController extends Controller
      */
     public function isiPengiriman()
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'driver',
-            'role_label' => 'Driver',
-            'email' => 'user@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $stepData = session('driver_capaian.step1', [
             'datang_tepat' => true,
@@ -190,12 +182,7 @@ class DriverController extends Controller
      */
     public function isiAdministrasi()
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'driver',
-            'role_label' => 'Driver',
-            'email' => 'user@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $stepData = session('driver_capaian.step2', [
             'surat_jalan' => false,
@@ -223,12 +210,7 @@ class DriverController extends Controller
      */
     public function isiKendaraan()
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'driver',
-            'role_label' => 'Driver',
-            'email' => 'user@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $stepData = session('driver_capaian.step3', [
             'kebersihan' => false,
@@ -261,12 +243,7 @@ class DriverController extends Controller
      */
     public function isiPelayanan()
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'driver',
-            'role_label' => 'Driver',
-            'email' => 'user@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $stepData = session('driver_capaian.step4', [
             'kerapian' => false,
@@ -332,12 +309,7 @@ class DriverController extends Controller
      */
     public function riwayatCapaian(Request $request)
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'driver',
-            'role_label' => 'Driver',
-            'email' => 'user@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $summaryCounts = [
             'disetujui' => 3,
@@ -470,12 +442,7 @@ class DriverController extends Controller
      */
     public function detailRiwayat(Request $request, $id = null)
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'driver',
-            'role_label' => 'Driver',
-            'email' => 'user@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         // Cek jika status revisi dari parameter atau id
         $isRevision = $request->query('status') === 'revisi' || in_array($id, [3, 6, 'revisi']);

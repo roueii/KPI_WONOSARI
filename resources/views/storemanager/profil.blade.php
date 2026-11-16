@@ -119,32 +119,7 @@
     <!-- Navigation Drawer -->
     @include('storemanager.partials.drawer')
 
-    <script>
-        const menuToggle = document.getElementById('menuToggle');
-        const sideDrawer = document.getElementById('sideDrawer');
-        const drawerBackdrop = document.getElementById('drawerBackdrop');
-        const closeDrawer = document.getElementById('closeDrawer');
-
-        function openMenu() {
-            if (sideDrawer && drawerBackdrop) {
-                sideDrawer.classList.add('is-open');
-                drawerBackdrop.classList.add('is-open');
-                menuToggle.setAttribute('aria-expanded', 'true');
-            }
-        }
-
-        function closeMenu() {
-            if (sideDrawer && drawerBackdrop) {
-                sideDrawer.classList.remove('is-open');
-                drawerBackdrop.classList.remove('is-open');
-                menuToggle.setAttribute('aria-expanded', 'false');
-            }
-        }
-
-        if (menuToggle) menuToggle.addEventListener('click', openMenu);
-        if (closeDrawer) closeDrawer.addEventListener('click', closeMenu);
-        if (drawerBackdrop) drawerBackdrop.addEventListener('click', closeMenu);
-    </script>
+    <script src="{{ asset('js/drawer.js') }}"></script>
 </body>
 
 </html>

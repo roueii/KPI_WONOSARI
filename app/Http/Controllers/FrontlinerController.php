@@ -7,17 +7,14 @@ use App\Services\KpiDashboardService;
 
 class FrontlinerController extends Controller
 {
+    protected array $defaultUser = ['name' => 'User', 'role' => 'frontliner', 'role_label' => 'Frontliner', 'email' => 'User@capaian.id'];
+
     /**
      * Tampilkan halaman utama Dashboard Frontliner (Karyawan) Sesuai Figma Revisi
      */
     public function dashboard()
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'frontliner',
-            'role_label' => 'Frontliner',
-            'email' => 'User@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         // Badge tanggal hari ini sesuai Figma Revisi
         $todayBadge = 'Hari ini, ' . now()->locale('id')->translatedFormat('j M');
@@ -189,24 +186,6 @@ class FrontlinerController extends Controller
         ));
     }
 
-    /**
-     * Endpoint untuk menyimpan input tugas capaian harian (AJAX)
-     */
-    public function saveDailyTask(Request $request)
-    {
-        $validated = $request->validate([
-            'pelayanan' => 'nullable|string',
-            'display_bersih' => 'nullable|string',
-            'kepatuhan_sop' => 'nullable|string',
-            'catatan' => 'nullable|string',
-        ]);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Capaian tugas harian berhasil disimpan!',
-        ]);
-    }
-
     // =========================================================================
     // MULTI-STEP FORM PENGISIAN CAPAIAN FRONTLINER (6 LANGKAH REVISI)
     // =========================================================================
@@ -216,12 +195,7 @@ class FrontlinerController extends Controller
      */
     public function isiPenjualan()
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'frontliner',
-            'role_label' => 'Frontliner',
-            'email' => 'User@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $stepInfo = [
             'current' => 1,
@@ -297,12 +271,7 @@ class FrontlinerController extends Controller
      */
     public function isiPelayanan()
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'frontliner',
-            'role_label' => 'Frontliner',
-            'email' => 'User@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $stepInfo = [
             'current' => 2,
@@ -372,12 +341,7 @@ class FrontlinerController extends Controller
      */
     public function isiProductKnowledge()
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'frontliner',
-            'role_label' => 'Frontliner',
-            'email' => 'User@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $stepInfo = [
             'current' => 3,
@@ -441,12 +405,7 @@ class FrontlinerController extends Controller
      */
     public function isiAkurasiKasir()
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'frontliner',
-            'role_label' => 'Frontliner',
-            'email' => 'User@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $stepInfo = [
             'current' => 4,
@@ -510,12 +469,7 @@ class FrontlinerController extends Controller
      */
     public function isiDisplayKebersihan()
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'frontliner',
-            'role_label' => 'Frontliner',
-            'email' => 'User@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $stepInfo = [
             'current' => 5,
@@ -597,12 +551,7 @@ class FrontlinerController extends Controller
      */
     public function isiKepatuhanSop()
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'frontliner',
-            'role_label' => 'Frontliner',
-            'email' => 'User@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $stepInfo = [
             'current' => 6,
@@ -720,12 +669,7 @@ class FrontlinerController extends Controller
      */
     public function riwayatCapaian()
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'frontliner',
-            'role_label' => 'Frontliner',
-            'email' => 'User@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $summary = [
             'disetujui' => 3,
@@ -799,12 +743,7 @@ class FrontlinerController extends Controller
      */
     public function detailRiwayat(Request $request, $id = null)
     {
-        $user = session('user', [
-            'name' => 'User',
-            'role' => 'frontliner',
-            'role_label' => 'Frontliner',
-            'email' => 'User@capaian.id',
-        ]);
+        $user = $this->currentUser();
 
         $isRevisi = $request->query('status') === 'revisi' || in_array($id, [3, 6, 'revisi']);
 
@@ -891,24 +830,5 @@ class FrontlinerController extends Controller
         ];
 
         return view('staff.profil', compact('user'));
-    }
-
-    // =========================================================================
-    // DETAIL RAPOR HISTORIS (KOMPATIBILITAS HALAMAN SEBELUMNYA)
-    // =========================================================================
-
-    public function detailPenjualan()
-    {
-        return view('staff.penjualan_rapor');
-    }
-
-    public function detailAkurasiKasir()
-    {
-        return view('staff.kasir_rapor');
-    }
-
-    public function detailProductKnowledge()
-    {
-        return view('staff.knowledge_rapor');
     }
 }
