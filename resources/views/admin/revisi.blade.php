@@ -7,9 +7,10 @@
     <title>Tinjau Revisi | Capaian.id - KPI Wonosari</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/design-system.css') }}" />
 </head>
 
 <body>
@@ -18,10 +19,7 @@
         <header class="revisi-header-bar">
             <div class="header-title-wrapper">
                 <a href="{{ route('admin.dashboard') }}" class="back-btn" aria-label="Kembali ke beranda">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="19" y1="12" x2="5" y2="12"></line>
-                        <polyline points="12 19 5 12 12 5"></polyline>
-                    </svg>
+                    <x-icon name="arrow-left" width="20" height="20" />
                 </a>
                 <div class="header-titles">
                     <h1 class="header-page-title">Tinjau Revisi</h1>
@@ -39,11 +37,7 @@
         <!-- 2. Banner Perhatian -->
         <div class="revisi-alert-banner">
             <div class="alert-icon-square" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="8" x2="12" y2="12"></line>
-                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                </svg>
+                <x-icon name="warning-circle" />
             </div>
             <strong class="alert-text">3 Karyawan Perlu Revisi</strong>
         </div>
@@ -70,20 +64,14 @@
                         <span class="user-subtitle">Pelayanan &amp; Kasir &middot; Shift Pagi</span>
                     </div>
                     <div class="req-origin-badge">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
+                        <x-icon name="clock" width="13" height="13" />
                         <span>Diminta SM</span>
                     </div>
                 </div>
 
                 <!-- Overdue Status Bar -->
                 <div class="overdue-bar danger-mode">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12 6 12 12 16 14"></polyline>
-                    </svg>
+                    <x-icon name="clock" width="14" height="14" />
                     <span>Menggantung 3 hari (Overdue &gt; 48 Jam)</span>
                 </div>
 
@@ -99,11 +87,7 @@
                     <!-- Berkas Lampiran -->
                     <div class="attachment-preview-box">
                         <div class="attachment-icon-peach">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                                <polyline points="21 15 16 10 5 21"></polyline>
-                            </svg>
+                            <x-icon name="media-image" />
                         </div>
                         <div class="attachment-info">
                             <strong class="attachment-filename">Foto_Setoran_22Okt.jpg</strong>
@@ -118,9 +102,7 @@
                         <div class="indicator-item-row">
                             <div class="indicator-name-group">
                                 <span class="indicator-icon-status success">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="20 6 9 17 4 12"></polyline>
-                                    </svg>
+                                    <x-icon name="check" />
                                 </span>
                                 <span class="indicator-label">Kebersihan Kasir &amp; Display Roti</span>
                             </div>
@@ -130,9 +112,7 @@
                         <div class="indicator-item-row">
                             <div class="indicator-name-group">
                                 <span class="indicator-icon-status success">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="20 6 9 17 4 12"></polyline>
-                                    </svg>
+                                    <x-icon name="check" />
                                 </span>
                                 <span class="indicator-label">Greeting &amp; Senyum Ramah</span>
                             </div>
@@ -142,10 +122,7 @@
                         <div class="indicator-item-row">
                             <div class="indicator-name-group">
                                 <span class="indicator-icon-status warning">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="12" y1="8" x2="12" y2="12"></line>
-                                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                                    </svg>
+                                    <x-icon name="warning-circle" />
                                 </span>
                                 <span class="indicator-label">Ketepatan Setoran Fisik Kasir</span>
                             </div>
@@ -156,13 +133,7 @@
                     <!-- Catatan Evaluator / SM -->
                     <div class="reviewer-quote-box">
                         <div class="quote-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                <polyline points="14 2 14 8 20 8"></polyline>
-                                <line x1="16" y1="13" x2="8" y2="13"></line>
-                                <line x1="16" y1="17" x2="8" y2="17"></line>
-                                <polyline points="10 9 9 9 8 9"></polyline>
-                            </svg>
+                            <x-icon name="page" />
                         </div>
                         <div class="quote-text-group">
                             <span class="quote-author">Siti Rahma (22 Okt, 20:15 WIB)</span>
@@ -211,10 +182,7 @@
                     </button>
 
                     <button type="button" class="btn-manual-resolve-green" onclick="handleManualResolve('Budi Santoso', 'card-budi')">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="16 10 11 15 8 12"></polyline>
-                        </svg>
+                        <x-icon name="check-circle" width="18" height="18" />
                         <span>Tandai sudah ditegur/ditindaklanjuti manual</span>
                     </button>
                 </div>
@@ -235,10 +203,7 @@
                 <!-- Overdue Status Bar (SLA Aman) -->
                 <div class="overdue-bar safe-mode">
                     <div class="overdue-left">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
+                        <x-icon name="clock" width="14" height="14" />
                         <span>Menggantung 18 jam</span>
                     </div>
                     <span class="sla-badge">SLA Aman</span>
@@ -263,18 +228,12 @@
                 <!-- Aksi Kartu 2 -->
                 <div class="revisi-card-actions">
                     <button type="button" class="btn-primary-orange" onclick="showToast('Membuka formulir detail Joko Prasetyo...');">
-                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                            <circle cx="12" cy="12" r="3"></circle>
-                        </svg>
+                        <x-icon name="eye-empty" width="17" height="17" />
                         <span>Lihat Detail Permintaan</span>
                     </button>
 
                     <button type="button" class="btn-secondary-outline" onclick="handleManualResolve('Joko Prasetyo', 'card-joko')">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
+                        <x-icon name="clock" width="15" height="15" />
                         <span>Tandai sudah ditindaklanjuti manual</span>
                     </button>
                 </div>
@@ -295,10 +254,7 @@
                 <!-- Overdue Status Bar (Batas: Besok) -->
                 <div class="overdue-bar safe-mode">
                     <div class="overdue-left">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
+                        <x-icon name="clock" width="14" height="14" />
                         <span>Menggantung 1 hari (26 Jam)</span>
                     </div>
                     <span class="sla-badge">Batas: Besok</span>
@@ -323,18 +279,12 @@
                 <!-- Aksi Kartu 3 -->
                 <div class="revisi-card-actions">
                     <button type="button" class="btn-primary-orange" onclick="showToast('Membuka formulir detail Agus Hermawan...');">
-                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                            <circle cx="12" cy="12" r="3"></circle>
-                        </svg>
+                        <x-icon name="eye-empty" width="17" height="17" />
                         <span>Lihat Detail Permintaan</span>
                     </button>
 
                     <button type="button" class="btn-secondary-outline" onclick="handleManualResolve('Agus Hermawan', 'card-agus')">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
+                        <x-icon name="clock" width="15" height="15" />
                         <span>Tandai sudah ditindaklanjuti manual</span>
                     </button>
                 </div>
@@ -345,11 +295,7 @@
         <!-- 5. Kartu Informasi Batasan Akses Mode Monitoring -->
         <footer class="monitoring-notice-box">
             <div class="notice-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="16" x2="12" y2="12"></line>
-                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                </svg>
+                <x-icon name="info-empty" />
             </div>
             <div class="notice-content">
                 <strong class="notice-title">Batasan Akses Mode Monitoring</strong>

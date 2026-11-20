@@ -6,10 +6,7 @@
 @section('content')
     <header class="fl-riwayat-header">
         <a href="{{ route($r . '.dashboard') }}" class="fl-step-close-btn" aria-label="Kembali ke Dashboard">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
+            <x-icon name="arrow-left" />
         </a>
         <div class="fl-riwayat-header-text">
             <h1 class="fl-riwayat-title">Riwayat</h1>
@@ -65,8 +62,8 @@
         @endforeach
 
         <div class="fl-history-empty" id="emptyState">
-            <p style="margin: 0; font-weight: 600; color: #57534e;">Tidak ada riwayat dengan status ini</p>
-            <p style="margin: 4px 0 0; font-size: 0.78rem; color: #a8a29e;">Pilih filter lain untuk melihat riwayat.</p>
+            <p style="margin: 0; font-weight: 600; color: var(--neutral-600);">Tidak ada riwayat dengan status ini</p>
+            <p style="margin: 4px 0 0; font-size: var(--fs-12); color: var(--neutral-400);">Pilih filter lain untuk melihat riwayat.</p>
         </div>
     </main>
 

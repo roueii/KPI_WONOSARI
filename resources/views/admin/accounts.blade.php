@@ -7,9 +7,10 @@
     <title>Kelola Akun | Capaian.id - KPI Wonosari</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/design-system.css') }}" />
 </head>
 
 <body>
@@ -18,10 +19,7 @@
         <header class="revisi-header-bar">
             <div class="header-title-wrapper">
                 <a href="{{ route('admin.dashboard') }}" class="back-btn" aria-label="Kembali ke beranda">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="19" y1="12" x2="5" y2="12"></line>
-                        <polyline points="12 19 5 12 12 5"></polyline>
-                    </svg>
+                    <x-icon name="arrow-left" width="20" height="20" />
                 </a>
                 <div class="header-titles">
                     <h1 class="header-page-title">Kelola Akun</h1>
@@ -38,23 +36,18 @@
 
         <!-- 2. Kotak Ringkasan Jumlah Akun -->
         @if(session('status'))
-            <div class="toast-inline success" role="status" style="background: #ecfdf5; border: 1px solid #86efac; color: #15803d; border-radius: 12px; padding: 10px 14px; font-size: 0.82rem; font-weight: 600; margin-bottom: 12px;">{{ session('status') }}</div>
+            <div class="toast-inline success" role="status" style="background: var(--success-100); border: 1px solid var(--success-500); color: var(--success-700); border-radius: 12px; padding: 10px 14px; font-size: var(--fs-14); font-weight: 600; margin-bottom: 12px;">{{ session('status') }}</div>
         @endif
         @if(session('error') && (old('_edit_id') || ! old('name')))
-            <div role="alert" style="background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; border-radius: 12px; padding: 10px 14px; font-size: 0.82rem; font-weight: 600; margin-bottom: 12px;">{{ session('error') }}</div>
+            <div role="alert" style="background: var(--error-100); border: 1px solid var(--error-100); color: var(--error-700); border-radius: 12px; padding: 10px 14px; font-size: var(--fs-14); font-weight: 600; margin-bottom: 12px;">{{ session('error') }}</div>
         @endif
         @unless($isLive)
-            <div role="note" style="background: #fffbeb; border: 1px dashed #f59e0b; color: #92400e; border-radius: 12px; padding: 10px 14px; font-size: 0.78rem; margin-bottom: 12px;">Mode demo: data di bawah adalah contoh. Login dengan akun Backend agar daftar akun bisa dikelola.</div>
+            <div role="note" style="background: var(--warning-100); border: 1px dashed var(--warning-500); color: var(--warning-700); border-radius: 12px; padding: 10px 14px; font-size: var(--fs-12); margin-bottom: 12px;">Mode demo: data di bawah adalah contoh. Login dengan akun Backend agar daftar akun bisa dikelola.</div>
         @endunless
 
         <div class="account-summary-card">
             <div class="summary-card-left">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="9" cy="7" r="4"></circle>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                </svg>
+                <x-icon name="group" width="20" height="20" />
                 <strong class="summary-card-title">Daftar Akun</strong>
             </div>
             <span class="summary-card-badge">{{ $summary['total_karyawan'] }} Karyawan &middot; {{ $summary['total_divisi'] }} Divisi</span>
@@ -63,18 +56,12 @@
         <!-- 3. Pencarian & Tombol Tambah -->
         <div class="account-actions-row">
             <div class="search-input-box">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
+                <x-icon name="search" width="18" height="18" />
                 <input type="text" id="accountSearchInput" placeholder="Cari nama karyawan..." aria-label="Cari nama karyawan" />
             </div>
 
             <button type="button" class="btn-add-account" onclick="scrollToAddForm()">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                </svg>
+                <x-icon name="plus" width="18" height="18" />
                 <span>Tambah</span>
             </button>
         </div>
@@ -116,10 +103,7 @@
                         <div class="edit-employee-panel" id="panel-{{ $acc['id'] }}" style="display: {{ $open ? 'block' : 'none' }};">
                             <div class="edit-panel-header">
                                 <div class="panel-header-left">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                        <polyline points="14 2 14 8 20 8"></polyline>
-                                    </svg>
+                                    <x-icon name="empty-page" width="16" height="16" />
                                     <strong>EDIT DATA KARYAWAN: {{ strtoupper($acc['name']) }}</strong>
                                 </div>
                                 <button type="button" class="panel-close-btn" onclick="toggleEditCard('{{ $acc['id'] }}')" aria-label="Tutup form edit">&times;</button>
@@ -163,19 +147,15 @@
                             <form method="POST" action="{{ route('admin.accounts.status', $acc['id']) }}" onsubmit="return confirm(@js(($acc['active'] ? 'Nonaktifkan' : 'Aktifkan') . ' akun ' . $acc['name'] . '?'))">
                                 @csrf
                                 <input type="hidden" name="is_active" value="{{ $acc['active'] ? 0 : 1 }}" />
-                                <button type="submit" class="btn-deactivate-dashed" @unless($acc['active']) style="border-color: #22c55e; color: #15803d;" @endunless>
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-                                        <line x1="12" y1="9" x2="12" y2="13"></line>
-                                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                                    </svg>
+                                <button type="submit" class="btn-deactivate-dashed" @unless($acc['active']) style="border-color: var(--success-500); color: var(--success-700);" @endunless>
+                                    <x-icon name="warning-triangle" width="15" height="15" />
                                     <span>{{ $acc['active'] ? 'Nonaktifkan Akun Karyawan' : 'Aktifkan Kembali Akun' }}</span>
                                 </button>
                             </form>
                         </div>
                     </div>
                 @empty
-                    <p style="text-align: center; color: #78716c; font-size: 0.85rem; padding: 18px 0;">Belum ada akun.</p>
+                    <p style="text-align: center; color: var(--neutral-500); font-size: var(--fs-14); padding: 18px 0;">Belum ada akun.</p>
                 @endforelse
             </div>
         </section>
@@ -195,7 +175,7 @@
                 <form class="add-employee-form" method="POST" action="{{ route('admin.accounts.store') }}">
                     @csrf
                     @if($errors->any() && ! old('_edit_id') && old('name'))
-                        <div role="alert" style="background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; border-radius: 10px; padding: 8px 12px; font-size: 0.78rem; margin-bottom: 10px;">{{ $errors->first() }}</div>
+                        <div role="alert" style="background: var(--error-100); border: 1px solid var(--error-100); color: var(--error-700); border-radius: 10px; padding: 8px 12px; font-size: var(--fs-12); margin-bottom: 10px;">{{ $errors->first() }}</div>
                     @endif
 
                     <div class="form-group-item">
@@ -227,9 +207,7 @@
                     </div>
 
                     <button type="submit" class="btn-save-new-account">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
+                        <x-icon name="check" width="18" height="18" />
                         <span>Simpan Akun Baru</span>
                     </button>
                 </form>

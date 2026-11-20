@@ -9,8 +9,8 @@
    1. Dashboard Specific: Donut Chart with Right Progress Bars
    ========================================================================== */
 .driver-chart-inner-card {
-  background: #fbf5ee;
-  border: 1px solid #ebdcd0;
+  background: var(--primary-50);
+  border: 1px solid var(--secondary-100);
   border-radius: 16px;
   padding: 16px;
   display: flex;
@@ -36,13 +36,13 @@
 
 .driver-donut-track {
   fill: none;
-  stroke: #dfd7ce;
+  stroke: var(--neutral-300);
   stroke-width: 9;
 }
 
 .driver-donut-progress {
   fill: none;
-  stroke: #22c55e;
+  stroke: var(--success-500);
   stroke-width: 9;
   stroke-linecap: round;
   transition: stroke-dashoffset 0.8s ease;
@@ -62,16 +62,16 @@
 }
 
 .driver-donut-val {
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: #1c1917;
+  font-size: var(--fs-22);
+  font-weight: var(--fw-semibold);
+  color: var(--neutral-900);
   letter-spacing: -0.02em;
 }
 
 .driver-donut-sub {
-  font-size: 0.68rem;
+  font-size: var(--fs-10);
   font-weight: 600;
-  color: #78716c;
+  color: var(--neutral-500);
   margin-top: 2px;
 }
 
@@ -92,31 +92,31 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.73rem;
-  color: #1c1917;
+  font-size: var(--fs-12);
+  color: var(--neutral-900);
   line-height: 1.2;
 }
 
 .driver-progress-header strong {
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
 }
 
 .driver-progress-count {
-  font-weight: 700;
-  color: #57534e;
+  font-weight: var(--fw-semibold);
+  color: var(--neutral-600);
 }
 
 .driver-progress-bar-bg {
   width: 100%;
   height: 6px;
-  background: #ded5cb;
+  background: var(--neutral-300);
   border-radius: 9999px;
   overflow: hidden;
 }
 
 .driver-progress-bar-fill {
   height: 100%;
-  background: #f97316;
+  background: var(--primary-500);
   border-radius: 9999px;
   transition: width 0.4s ease;
 }
@@ -129,8 +129,8 @@
 }
 
 .driver-preview-card {
-  background: #fbf5ee;
-  border: 1px solid #ebdcd0;
+  background: var(--primary-50);
+  border: 1px solid var(--secondary-100);
   border-radius: 14px;
   padding: 12px 14px;
   display: flex;
@@ -142,15 +142,15 @@
 }
 
 .driver-preview-card:hover {
-  background: #f8efe4;
-  border-color: #d1c4b7;
+  background: var(--primary-50);
+  border-color: var(--neutral-300);
   transform: translateY(-1px);
 }
 
 .driver-preview-card-title {
-  font-size: 0.84rem;
-  font-weight: 700;
-  color: #1c1917;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
+  color: var(--neutral-900);
   line-height: 1.25;
 }
 
@@ -165,36 +165,36 @@
 .driver-step-pill {
   height: 5px;
   border-radius: 9999px;
-  background: #dfd7ce;
+  background: var(--neutral-300);
   transition: background-color 0.2s ease;
 }
 
 .driver-step-pill.is-active {
-  background: #f97316;
+  background: var(--primary-500);
 }
 
 /* 4. Drawer Menu Cards Sesuai Menu.png */
 .driver-drawer-menu-card {
-  background: #fbf9f6;
-  border: 1px solid #ebdcd0;
+  background: var(--secondary-50);
+  border: 1px solid var(--secondary-100);
   border-radius: 16px;
   padding: 14px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   text-decoration: none;
-  color: #1c1917;
+  color: var(--neutral-900);
   transition: all 0.2s ease;
 }
 
 .driver-drawer-menu-card:hover {
-  background: #fdf5ee;
-  border-color: #d1c4b7;
+  background: var(--primary-50);
+  border-color: var(--neutral-300);
 }
 
 .driver-drawer-menu-card.is-active {
-  background: #fff8f2;
-  border-color: #f97316;
+  background: var(--secondary-50);
+  border-color: var(--primary-500);
 }
 
 .driver-drawer-menu-left {
@@ -206,34 +206,34 @@
 .driver-drawer-menu-icon {
   width: 22px;
   height: 22px;
-  color: #1c1917;
+  color: var(--neutral-900);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .driver-drawer-menu-title {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #1c1917;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-semibold);
+  color: var(--neutral-900);
 }
 
 .driver-drawer-footer-chip {
-  background: #fbf9f6;
-  border: 1px solid #ebdcd0;
+  background: var(--secondary-50);
+  border: 1px solid var(--secondary-100);
   border-radius: 14px;
   padding: 12px 16px;
-  font-size: 0.8rem;
+  font-size: var(--fs-12);
   font-weight: 500;
-  color: #78716c;
+  color: var(--neutral-500);
   text-align: left;
   margin-top: auto;
 }
 
 /* 5. Custom Clickable Checkbox Cards */
 .driver-check-card {
-  background: #ffffff;
-  border: 1px solid #ebdcd0;
+  background: var(--white);
+  border: 1px solid var(--secondary-100);
   border-radius: 14px;
   padding: 14px;
   display: flex;
@@ -245,21 +245,21 @@
 }
 
 .driver-check-card:hover {
-  border-color: #d1c4b7;
-  background: #fffdfa;
+  border-color: var(--neutral-300);
+  background: var(--neutral-50);
 }
 
 .driver-check-card.is-checked {
-  background: #fffaf5;
-  border-color: #f97316;
+  background: var(--secondary-50);
+  border-color: var(--primary-500);
 }
 
 .driver-check-box {
   width: 22px;
   height: 22px;
   border-radius: 7px;
-  border: 2px solid #b45309;
-  background: #ffffff;
+  border: 2px solid var(--warning-700);
+  background: var(--white);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -269,14 +269,14 @@
 }
 
 .driver-check-card.is-checked .driver-check-box {
-  background: #ea580c;
-  border-color: #ea580c;
+  background: var(--primary-600);
+  border-color: var(--primary-600);
 }
 
 .driver-check-icon {
   width: 14px;
   height: 14px;
-  color: #ffffff;
+  color: var(--white);
   opacity: 0;
   transform: scale(0.6);
   transition: all 0.15s ease;
@@ -294,36 +294,36 @@
 }
 
 .driver-check-title {
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: #1c1917;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
+  color: var(--neutral-900);
   line-height: 1.3;
 }
 
 .driver-check-sub {
-  font-size: 0.78rem;
+  font-size: var(--fs-12);
   font-weight: 500;
-  color: #78716c;
+  color: var(--neutral-500);
   line-height: 1.4;
 }
 
 /* 6. Dashed Notice Bottom Box */
 .driver-notice-dashed {
-  background: #fffbf8;
-  border: 1px dashed #c2410c;
+  background: var(--secondary-50);
+  border: 1px dashed var(--primary-700);
   border-radius: 12px;
   padding: 12px 14px;
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  font-size: 0.79rem;
-  color: #57534e;
+  font-size: var(--fs-12);
+  color: var(--neutral-600);
   line-height: 1.45;
   margin: 18px 0 20px;
 }
 
 .driver-notice-dashed svg {
-  color: #78716c;
+  color: var(--neutral-500);
   flex-shrink: 0;
   margin-top: 2px;
 }
@@ -333,16 +333,16 @@
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: #fbf5ee;
+  background: var(--primary-50);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: #1c1917;
+  color: var(--neutral-900);
 }
 
 .driver-cat-icon-box.is-orange {
-  background: #fff8f2;
-  color: #ea580c;
+  background: var(--secondary-50);
+  color: var(--primary-600);
 }
 

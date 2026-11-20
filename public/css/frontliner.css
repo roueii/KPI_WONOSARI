@@ -4,35 +4,35 @@
    ========================================================================== */
 
 :root {
-  --fl-bg-canvas: #f5ede6;
-  --fl-bg-app: #fbf9f6;
-  --fl-card-bg: #ffffff;
-  --fl-card-border: #ebdcd0;
-  --fl-card-inner-border: #f0e6dc;
+  --fl-bg-canvas: var(--secondary-100);
+  --fl-bg-app: var(--secondary-50);
+  --fl-card-bg: var(--white);
+  --fl-card-border: var(--secondary-100);
+  --fl-card-inner-border: var(--secondary-100);
   
-  --fl-text-main: #1c1917;
-  --fl-text-muted: #78716c;
-  --fl-text-subtle: #a8a29e;
+  --fl-text-main: var(--neutral-900);
+  --fl-text-muted: var(--neutral-500);
+  --fl-text-subtle: var(--neutral-400);
   
-  --fl-orange: #f97316;
-  --fl-orange-vibrant: #ff6a00;
-  --fl-orange-hover: #ea580c;
+  --fl-orange: var(--primary-500);
+  --fl-orange-vibrant: var(--primary-500);
+  --fl-orange-hover: var(--primary-600);
   
-  --fl-peach-bg: #fdf5ee;
-  --fl-peach-border: #eddcd0;
-  --fl-peach-hover: #fbeee3;
+  --fl-peach-bg: var(--primary-50);
+  --fl-peach-border: var(--secondary-100);
+  --fl-peach-hover: var(--secondary-100);
   
-  --fl-green: #22c55e;
-  --fl-green-bg: #ecfdf5;
-  --fl-green-text: #15803d;
+  --fl-green: var(--success-500);
+  --fl-green-bg: var(--success-100);
+  --fl-green-text: var(--success-700);
   
-  --fl-amber: #f59e0b;
-  --fl-amber-bg: #fffbeb;
-  --fl-amber-text: #b45309;
+  --fl-amber: var(--warning-500);
+  --fl-amber-bg: var(--warning-100);
+  --fl-amber-text: var(--warning-700);
   
-  --fl-red: #ef4444;
-  --fl-red-bg: #fef2f2;
-  --fl-red-text: #b91c1c;
+  --fl-red: var(--error-500);
+  --fl-red-bg: var(--error-100);
+  --fl-red-text: var(--error-700);
 
   --fl-radius-lg: 20px;
   --fl-radius-md: 14px;
@@ -69,10 +69,10 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: #1c1917;
+  background: var(--neutral-900);
   display: grid;
   place-items: center;
-  color: #ffffff;
+  color: var(--white);
   flex-shrink: 0;
 }
 
@@ -88,14 +88,14 @@
 }
 
 .fl-profile-name {
-  font-size: 1.05rem;
-  font-weight: 800;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
   letter-spacing: -0.02em;
 }
 
 .fl-profile-role {
-  font-size: 0.8rem;
+  font-size: var(--fs-12);
   font-weight: 500;
   color: var(--fl-text-muted);
 }
@@ -122,15 +122,15 @@
 }
 
 .fl-title-group h2 {
-  font-size: 1.15rem;
-  font-weight: 800;
+  font-size: var(--fs-18);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
   letter-spacing: -0.01em;
   margin: 0;
 }
 
 .fl-title-group p {
-  font-size: 0.82rem;
+  font-size: var(--fs-14);
   color: var(--fl-text-muted);
   margin-top: 3px;
   margin-bottom: 0;
@@ -139,13 +139,13 @@
 .fl-date-pill {
   display: inline-flex;
   align-items: center;
-  border: 1px solid #ebdcd0;
-  background: #ffffff;
+  border: 1px solid var(--secondary-100);
+  background: var(--white);
   border-radius: var(--fl-radius-pill);
   padding: 4px 12px;
-  font-size: 0.75rem;
+  font-size: var(--fs-12);
   font-weight: 500;
-  color: #44403c;
+  color: var(--neutral-700);
   white-space: nowrap;
 }
 
@@ -175,7 +175,7 @@
 
 .fl-donut-track {
   fill: none;
-  stroke: #ede8e2;
+  stroke: var(--secondary-100);
   stroke-width: 12;
 }
 
@@ -199,14 +199,14 @@
 }
 
 .fl-donut-count {
-  font-size: 1.45rem;
-  font-weight: 800;
+  font-size: var(--fs-22);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
   letter-spacing: -0.02em;
 }
 
 .fl-donut-sub {
-  font-size: 0.75rem;
+  font-size: var(--fs-12);
   color: var(--fl-text-muted);
   margin-top: 4px;
 }
@@ -223,14 +223,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.82rem;
+  font-size: var(--fs-14);
 }
 
 .fl-legend-left {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #44403c;
+  color: var(--neutral-700);
 }
 
 .fl-dot {
@@ -253,22 +253,22 @@
 }
 
 .fl-legend-count {
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
-  font-size: 0.82rem;
+  font-size: var(--fs-14);
 }
 
 /* Bottom status info pill */
 .fl-status-infobar {
   border: 1px solid var(--fl-card-border);
-  background: #fffdfa;
+  background: var(--neutral-50);
   border-radius: var(--fl-radius-pill);
   padding: 8px 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.72rem;
-  color: #57534e;
+  font-size: var(--fs-12);
+  color: var(--neutral-600);
   gap: 6px;
 }
 
@@ -295,28 +295,28 @@
 }
 
 .fl-section-header h2 {
-  font-size: 1.18rem;
-  font-weight: 800;
+  font-size: var(--fs-18);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
   letter-spacing: -0.01em;
   margin: 0;
 }
 
 .fl-section-header p {
-  font-size: 0.82rem;
+  font-size: var(--fs-14);
   color: var(--fl-text-muted);
   margin: 0;
 }
 
 /* Orange CTA Card */
 .fl-banner-cta {
-  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  background: linear-gradient(135deg, var(--primary-500) 0%, var(--primary-600) 100%);
   border-radius: var(--fl-radius-lg);
   padding: 18px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: #ffffff;
+  color: var(--white);
   cursor: pointer;
   text-decoration: none;
   box-shadow: 0 4px 14px rgba(249, 115, 22, 0.25);
@@ -342,17 +342,17 @@
 }
 
 .fl-banner-title {
-  font-size: 1.12rem;
-  font-weight: 800;
+  font-size: var(--fs-18);
+  font-weight: var(--fw-semibold);
   letter-spacing: -0.01em;
-  color: #ffffff;
+  color: var(--white);
 }
 
 .fl-banner-sub {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.82rem;
+  font-size: var(--fs-14);
   color: rgba(255, 255, 255, 0.92);
 }
 
@@ -365,7 +365,7 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: #ffffff;
+  background: var(--white);
   display: grid;
   place-items: center;
   color: var(--fl-orange);
@@ -399,16 +399,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.82rem;
+  font-size: var(--fs-14);
 }
 
 .fl-preview-title {
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
 }
 
 .fl-preview-autosave {
-  font-size: 0.76rem;
+  font-size: var(--fs-12);
   color: var(--fl-text-muted);
 }
 
@@ -442,8 +442,8 @@
 }
 
 .fl-item-title {
-  font-size: 0.85rem;
-  font-weight: 700;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
   line-height: 1.25;
 }
@@ -453,11 +453,11 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  background: #ffffff;
-  border: 1px solid #ebdcd0;
+  background: var(--white);
+  border: 1px solid var(--secondary-100);
   border-radius: var(--fl-radius-pill);
   padding: 3px 8px;
-  font-size: 0.72rem;
+  font-size: var(--fs-12);
   font-weight: 600;
 }
 
@@ -488,7 +488,7 @@
   text-decoration: none;
   cursor: pointer;
   transition: background 0.18s ease;
-  border-bottom: 1px solid #f2e9e2;
+  border-bottom: 1px solid var(--secondary-100);
 }
 
 .fl-rapor-item:last-child {
@@ -496,7 +496,7 @@
 }
 
 .fl-rapor-item:hover {
-  background: #fbf6f1;
+  background: var(--secondary-50);
 }
 
 .fl-rapor-left {
@@ -506,13 +506,13 @@
 }
 
 .fl-rapor-title {
-  font-size: 0.92rem;
-  font-weight: 700;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
 }
 
 .fl-rapor-sub {
-  font-size: 0.8rem;
+  font-size: var(--fs-12);
   color: var(--fl-text-muted);
 }
 
@@ -520,7 +520,7 @@
   color: var(--fl-text-subtle);
   display: grid;
   place-items: center;
-  font-size: 1.2rem;
+  font-size: var(--fs-18);
   line-height: 1;
   transition: transform 0.18s ease, color 0.18s ease;
 }
@@ -566,12 +566,12 @@
 }
 
 .fl-recent-date {
-  font-size: 0.78rem;
+  font-size: var(--fs-12);
   color: var(--fl-text-muted);
 }
 
 .fl-recent-title {
-  font-size: 0.88rem;
+  font-size: var(--fs-14);
   font-weight: 600;
   color: var(--fl-text-main);
   line-height: 1.3;
@@ -583,9 +583,9 @@
   justify-content: center;
   border-radius: var(--fl-radius-pill);
   padding: 4px 14px;
-  font-size: 0.76rem;
-  font-weight: 700;
-  color: #ffffff;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+  color: var(--white);
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -595,7 +595,7 @@
 }
 
 .fl-status-badge.badge-amber {
-  background-color: #ea8c00;
+  background-color: var(--warning-500);
 }
 
 /* ==========================================================================
@@ -616,14 +616,14 @@
 }
 
 .fl-footer-brand {
-  font-size: 0.82rem;
-  font-weight: 800;
-  color: #292524;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
+  color: var(--neutral-800);
   letter-spacing: 0.04em;
 }
 
 .fl-footer-sub {
-  font-size: 0.78rem;
+  font-size: var(--fs-12);
   color: var(--fl-text-muted);
   margin-bottom: 8px;
 }
@@ -633,12 +633,12 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  font-size: 0.78rem;
-  color: #57534e;
+  font-size: var(--fs-12);
+  color: var(--neutral-600);
 }
 
 .fl-footer-link {
-  color: #57534e;
+  color: var(--neutral-600);
   text-decoration: none;
   font-weight: 500;
   transition: color 0.15s ease;
@@ -691,7 +691,7 @@
   z-index: 1051;
   width: 100%;
   max-width: 480px;
-  background: #ffffff;
+  background: var(--white);
   border-radius: 24px 24px 0 0;
   padding: 20px 20px 32px;
   max-height: 90vh;
@@ -715,14 +715,14 @@
 }
 
 .fl-modal-title-group h3 {
-  font-size: 1.15rem;
-  font-weight: 800;
+  font-size: var(--fs-18);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
   margin: 0;
 }
 
 .fl-modal-title-group p {
-  font-size: 0.8rem;
+  font-size: var(--fs-12);
   color: var(--fl-text-muted);
   margin-top: 3px;
   margin-bottom: 0;
@@ -733,16 +733,16 @@
   height: 36px;
   border-radius: 10px;
   border: 1px solid var(--fl-card-border);
-  background: #ffffff;
+  background: var(--white);
   display: grid;
   place-items: center;
-  color: #44403c;
+  color: var(--neutral-700);
   cursor: pointer;
   transition: all 0.18s ease;
 }
 
 .fl-modal-close-btn:hover {
-  background: #fbf5ef;
+  background: var(--secondary-50);
   color: var(--fl-orange);
   border-color: var(--fl-orange);
 }
@@ -761,8 +761,8 @@
 }
 
 .fl-form-group label {
-  font-size: 0.84rem;
-  font-weight: 700;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
 }
 
@@ -771,16 +771,16 @@
   align-items: center;
   gap: 10px;
   padding: 10px 12px;
-  background: #fdfaf7;
-  border: 1px solid #eddcd0;
+  background: var(--secondary-50);
+  border: 1px solid var(--secondary-100);
   border-radius: 12px;
-  font-size: 0.84rem;
+  font-size: var(--fs-14);
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .fl-checkbox-label:hover {
-  background: #fff5ee;
+  background: var(--primary-50);
   border-color: var(--fl-orange);
 }
 
@@ -800,12 +800,12 @@
 .fl-btn-submit {
   flex: 1;
   background: var(--fl-orange);
-  color: #ffffff;
+  color: var(--white);
   border: none;
   border-radius: 12px;
   padding: 12px 16px;
-  font-weight: 700;
-  font-size: 0.92rem;
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-14);
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(249, 115, 22, 0.25);
   transition: all 0.18s ease;
@@ -817,18 +817,18 @@
 }
 
 .fl-btn-cancel {
-  background: #ffffff;
+  background: var(--white);
   color: var(--fl-text-muted);
   border: 1px solid var(--fl-card-border);
   border-radius: 12px;
   padding: 12px 16px;
   font-weight: 600;
-  font-size: 0.92rem;
+  font-size: var(--fs-14);
   cursor: pointer;
 }
 
 .fl-btn-cancel:hover {
-  background: #fbf5ef;
+  background: var(--secondary-50);
   color: var(--fl-text-main);
 }
 
@@ -838,11 +838,11 @@
   bottom: 24px;
   left: 50%;
   transform: translateX(-50%) translateY(100px);
-  background: #1c1917;
-  color: #ffffff;
+  background: var(--neutral-900);
+  color: var(--white);
   padding: 12px 20px;
   border-radius: 9999px;
-  font-size: 0.85rem;
+  font-size: var(--fs-14);
   font-weight: 600;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
   display: flex;
@@ -864,13 +864,13 @@
    ========================================================================== */
 .drawer-logout-btn {
   width: 100%;
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  color: #dc2626;
+  background: var(--error-100);
+  border: 1px solid var(--error-100);
+  color: var(--error-700);
   border-radius: 12px;
   padding: 12px 16px;
-  font-size: 0.88rem;
-  font-weight: 700;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -880,8 +880,8 @@
 }
 
 .drawer-logout-btn:hover {
-  background: #fee2e2;
-  border-color: #f87171;
+  background: var(--error-100);
+  border-color: var(--error-500);
 }
 
 .drawer-logout-btn svg {
@@ -907,10 +907,10 @@
   height: 42px;
   border-radius: 14px;
   border: 1px solid var(--fl-card-border);
-  background: #ffffff;
+  background: var(--white);
   display: grid;
   place-items: center;
-  color: #44403c;
+  color: var(--neutral-700);
   text-decoration: none;
   cursor: pointer;
   transition: all 0.18s ease;
@@ -918,7 +918,7 @@
 }
 
 .fl-step-close-btn:hover {
-  background: #fbf5ef;
+  background: var(--secondary-50);
   border-color: var(--fl-orange);
   color: var(--fl-orange);
   transform: translateY(-1px);
@@ -932,14 +932,14 @@
 .fl-step-badge {
   display: inline-flex;
   align-items: center;
-  border: 1px solid #fed7aa;
-  background: #fffcf9;
+  border: 1px solid var(--primary-200);
+  background: var(--neutral-50);
   border-radius: var(--fl-radius-pill);
   padding: 4px 14px;
-  font-size: 0.72rem;
-  font-weight: 800;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
   letter-spacing: 0.04em;
-  color: #9a3412;
+  color: var(--primary-800);
 }
 
 /* 3-Segment Stepper Progress */
@@ -966,8 +966,8 @@
 }
 
 .fl-step-pill.is-inactive {
-  border: 1.5px solid #e7ded6;
-  background: #ffffff;
+  border: 1.5px solid var(--secondary-100);
+  background: var(--white);
 }
 
 /* Step Meta Row */
@@ -979,27 +979,27 @@
 }
 
 .fl-step-current-text {
-  font-size: 0.82rem;
-  font-weight: 700;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
 }
 
 .fl-step-category-text {
-  font-size: 0.82rem;
+  font-size: var(--fs-14);
   color: var(--fl-text-muted);
 }
 
 /* Page Title & Subtitle */
 .fl-step-page-title {
-  font-size: 1.55rem;
-  font-weight: 800;
+  font-size: var(--fs-26);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
   letter-spacing: -0.02em;
   line-height: 1.2;
 }
 
 .fl-step-page-sub {
-  font-size: 0.82rem;
+  font-size: var(--fs-14);
   color: var(--fl-text-muted);
   margin-top: 4px;
   margin-bottom: 18px;
@@ -1032,13 +1032,13 @@
 }
 
 .fl-step-card-title {
-  font-size: 1.05rem;
-  font-weight: 800;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
 }
 
 .fl-step-card-sub {
-  font-size: 0.8rem;
+  font-size: var(--fs-12);
   color: var(--fl-text-muted);
   margin-top: 3px;
   line-height: 1.35;
@@ -1055,7 +1055,7 @@
 .fl-check-card {
   border: 1.5px solid var(--fl-card-border);
   border-radius: 14px;
-  background: #ffffff;
+  background: var(--white);
   padding: 14px 16px;
   display: flex;
   align-items: center;
@@ -1066,8 +1066,8 @@
 }
 
 .fl-check-card:hover {
-  background: #fffcf9;
-  border-color: #fdba74;
+  background: var(--neutral-50);
+  border-color: var(--primary-300);
 }
 
 .fl-custom-box {
@@ -1077,8 +1077,8 @@
   flex-shrink: 0;
   display: grid;
   place-items: center;
-  border: 2px solid #c2410c;
-  background: #ffffff;
+  border: 2px solid var(--primary-700);
+  background: var(--white);
   transition: all 0.18s ease;
 }
 
@@ -1089,8 +1089,8 @@
 }
 
 .fl-check-card.is-checked .fl-custom-box {
-  background: #c2410c;
-  border-color: #c2410c;
+  background: var(--primary-700);
+  border-color: var(--primary-700);
 }
 
 .fl-check-card.is-checked .fl-custom-box svg {
@@ -1098,19 +1098,19 @@
 }
 
 .fl-check-text {
-  font-size: 0.88rem;
-  font-weight: 700;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
   line-height: 1.25;
 }
 
 /* Required Pill Badge di Card 2 */
 .fl-step-required-badge {
-  border: 1.5px solid #c2410c;
-  background: #fff7ed;
-  color: #9a3412;
-  font-size: 0.65rem;
-  font-weight: 800;
+  border: 1.5px solid var(--primary-700);
+  background: var(--primary-50);
+  color: var(--primary-800);
+  font-size: var(--fs-10);
+  font-weight: var(--fw-semibold);
   padding: 4px 10px;
   border-radius: var(--fl-radius-pill);
   white-space: nowrap;
@@ -1119,9 +1119,9 @@
 
 /* Upload Drop Area */
 .fl-upload-zone {
-  border: 2px dashed #9a3412;
+  border: 2px dashed var(--primary-800);
   border-radius: 16px;
-  background: #faf8f5;
+  background: var(--secondary-50);
   padding: 22px 16px;
   display: flex;
   flex-direction: column;
@@ -1135,18 +1135,18 @@
 }
 
 .fl-upload-zone:hover {
-  background: #fdf5ee;
-  border-color: #ea580c;
+  background: var(--primary-50);
+  border-color: var(--primary-600);
 }
 
 .fl-camera-circle {
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  border: 1.5px solid #9ca3af;
+  border: 1.5px solid var(--neutral-400);
   display: grid;
   place-items: center;
-  color: #6b7280;
+  color: var(--neutral-500);
   margin-bottom: 2px;
 }
 
@@ -1156,14 +1156,14 @@
 }
 
 .fl-upload-title {
-  font-size: 0.85rem;
-  font-weight: 800;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
   margin-top: 2px;
 }
 
 .fl-upload-sub {
-  font-size: 0.75rem;
+  font-size: var(--fs-12);
   color: var(--fl-text-muted);
 }
 
@@ -1179,7 +1179,7 @@
 .fl-chip-item {
   border: 1px solid var(--fl-card-border);
   border-radius: 12px;
-  background: #fdfaf7;
+  background: var(--secondary-50);
   padding: 8px 12px;
   display: inline-flex;
   align-items: center;
@@ -1189,18 +1189,18 @@
 }
 
 .fl-chip-item:hover {
-  background: #ffffff;
-  border-color: #fdba74;
+  background: var(--white);
+  border-color: var(--primary-300);
 }
 
 .fl-chip-icon {
   width: 26px;
   height: 26px;
   border-radius: 6px;
-  background: #f3ece5;
+  background: var(--secondary-100);
   display: grid;
   place-items: center;
-  color: #78716c;
+  color: var(--neutral-500);
 }
 
 .fl-chip-icon svg {
@@ -1209,7 +1209,7 @@
 }
 
 .fl-chip-name {
-  font-size: 0.78rem;
+  font-size: var(--fs-12);
   font-weight: 600;
   color: var(--fl-text-main);
   max-width: 140px;
@@ -1224,7 +1224,7 @@
   border-radius: 50%;
   display: grid;
   place-items: center;
-  color: #78716c;
+  color: var(--neutral-500);
   cursor: pointer;
   background: none;
   border: none;
@@ -1233,8 +1233,8 @@
 }
 
 .fl-chip-remove:hover {
-  color: #ef4444;
-  background: #fee2e2;
+  color: var(--error-500);
+  background: var(--error-100);
 }
 
 .fl-chip-remove svg {
@@ -1248,8 +1248,8 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  color: #44403c;
-  font-size: 0.78rem;
+  color: var(--neutral-700);
+  font-size: var(--fs-12);
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
@@ -1272,8 +1272,8 @@
 
 /* Info Box */
 .fl-info-card {
-  background: #fffdfa;
-  border: 1px solid #f3d8c2;
+  background: var(--neutral-50);
+  border: 1px solid var(--secondary-200);
   border-radius: 14px;
   padding: 12px 14px;
   display: flex;
@@ -1296,19 +1296,19 @@
 }
 
 .fl-info-text {
-  font-size: 0.78rem;
-  color: #57534e;
+  font-size: var(--fs-12);
+  color: var(--neutral-600);
   line-height: 1.45;
 }
 
 .fl-info-text strong {
   color: var(--fl-text-main);
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
 }
 
 /* Step Footer */
 .fl-step-footer {
-  border-top: 1px solid #f3ece5;
+  border-top: 1px solid var(--secondary-100);
   padding-top: 18px;
   margin-top: 8px;
   display: flex;
@@ -1320,12 +1320,12 @@
 .fl-btn-next {
   width: 100%;
   height: 52px;
-  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
-  color: #ffffff;
+  background: linear-gradient(135deg, var(--primary-500) 0%, var(--primary-600) 100%);
+  color: var(--white);
   border: none;
   border-radius: 14px;
-  font-size: 1rem;
-  font-weight: 800;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-semibold);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1365,12 +1365,12 @@
 .fl-btn-back {
   height: 52px;
   padding: 0 24px;
-  background: #ffffff;
+  background: var(--white);
   border: 1.5px solid var(--fl-card-border);
   border-radius: 14px;
   color: var(--fl-text-main);
-  font-size: 0.95rem;
-  font-weight: 700;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-semibold);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1382,8 +1382,8 @@
 }
 
 .fl-btn-back:hover {
-  background: #fbf5ef;
-  border-color: #fdba74;
+  background: var(--secondary-50);
+  border-color: var(--primary-300);
   color: var(--fl-orange);
   transform: translateY(-1px);
 }
@@ -1397,15 +1397,15 @@
 }
 
 .fl-step-footer-text {
-  font-size: 0.75rem;
+  font-size: var(--fs-12);
   color: var(--fl-text-subtle);
   text-align: center;
 }
 
 .fl-link-draft {
   display: inline-block;
-  font-size: 0.78rem;
-  color: #78716c;
+  font-size: var(--fs-12);
+  color: var(--neutral-500);
   text-decoration: underline;
   cursor: pointer;
   transition: color 0.15s ease;
@@ -1434,8 +1434,8 @@
 }
 
 .fl-detail-page-title {
-  font-size: 1.6rem;
-  font-weight: 800;
+  font-size: var(--fs-26);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
   letter-spacing: -0.02em;
   margin: 18px 0 16px;
@@ -1445,11 +1445,11 @@
 .fl-badge-auto {
   display: inline-flex;
   align-items: center;
-  border: 1.5px solid #c2410c;
-  background: #fff7ed;
-  color: #9a3412;
-  font-size: 0.65rem;
-  font-weight: 800;
+  border: 1.5px solid var(--primary-700);
+  background: var(--primary-50);
+  color: var(--primary-800);
+  font-size: var(--fs-10);
+  font-weight: var(--fw-semibold);
   padding: 3px 10px;
   border-radius: var(--fl-radius-pill);
   letter-spacing: 0.04em;
@@ -1458,8 +1458,8 @@
 
 /* Big Number Omzet */
 .fl-omzet-big-number {
-  font-size: 1.7rem;
-  font-weight: 800;
+  font-size: var(--fs-26);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
   letter-spacing: -0.02em;
   margin: 10px 0 4px;
@@ -1476,21 +1476,21 @@
 }
 
 .fl-omzet-target-text {
-  font-size: 0.82rem;
+  font-size: var(--fs-14);
   color: var(--fl-text-muted);
 }
 
 .fl-omzet-target-text strong {
-  color: #9a5525;
-  font-weight: 700;
+  color: var(--secondary-500);
+  font-weight: var(--fw-semibold);
 }
 
 .fl-target-pill {
-  border: 1px solid #fed7aa;
-  background: #fffcf9;
-  color: #9a5525;
-  font-size: 0.72rem;
-  font-weight: 700;
+  border: 1px solid var(--primary-200);
+  background: var(--neutral-50);
+  color: var(--secondary-500);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
   padding: 3px 8px;
   border-radius: 6px;
   white-space: nowrap;
@@ -1500,7 +1500,7 @@
 .fl-omzet-progress-bar {
   margin: 14px 0 8px;
   height: 8px;
-  background: #f3ece5;
+  background: var(--secondary-100);
   border-radius: var(--fl-radius-pill);
   overflow: hidden;
   position: relative;
@@ -1517,7 +1517,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.75rem;
+  font-size: var(--fs-12);
   margin-top: 4px;
 }
 
@@ -1546,13 +1546,13 @@
 }
 
 .fl-calc-label {
-  font-size: 0.85rem;
+  font-size: var(--fs-14);
   color: var(--fl-text-muted);
 }
 
 .fl-calc-value {
-  font-size: 0.95rem;
-  font-weight: 800;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
   display: flex;
   align-items: center;
@@ -1560,7 +1560,7 @@
 }
 
 .fl-calc-footnote {
-  font-size: 0.72rem;
+  font-size: var(--fs-12);
   color: var(--fl-text-subtle);
   font-style: italic;
   margin-top: 4px;
@@ -1583,13 +1583,13 @@
 }
 
 .fl-history-day {
-  font-size: 0.82rem;
-  color: #44403c;
+  font-size: var(--fs-14);
+  color: var(--neutral-700);
   min-width: 105px;
 }
 
 .fl-history-day.is-bold {
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
 }
 
@@ -1597,7 +1597,7 @@
   flex: 1;
   max-width: 85px;
   height: 8px;
-  background: #f5ede6;
+  background: var(--secondary-100);
   border-radius: var(--fl-radius-pill);
   overflow: hidden;
   margin: 0 10px;
@@ -1611,8 +1611,8 @@
 }
 
 .fl-history-amount {
-  font-size: 0.85rem;
-  font-weight: 700;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
   text-align: right;
   min-width: 105px;
@@ -1626,11 +1626,11 @@
 /* Badge Akurat */
 .fl-badge-akurat {
   display: inline-block;
-  border: 1.5px solid #c2410c;
-  background: #fffcf9;
-  color: #9a3412;
-  font-size: 0.72rem;
-  font-weight: 800;
+  border: 1.5px solid var(--primary-700);
+  background: var(--neutral-50);
+  color: var(--primary-800);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
   padding: 3px 10px;
   border-radius: 6px;
   letter-spacing: 0.02em;
@@ -1644,9 +1644,9 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 0;
-  font-size: 0.88rem;
-  color: #44403c;
-  border-top: 1px solid #f2e9e2;
+  font-size: var(--fs-14);
+  color: var(--neutral-700);
+  border-top: 1px solid var(--secondary-100);
 }
 
 .fl-icon-circle-check {
@@ -1660,8 +1660,8 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #ea580c;
-  color: #ffffff;
+  background: var(--primary-600);
+  color: var(--white);
   display: grid;
   place-items: center;
   flex-shrink: 0;
@@ -1677,10 +1677,10 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.78rem;
+  font-size: var(--fs-12);
   color: var(--fl-text-muted);
   padding-top: 12px;
-  border-top: 1px solid #f2e9e2;
+  border-top: 1px solid var(--secondary-100);
   margin-top: 4px;
 }
 
@@ -1695,7 +1695,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 11px 0;
-  border-bottom: 1px solid #f3ece5;
+  border-bottom: 1px solid var(--secondary-100);
 }
 
 .fl-kasir-history-item:last-child {
@@ -1708,17 +1708,17 @@
 }
 
 .fl-kasir-item-day {
-  font-size: 0.85rem;
-  color: #44403c;
+  font-size: var(--fs-14);
+  color: var(--neutral-700);
 }
 
 .fl-kasir-item-day.is-bold {
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
 }
 
 .fl-kasir-item-sub {
-  font-size: 0.72rem;
+  font-size: var(--fs-12);
   color: var(--fl-text-muted);
   margin-top: 2px;
 }
@@ -1730,14 +1730,14 @@
 }
 
 .fl-kasir-amount-text {
-  font-size: 0.88rem;
-  font-weight: 700;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
 }
 
 .fl-kasir-amount-text.is-negative {
   color: var(--fl-text-main);
-  font-weight: 800;
+  font-weight: var(--fw-semibold);
 }
 
 /* ==========================================================================
@@ -1754,28 +1754,28 @@
 }
 
 .fl-knowledge-score-val {
-  font-size: 2.1rem;
-  font-weight: 800;
+  font-size: var(--fs-32);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
   letter-spacing: -0.03em;
   line-height: 1;
 }
 
 .fl-knowledge-score-max {
-  font-size: 1.15rem;
+  font-size: var(--fs-18);
   font-weight: 600;
-  color: #44403c;
+  color: var(--neutral-700);
 }
 
 /* Badge Grade (BAIK, CUKUP) */
 .fl-badge-grade {
   display: inline-flex;
   align-items: center;
-  border: 1.5px solid #c2410c;
-  background: #fff7ed;
-  color: #9a3412;
-  font-size: 0.65rem;
-  font-weight: 800;
+  border: 1.5px solid var(--primary-700);
+  background: var(--primary-50);
+  color: var(--primary-800);
+  font-size: var(--fs-10);
+  font-weight: var(--fw-semibold);
   padding: 2px 8px;
   border-radius: 6px;
   letter-spacing: 0.04em;
@@ -1804,8 +1804,8 @@
 }
 
 .fl-criteria-title {
-  font-size: 0.88rem;
-  font-weight: 700;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
   line-height: 1.3;
 }
@@ -1829,11 +1829,11 @@
 }
 
 .fl-criteria-pill-segment.is-inactive {
-  background: #e7ded6;
+  background: var(--secondary-100);
 }
 
 .fl-criteria-score-text {
-  font-size: 0.75rem;
+  font-size: var(--fs-12);
   color: var(--fl-text-muted);
   margin-left: 6px;
   font-weight: 500;
@@ -1841,14 +1841,14 @@
 
 /* Card Penilaian Berikutnya */
 .fl-next-eval-title {
-  font-size: 0.88rem;
-  font-weight: 700;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
   margin: 6px 0 4px;
 }
 
 .fl-next-eval-desc {
-  font-size: 0.8rem;
+  font-size: var(--fs-12);
   color: var(--fl-text-muted);
   line-height: 1.45;
   margin: 0;
@@ -1873,15 +1873,15 @@
 }
 
 .fl-riwayat-title {
-  font-size: 1.4rem;
-  font-weight: 800;
+  font-size: var(--fs-22);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
   letter-spacing: -0.025em;
   margin: 0;
 }
 
 .fl-riwayat-subtitle {
-  font-size: 0.82rem;
+  font-size: var(--fs-14);
   font-weight: 500;
   color: var(--fl-text-muted);
   margin: 2px 0 0;
@@ -1896,7 +1896,7 @@
 }
 
 .fl-riwayat-metric-card {
-  background: #fffdfa;
+  background: var(--neutral-50);
   border: 1px solid var(--fl-card-border);
   border-radius: 16px;
   padding: 12px 8px;
@@ -1912,12 +1912,12 @@
 
 .fl-riwayat-metric-card:hover {
   transform: translateY(-2px);
-  border-color: #d1c4b7;
+  border-color: var(--neutral-300);
   box-shadow: 0 4px 12px rgba(50, 30, 20, 0.05);
 }
 
 .fl-riwayat-metric-card.is-active {
-  background: #fff8f2;
+  background: var(--secondary-50);
   border-color: var(--fl-orange);
   box-shadow: 0 0 0 1px var(--fl-orange);
 }
@@ -1938,26 +1938,26 @@
 }
 
 .fl-dot-circle.dot-green {
-  background-color: #22c55e;
+  background-color: var(--success-500);
 }
 
 .fl-dot-circle.dot-gray {
-  background-color: #9ca3af;
+  background-color: var(--neutral-400);
 }
 
 .fl-dot-circle.dot-amber {
-  background-color: #f59e0b;
+  background-color: var(--warning-500);
 }
 
 .fl-riwayat-metric-label {
-  font-size: 0.76rem;
+  font-size: var(--fs-12);
   font-weight: 600;
-  color: #57534e;
+  color: var(--neutral-600);
 }
 
 .fl-riwayat-metric-value {
-  font-size: 1.55rem;
-  font-weight: 800;
+  font-size: var(--fs-26);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
   line-height: 1;
 }
@@ -1981,28 +1981,28 @@
 .fl-filter-chip {
   padding: 7px 16px;
   border-radius: var(--fl-radius-pill);
-  font-size: 0.78rem;
+  font-size: var(--fs-12);
   font-weight: 600;
   white-space: nowrap;
-  border: 1px solid #ebdcd0;
-  background: #fffdfa;
-  color: #57534e;
+  border: 1px solid var(--secondary-100);
+  background: var(--neutral-50);
+  color: var(--neutral-600);
   cursor: pointer;
   transition: all 0.2s ease;
   user-select: none;
-  border: 1px solid #ebdcd0;
+  border: 1px solid var(--secondary-100);
 }
 
 .fl-filter-chip:hover {
-  background: #fdf5ee;
-  border-color: #d1c4b7;
+  background: var(--primary-50);
+  border-color: var(--neutral-300);
 }
 
 .fl-filter-chip.is-active {
   background: var(--fl-orange);
   border-color: var(--fl-orange);
-  color: #ffffff !important;
-  font-weight: 700;
+  color: var(--white) !important;
+  font-weight: var(--fw-semibold);
   box-shadow: 0 2px 8px rgba(249, 115, 22, 0.28);
 }
 
@@ -2018,7 +2018,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #fffdfa;
+  background: var(--neutral-50);
   border: 1px solid var(--fl-card-border);
   border-radius: 16px;
   padding: 13px 16px;
@@ -2030,7 +2030,7 @@
 
 .fl-history-card-item:hover {
   transform: translateY(-2px);
-  border-color: #d6c5b6;
+  border-color: var(--secondary-200);
   box-shadow: 0 4px 14px rgba(50, 30, 20, 0.05);
 }
 
@@ -2051,15 +2051,15 @@
 }
 
 .fl-history-day-name {
-  font-size: 0.75rem;
+  font-size: var(--fs-12);
   font-weight: 600;
-  color: #78716c;
+  color: var(--neutral-500);
   text-transform: capitalize;
 }
 
 .fl-history-day-num {
-  font-size: 1.15rem;
-  font-weight: 800;
+  font-size: var(--fs-18);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
   letter-spacing: -0.02em;
 }
@@ -2071,16 +2071,16 @@
 }
 
 .fl-history-full-date {
-  font-size: 0.92rem;
-  font-weight: 700;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
   letter-spacing: -0.01em;
 }
 
 .fl-history-category-info {
-  font-size: 0.77rem;
+  font-size: var(--fs-12);
   font-weight: 500;
-  color: #78716c;
+  color: var(--neutral-500);
 }
 
 .fl-history-item-right {
@@ -2093,9 +2093,9 @@
 .fl-history-badge {
   padding: 4px 12px;
   border-radius: var(--fl-radius-pill);
-  font-size: 0.74rem;
-  font-weight: 700;
-  color: #ffffff;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+  color: var(--white);
   letter-spacing: 0.01em;
   display: inline-flex;
   align-items: center;
@@ -2103,28 +2103,28 @@
 }
 
 .fl-history-badge.badge-disetujui {
-  background-color: #22c55e;
+  background-color: var(--success-500);
 }
 
 .fl-history-badge.badge-menunggu {
-  background-color: #8b8580;
+  background-color: var(--neutral-500);
 }
 
 .fl-history-badge.badge-revisi {
-  background-color: #f59e0b;
+  background-color: var(--warning-500);
 }
 
 .fl-history-chevron {
-  color: #a8a29e;
+  color: var(--neutral-400);
   display: flex;
   align-items: center;
-  font-size: 1.1rem;
+  font-size: var(--fs-18);
   line-height: 1;
 }
 
 /* 5. Bottom Legend Card (Indikator Bentuk Status) */
 .fl-history-legend-card {
-  background: #fffdfa;
+  background: var(--neutral-50);
   border: 1px solid var(--fl-card-border);
   border-radius: 16px;
   padding: 14px 16px;
@@ -2133,9 +2133,9 @@
 }
 
 .fl-history-legend-title {
-  font-size: 0.78rem;
+  font-size: var(--fs-12);
   font-weight: 600;
-  color: #57534e;
+  color: var(--neutral-600);
   margin-bottom: 8px;
 }
 
@@ -2144,8 +2144,8 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 14px;
-  font-size: 0.77rem;
-  color: #44403c;
+  font-size: var(--fs-12);
+  color: var(--neutral-700);
   font-weight: 500;
 }
 
@@ -2160,11 +2160,11 @@
   display: none;
   text-align: center;
   padding: 36px 16px;
-  background: #fffdfa;
+  background: var(--neutral-50);
   border: 1px dashed var(--fl-card-border);
   border-radius: 16px;
   color: var(--fl-text-muted);
-  font-size: 0.85rem;
+  font-size: var(--fs-14);
   margin-bottom: 16px;
 }
 
@@ -2174,7 +2174,7 @@
 
 /* 1. Header Card Summary (Riwayat - 24 Okt & Badge Perlu Revisi) */
 .fl-dr-summary-card {
-  background: #fffdfa;
+  background: var(--neutral-50);
   border: 1px solid var(--fl-card-border);
   border-radius: 18px;
   padding: 16px 18px;
@@ -2190,8 +2190,8 @@
 }
 
 .fl-dr-summary-title {
-  font-size: 1.35rem;
-  font-weight: 800;
+  font-size: var(--fs-22);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
   letter-spacing: -0.025em;
   margin: 0;
@@ -2199,12 +2199,12 @@
 
 .fl-dr-badge-revisi-outline {
   padding: 4px 10px;
-  border: 1px solid #c2410c;
+  border: 1px solid var(--primary-700);
   border-radius: 8px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: #c2410c;
-  background: #fff8f5;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+  color: var(--primary-700);
+  background: var(--secondary-50);
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -2213,18 +2213,18 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.82rem;
+  font-size: var(--fs-14);
   color: var(--fl-text-muted);
 }
 
 .fl-dr-summary-time svg {
-  color: #a8a29e;
+  color: var(--neutral-400);
   flex-shrink: 0;
 }
 
 /* 2. Kartu Catatan Revisi Sesuai Desain Figma (Border Oranye Tebal) */
 .fl-dr-revision-card {
-  background: #fffdfa;
+  background: var(--neutral-50);
   border: 2px solid var(--fl-orange);
   border-radius: 18px;
   padding: 18px;
@@ -2246,42 +2246,42 @@
 }
 
 .fl-dr-revision-label {
-  font-size: 0.72rem;
-  font-weight: 800;
-  color: #78716c;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+  color: var(--neutral-500);
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
 .fl-dr-revision-author {
-  font-size: 0.9rem;
+  font-size: var(--fs-14);
   color: var(--fl-text-main);
   line-height: 1.3;
 }
 
 .fl-dr-revision-author strong {
-  font-weight: 800;
+  font-weight: var(--fw-semibold);
 }
 
 .fl-dr-revision-time-chip {
   padding: 4px 8px;
-  border: 1px solid #ebdcd0;
+  border: 1px solid var(--secondary-100);
   border-radius: 8px;
-  font-size: 0.72rem;
+  font-size: var(--fs-12);
   font-weight: 500;
-  color: #78716c;
-  background: #ffffff;
+  color: var(--neutral-500);
+  background: var(--white);
   white-space: nowrap;
 }
 
 .fl-dr-revision-bubble {
-  background: #ffffff;
+  background: var(--white);
   border: 1px solid var(--fl-card-border);
   border-radius: 12px;
   padding: 14px 16px;
   margin: 14px 0 16px;
-  font-size: 0.86rem;
-  color: #292524;
+  font-size: var(--fs-14);
+  color: var(--neutral-800);
   line-height: 1.5;
   font-weight: 500;
 }
@@ -2293,9 +2293,9 @@
   gap: 8px;
   width: 100%;
   background: var(--fl-orange);
-  color: #ffffff;
-  font-size: 0.88rem;
-  font-weight: 700;
+  color: var(--white);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   padding: 13px 18px;
@@ -2322,21 +2322,21 @@
 }
 
 .fl-dr-section-title {
-  font-size: 0.76rem;
-  font-weight: 800;
-  color: #78716c;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+  color: var(--neutral-500);
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
 .fl-dr-section-count {
-  font-size: 0.78rem;
+  font-size: var(--fs-12);
   font-weight: 600;
-  color: #78716c;
+  color: var(--neutral-500);
 }
 
 .fl-dr-categories-container {
-  background: #fffdfa;
+  background: var(--neutral-50);
   border: 1px solid var(--fl-card-border);
   border-radius: 18px;
   padding: 8px;
@@ -2350,7 +2350,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #ffffff;
+  background: var(--white);
   border: 1px solid var(--fl-card-border);
   border-radius: 14px;
   padding: 12px 14px;
@@ -2360,7 +2360,7 @@
 }
 
 .fl-dr-category-item:hover {
-  border-color: #d1c4b7;
+  border-color: var(--neutral-300);
   transform: translateY(-1px);
 }
 
@@ -2379,7 +2379,7 @@
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: #fdfaf6;
+  background: var(--secondary-50);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2388,7 +2388,7 @@
 }
 
 .fl-dr-category-icon-box.is-orange {
-  background: #fff8f2;
+  background: var(--secondary-50);
   color: var(--fl-orange);
 }
 
@@ -2406,38 +2406,38 @@
 }
 
 .fl-dr-category-title {
-  font-size: 0.88rem;
-  font-weight: 700;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
 }
 
 .fl-dr-category-badge-warning {
   padding: 2px 8px;
   border-radius: 6px;
-  background: #ea580c;
-  color: #ffffff;
-  font-size: 0.65rem;
-  font-weight: 800;
+  background: var(--primary-600);
+  color: var(--white);
+  font-size: var(--fs-10);
+  font-weight: var(--fw-semibold);
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
 .fl-dr-category-sub {
-  font-size: 0.78rem;
+  font-size: var(--fs-12);
   font-weight: 500;
-  color: #78716c;
+  color: var(--neutral-500);
 }
 
 .fl-dr-category-chevron {
-  color: #a8a29e;
+  color: var(--neutral-400);
   display: flex;
   align-items: center;
-  font-size: 1.15rem;
+  font-size: var(--fs-18);
 }
 
 /* 4. Bottom Info / Notice Card */
 .fl-dr-notice-card {
-  background: #fffbf8;
+  background: var(--secondary-50);
   border: 1px solid var(--fl-orange);
   border-radius: 16px;
   padding: 14px 16px;
@@ -2449,13 +2449,13 @@
 
 .fl-dr-notice-icon {
   flex-shrink: 0;
-  color: #78716c;
+  color: var(--neutral-500);
   margin-top: 1px;
 }
 
 .fl-dr-notice-text {
-  font-size: 0.79rem;
-  color: #57534e;
+  font-size: var(--fs-12);
+  color: var(--neutral-600);
   line-height: 1.5;
   margin: 0;
   font-weight: 500;
@@ -2480,8 +2480,8 @@
 }
 
 .fl-profile-header-title {
-  font-size: 1.35rem;
-  font-weight: 800;
+  font-size: var(--fs-22);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
   letter-spacing: -0.025em;
   margin: 0;
@@ -2489,7 +2489,7 @@
 
 /* 2. Top Profile Card */
 .fl-user-profile-card {
-  background: #fffdfa;
+  background: var(--neutral-50);
   border: 1px solid var(--fl-card-border);
   border-radius: 20px;
   padding: 32px 20px 26px;
@@ -2505,12 +2505,12 @@
   width: 78px;
   height: 78px;
   border-radius: 50%;
-  border: 1px solid #ebdcd0;
-  background: #ffffff;
+  border: 1px solid var(--secondary-100);
+  background: var(--white);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #8c7b6d;
+  color: var(--neutral-500);
   margin-bottom: 14px;
 }
 
@@ -2520,21 +2520,21 @@
 }
 
 .fl-user-profile-name {
-  font-size: 1.35rem;
-  font-weight: 800;
+  font-size: var(--fs-22);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
   margin: 0 0 8px 0;
   letter-spacing: -0.02em;
 }
 
 .fl-user-profile-badge {
-  border: 1px solid #b45309;
+  border: 1px solid var(--warning-700);
   border-radius: var(--fl-radius-pill);
   padding: 3px 14px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: #b45309;
-  background: #fff8f5;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+  color: var(--warning-700);
+  background: var(--secondary-50);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   margin-bottom: 12px;
@@ -2545,9 +2545,9 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.8rem;
+  font-size: var(--fs-12);
   font-weight: 500;
-  color: #57534e;
+  color: var(--neutral-600);
 }
 
 .fl-user-profile-dot {
@@ -2560,16 +2560,16 @@
 
 /* 3. Section Informasi Akun */
 .fl-account-info-heading {
-  font-size: 0.76rem;
-  font-weight: 800;
-  color: #78716c;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+  color: var(--neutral-500);
   letter-spacing: 0.05em;
   text-transform: uppercase;
   margin-bottom: 10px;
 }
 
 .fl-account-info-card {
-  background: #fffdfa;
+  background: var(--neutral-50);
   border: 1px solid var(--fl-card-border);
   border-radius: 18px;
   padding: 0 18px;
@@ -2581,25 +2581,25 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px 0;
-  font-size: 0.88rem;
+  font-size: var(--fs-14);
 }
 
 .fl-account-info-row:not(:last-child) {
-  border-bottom: 1px solid #f0e6dc;
+  border-bottom: 1px solid var(--secondary-100);
 }
 
 .fl-account-info-left {
   display: flex;
   align-items: center;
   gap: 12px;
-  color: #57534e;
+  color: var(--neutral-600);
   font-weight: 500;
 }
 
 .fl-account-info-icon {
   width: 20px;
   height: 20px;
-  color: #8c7b6d;
+  color: var(--neutral-500);
   flex-shrink: 0;
 }
 
@@ -2613,12 +2613,12 @@
 .fl-btn-logout {
   width: 100%;
   background: var(--fl-orange);
-  color: #ffffff;
+  color: var(--white);
   border: none;
   border-radius: 14px;
   padding: 14px 18px;
-  font-size: 0.95rem;
-  font-weight: 700;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-semibold);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2642,18 +2642,18 @@
 }
 
 .fl-profile-footer-name {
-  font-size: 0.82rem;
-  font-weight: 800;
-  color: #78716c;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
+  color: var(--neutral-500);
   letter-spacing: 0.05em;
   text-transform: uppercase;
   display: block;
 }
 
 .fl-profile-footer-sub {
-  font-size: 0.75rem;
+  font-size: var(--fs-12);
   font-weight: 500;
-  color: #a8a29e;
+  color: var(--neutral-400);
   margin-top: 3px;
   display: block;
 }
@@ -2682,8 +2682,8 @@
 
 /* 2. Donut Card with 6 Right Progress Bars */
 .fl-revised-donut-card {
-  background: #fbf5ee;
-  border: 1px solid #ebdcd0;
+  background: var(--primary-50);
+  border: 1px solid var(--secondary-100);
   border-radius: 16px;
   padding: 16px;
   display: flex;
@@ -2709,13 +2709,13 @@
 
 .fl-revised-donut-track {
   fill: none;
-  stroke: #dfd7ce;
+  stroke: var(--neutral-300);
   stroke-width: 9;
 }
 
 .fl-revised-donut-progress {
   fill: none;
-  stroke: #22c55e;
+  stroke: var(--success-500);
   stroke-width: 9;
   stroke-linecap: round;
   transition: stroke-dashoffset 0.8s ease;
@@ -2735,16 +2735,16 @@
 }
 
 .fl-revised-donut-val {
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: #1c1917;
+  font-size: var(--fs-22);
+  font-weight: var(--fw-semibold);
+  color: var(--neutral-900);
   letter-spacing: -0.02em;
 }
 
 .fl-revised-donut-sub {
-  font-size: 0.68rem;
+  font-size: var(--fs-10);
   font-weight: 600;
-  color: #78716c;
+  color: var(--neutral-500);
   margin-top: 2px;
 }
 
@@ -2765,33 +2765,33 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.72rem;
-  color: #1c1917;
+  font-size: var(--fs-12);
+  color: var(--neutral-900);
   line-height: 1.2;
 }
 
 .fl-revised-progress-header strong {
-  font-weight: 700;
-  color: #1c1917;
+  font-weight: var(--fw-semibold);
+  color: var(--neutral-900);
 }
 
 .fl-revised-progress-header span {
-  font-size: 0.7rem;
+  font-size: var(--fs-12);
   font-weight: 600;
-  color: #78716c;
+  color: var(--neutral-500);
 }
 
 .fl-revised-bar-track {
   width: 100%;
   height: 5px;
-  background: #eedfd2;
+  background: var(--secondary-100);
   border-radius: 999px;
   overflow: hidden;
 }
 
 .fl-revised-bar-fill {
   height: 100%;
-  background: #f97316;
+  background: var(--primary-500);
   border-radius: 999px;
   transition: width 0.6s ease;
 }
@@ -2802,12 +2802,12 @@
   align-items: center;
   justify-content: space-around;
   padding: 10px 14px;
-  background: #ffffff;
-  border: 1px solid #ebdcd0;
+  background: var(--white);
+  border: 1px solid var(--secondary-100);
   border-radius: 12px;
   margin-top: 12px;
-  font-size: 0.72rem;
-  color: #78716c;
+  font-size: var(--fs-12);
+  color: var(--neutral-500);
 }
 
 .fl-legend-note-item {
@@ -2820,8 +2820,8 @@
 .fl-badge-pill.danger,
 .fl-badge-pill.red {
   color: var(--fl-red-text);
-  border-color: #fecaca;
-  background: #fef2f2;
+  border-color: var(--error-100);
+  background: var(--error-100);
 }
 
 .fl-badge-pill.danger .fl-dot,
@@ -2831,8 +2831,8 @@
 
 .fl-badge-pill.success {
   color: var(--fl-green-text);
-  border-color: #bbf7d0;
-  background: #f0fdf4;
+  border-color: var(--success-100);
+  background: var(--success-100);
 }
 
 .fl-badge-pill.success .fl-dot {
@@ -2841,8 +2841,8 @@
 
 .fl-badge-pill.warning {
   color: var(--fl-amber-text);
-  border-color: #fed7aa;
-  background: #fffbeb;
+  border-color: var(--primary-200);
+  background: var(--warning-100);
 }
 
 .fl-badge-pill.warning .fl-dot {
@@ -2851,8 +2851,8 @@
 
 /* 5. Detail Riwayat 6 Categories & Perlu Revisi */
 .fl-detail-category-card {
-  background: #ffffff;
-  border: 1px solid #ebdcd0;
+  background: var(--white);
+  border: 1px solid var(--secondary-100);
   border-radius: 14px;
   padding: 12px 14px;
   display: flex;
@@ -2864,14 +2864,14 @@
 }
 
 .fl-detail-category-card:hover {
-  background: #fbf5ee;
-  border-color: #f97316;
+  background: var(--primary-50);
+  border-color: var(--primary-500);
   transform: translateY(-1px);
 }
 
 .fl-detail-category-card.is-revisi {
-  border: 2px solid #f97316;
-  background: #fffdfa;
+  border: 2px solid var(--primary-500);
+  background: var(--neutral-50);
 }
 
 .fl-detail-cat-left {
@@ -2884,12 +2884,12 @@
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background: #fdf5ee;
-  border: 1px solid #ebdcd0;
+  background: var(--primary-50);
+  border: 1px solid var(--secondary-100);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1c1917;
+  color: var(--neutral-900);
   flex-shrink: 0;
 }
 
@@ -2906,20 +2906,20 @@
 }
 
 .fl-detail-cat-title {
-  font-size: 0.92rem;
-  font-weight: 700;
-  color: #1c1917;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
+  color: var(--neutral-900);
   margin: 0;
 }
 
 .fl-detail-cat-sub {
-  font-size: 0.76rem;
-  color: #78716c;
+  font-size: var(--fs-12);
+  color: var(--neutral-500);
   margin: 0;
 }
 
 .fl-detail-cat-sub.text-revisi {
-  color: #b45309;
+  color: var(--warning-700);
   font-weight: 600;
 }
 
@@ -2930,24 +2930,24 @@
   justify-content: space-between;
   padding: 14px 16px;
   border-radius: 14px;
-  border: 1px solid #ebdcd0;
-  background: #ffffff;
-  color: #1c1917;
+  border: 1px solid var(--secondary-100);
+  background: var(--white);
+  color: var(--neutral-900);
   text-decoration: none;
-  font-weight: 700;
-  font-size: 0.92rem;
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-14);
   transition: all 0.2s ease;
 }
 
 .drawer-menu-revised-item:hover {
-  background: #fbf5ee;
-  border-color: #f97316;
+  background: var(--primary-50);
+  border-color: var(--primary-500);
 }
 
 .drawer-menu-revised-item.is-active {
-  background: #fff8f5;
-  border: 1.5px solid #f97316;
-  color: #ea580c;
+  background: var(--secondary-50);
+  border: 1.5px solid var(--primary-500);
+  color: var(--primary-600);
 }
 
 .drawer-menu-revised-item-left {
@@ -2957,14 +2957,14 @@
 }
 
 .drawer-menu-revised-footer-pill {
-  background: #f5f0eb;
-  border: 1px solid #ebdcd0;
+  background: var(--secondary-50);
+  border: 1px solid var(--secondary-100);
   border-radius: 12px;
   padding: 12px;
   text-align: center;
-  font-size: 0.8rem;
+  font-size: var(--fs-12);
   font-weight: 600;
-  color: #78716c;
+  color: var(--neutral-500);
   margin-top: auto;
 }
 
@@ -2983,7 +2983,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  color: #ffffff;
+  color: var(--white);
   text-decoration: none;
   box-shadow: 0 4px 14px rgba(249, 115, 22, 0.28);
   margin-bottom: 16px;
@@ -2999,15 +2999,15 @@
   gap: 4px;
 }
 .fl-task-banner-title {
-  font-size: 1.15rem;
-  font-weight: 800;
-  color: #ffffff;
+  font-size: var(--fs-18);
+  font-weight: var(--fw-semibold);
+  color: var(--white);
 }
 .fl-task-banner-meta {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.82rem;
+  font-size: var(--fs-14);
   color: rgba(255, 255, 255, 0.92);
 }
 .fl-task-clock-icon {
@@ -3019,7 +3019,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #ffffff;
+  background: var(--white);
   color: var(--fl-orange);
   display: flex;
   align-items: center;
@@ -3036,7 +3036,7 @@
   margin-top: 14px;
   border: 1px solid var(--fl-card-border);
   border-radius: 14px;
-  background: #ffffff;
+  background: var(--white);
   padding: 10px 12px;
   display: flex;
   align-items: center;
@@ -3047,7 +3047,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.68rem;
+  font-size: var(--fs-10);
   color: var(--fl-text-muted);
   line-height: 1.25;
 }
@@ -3060,26 +3060,26 @@
   margin-bottom: 18px;
 }
 .fl-step-title {
-  font-size: 1.55rem;
-  font-weight: 800;
+  font-size: var(--fs-26);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
   letter-spacing: -0.02em;
   line-height: 1.2;
   margin: 0;
 }
 .fl-step-subtitle {
-  font-size: 0.85rem;
-  color: #64748b;
+  font-size: var(--fs-14);
+  color: var(--neutral-500);
   margin: 4px 0 0;
 }
 
 /* Form: tag WAJIB / OPSIONAL */
 .fl-step-card-tag {
-  border: 1.5px solid #c2410c;
-  background: #fff7ed;
-  color: #9a3412;
-  font-size: 0.66rem;
-  font-weight: 800;
+  border: 1.5px solid var(--primary-700);
+  background: var(--primary-50);
+  color: var(--primary-800);
+  font-size: var(--fs-10);
+  font-weight: var(--fw-semibold);
   letter-spacing: 0.04em;
   padding: 2px 8px;
   border-radius: 5px;
@@ -3107,8 +3107,8 @@
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  border: 1.5px solid #a8a29e;
-  color: #78716c;
+  border: 1.5px solid var(--neutral-400);
+  color: var(--neutral-500);
   display: grid;
   place-items: center;
   margin-bottom: 4px;
@@ -3118,12 +3118,12 @@
   height: 24px;
 }
 .fl-upload-prompt-text {
-  font-size: 0.92rem;
-  font-weight: 800;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
   color: var(--fl-text-main);
 }
 .fl-upload-subtext {
-  font-size: 0.76rem;
+  font-size: var(--fs-12);
   color: var(--fl-text-muted);
 }
 
@@ -3138,9 +3138,9 @@
   display: none;
 }
 .fl-photo-chip {
-  border: 1.5px solid #c2410c;
+  border: 1.5px solid var(--primary-700);
   border-radius: 12px;
-  background: #ffffff;
+  background: var(--white);
   padding: 8px 10px;
   display: inline-flex;
   align-items: center;
@@ -3153,13 +3153,13 @@
   height: 26px;
   padding: 5px;
   border-radius: 6px;
-  background: #f3ece5;
-  color: #78716c;
+  background: var(--secondary-100);
+  color: var(--neutral-500);
   flex-shrink: 0;
   box-sizing: border-box;
 }
 .fl-photo-chip-name {
-  font-size: 0.78rem;
+  font-size: var(--fs-12);
   font-weight: 600;
   color: var(--fl-text-main);
   overflow: hidden;
@@ -3169,8 +3169,8 @@
 .fl-photo-chip-close {
   background: none;
   border: none;
-  color: #78716c;
-  font-size: 1rem;
+  color: var(--neutral-500);
+  font-size: var(--fs-16);
   line-height: 1;
   cursor: pointer;
   padding: 0 2px;

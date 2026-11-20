@@ -7,10 +7,11 @@
     <title>Hasil Produksi | Capaian.id - Produksi</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/produksi.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/design-system.css') }}" />
 </head>
 
 <body>
@@ -18,10 +19,7 @@
         <!-- 1. Header Bar Sesuai Desain Figma (Tombol X, Progress 5-Langkah, Badge PRODUKSI) -->
         <header class="fl-step-header">
             <a href="{{ route('produksi.dashboard') }}" class="fl-step-close-btn" aria-label="Batal dan kembali ke dashboard">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
+                <x-icon name="cancel" />
             </a>
 
             <!-- 5-Steps Indicator (Langkah 1 Aktif) -->
@@ -39,9 +37,9 @@
         </header>
 
         <!-- Subheader Langkah -->
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; font-size: 0.8rem; font-weight: 600;">
-            <span style="color: #1c1917;">Langkah 1 dari 5</span>
-            <span style="color: #78716c;">Hasil Produksi</span>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; font-size: var(--fs-12); font-weight: 600;">
+            <span style="color: var(--neutral-900);">Langkah 1 dari 5</span>
+            <span style="color: var(--neutral-500);">Hasil Produksi</span>
         </div>
 
         <!-- 2. Judul Halaman Sesuai Figma -->
@@ -64,11 +62,9 @@
                 <!-- Section: PRODUKTIVITAS PRODUKSI -->
                 <span class="produksi-section-label">PRODUKTIVITAS PRODUKSI</span>
                 <label class="produksi-check-card {{ !empty($stepData['target_roti']) ? 'is-checked' : '' }}">
-                    <input type="checkbox" name="indicators[target_roti]" value="1" {{ !empty($stepData['target_roti']) ? 'checked' : '' }} style="display: none;" />
+                    <input class="ds-visually-hidden" type="checkbox" name="indicators[target_roti]" value="1" {{ !empty($stepData['target_roti']) ? 'checked' : '' }} />
                     <div class="produksi-check-box">
-                        <svg class="produksi-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
+                        <x-icon name="check" class="produksi-check-icon" />
                     </div>
                     <div class="produksi-check-info">
                         <span class="produksi-check-title">Target jumlah roti sesuai rencana harian</span>
@@ -79,11 +75,9 @@
                 <!-- Section: KUALITAS PRODUK -->
                 <span class="produksi-section-label">KUALITAS PRODUK</span>
                 <label class="produksi-check-card {{ !empty($stepData['reject_maksimal']) ? 'is-checked' : '' }}">
-                    <input type="checkbox" name="indicators[reject_maksimal]" value="1" {{ !empty($stepData['reject_maksimal']) ? 'checked' : '' }} style="display: none;" />
+                    <input class="ds-visually-hidden" type="checkbox" name="indicators[reject_maksimal]" value="1" {{ !empty($stepData['reject_maksimal']) ? 'checked' : '' }} />
                     <div class="produksi-check-box">
-                        <svg class="produksi-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
+                        <x-icon name="check" class="produksi-check-icon" />
                     </div>
                     <div class="produksi-check-info">
                         <span class="produksi-check-title">Produk reject maksimal 2%</span>
@@ -94,11 +88,9 @@
                 <!-- Section: WASTE BAHAN BAKU -->
                 <span class="produksi-section-label">WASTE BAHAN BAKU</span>
                 <label class="produksi-check-card {{ !empty($stepData['waste_terkontrol']) ? 'is-checked' : '' }}">
-                    <input type="checkbox" name="indicators[waste_terkontrol]" value="1" {{ !empty($stepData['waste_terkontrol']) ? 'checked' : '' }} style="display: none;" />
+                    <input class="ds-visually-hidden" type="checkbox" name="indicators[waste_terkontrol]" value="1" {{ !empty($stepData['waste_terkontrol']) ? 'checked' : '' }} />
                     <div class="produksi-check-box">
-                        <svg class="produksi-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
+                        <x-icon name="check" class="produksi-check-icon" />
                     </div>
                     <div class="produksi-check-info">
                         <span class="produksi-check-title">Penggunaan bahan baku terkontrol</span>
@@ -109,11 +101,7 @@
 
             <!-- 4. Dashed Notice Bottom Box Sesuai Figma -->
             <div class="produksi-notice-dashed">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="16" x2="12" y2="12"></line>
-                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                </svg>
+                <x-icon name="info-empty" width="18" height="18" />
                 <span>Ketuk baris untuk menandai ceklis selesai dikerjakan.</span>
             </div>
 
@@ -128,7 +116,7 @@
                 </button>
             </div>
 
-            <div style="text-align: center; margin-top: 12px; margin-bottom: 24px; font-size: 0.78rem; color: #a8a29e;">
+            <div style="text-align: center; margin-top: 12px; margin-bottom: 24px; font-size: var(--fs-12); color: var(--neutral-400);">
                 Langkah 1 dari 5
             </div>
         </form>

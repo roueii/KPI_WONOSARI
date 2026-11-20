@@ -19,9 +19,7 @@
     <header class="fl-header">
         <a href="{{ route($r . '.profile') }}" class="fl-profile-group" style="text-decoration: none; color: inherit;" aria-label="Lihat Profil">
             <div class="fl-avatar-circle" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
-                </svg>
+                <x-icon name="user" />
             </div>
             <div class="fl-profile-info">
                 <h1 class="fl-profile-name">Halo, {{ $user['name'] }}</h1>
@@ -96,10 +94,7 @@
                 </span>
             </div>
             <span class="ck-cta-arrow" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
+                <x-icon name="arrow-right" width="20" height="20" />
             </span>
         </a>
 
@@ -135,8 +130,8 @@
             @foreach ($recentAchievements as $item)
                 <a href="{{ route($r . '.riwayat.detail', $item['id']) }}" class="fl-recent-card" style="text-decoration: none; color: inherit;">
                     <div class="fl-recent-left">
-                        <span class="fl-recent-title" style="font-size: 0.92rem; font-weight: 700;">{{ $item['title'] }}</span>
-                        <span class="fl-recent-date" style="font-size: 0.78rem; color: #78716c;">{{ $item['sub'] }}</span>
+                        <span class="fl-recent-title" style="font-size: var(--fs-14); font-weight: var(--fw-semibold);">{{ $item['title'] }}</span>
+                        <span class="fl-recent-date" style="font-size: var(--fs-12); color: var(--neutral-500);">{{ $item['sub'] }}</span>
                     </div>
                     <span class="fl-status-badge {{ $item['badge_class'] }}">{{ $item['status_label'] }}</span>
                 </a>

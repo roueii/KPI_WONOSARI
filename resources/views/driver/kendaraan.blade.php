@@ -7,10 +7,11 @@
     <title>Kendaraan & BBM | Capaian.id - Driver</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/driver.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/design-system.css') }}" />
 </head>
 
 <body>
@@ -18,10 +19,7 @@
         <!-- 1. Header Bar Sesuai Desain Figma (Tombol X, Progress 4-Langkah, Badge DRIVER) -->
         <header class="fl-step-header">
             <a href="{{ route('driver.dashboard') }}" class="fl-step-close-btn" aria-label="Batal dan kembali ke dashboard">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
+                <x-icon name="cancel" />
             </a>
 
             <!-- 4-Steps Indicator (Langkah 3 Aktif) -->
@@ -38,9 +36,9 @@
         </header>
 
         <!-- Subheader Langkah -->
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; font-size: 0.8rem; font-weight: 600;">
-            <span style="color: #1c1917;">Langkah 3 dari 4</span>
-            <span style="color: #78716c;">Kendaraan &amp; BBM</span>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; font-size: var(--fs-12); font-weight: 600;">
+            <span style="color: var(--neutral-900);">Langkah 3 dari 4</span>
+            <span style="color: var(--neutral-500);">Kendaraan &amp; BBM</span>
         </div>
 
         <!-- 2. Judul Halaman Sesuai Figma -->
@@ -63,11 +61,9 @@
                 <div style="display: flex; flex-direction: column; gap: 10px;">
                     <!-- Item 1 -->
                     <label class="driver-check-card {{ !empty($stepData['kebersihan']) ? 'is-checked' : '' }}">
-                        <input type="checkbox" name="indicators[kebersihan]" value="1" {{ !empty($stepData['kebersihan']) ? 'checked' : '' }} style="display: none;" />
+                        <input class="ds-visually-hidden" type="checkbox" name="indicators[kebersihan]" value="1" {{ !empty($stepData['kebersihan']) ? 'checked' : '' }} />
                         <div class="driver-check-box">
-                            <svg class="driver-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
+                            <x-icon name="check" class="driver-check-icon" />
                         </div>
                         <div class="driver-check-info">
                             <span class="driver-check-title">Kendaraan bersih setiap hari</span>
@@ -77,11 +73,9 @@
 
                     <!-- Item 2 -->
                     <label class="driver-check-card {{ !empty($stepData['cek_rem']) ? 'is-checked' : '' }}">
-                        <input type="checkbox" name="indicators[cek_rem]" value="1" {{ !empty($stepData['cek_rem']) ? 'checked' : '' }} style="display: none;" />
+                        <input class="ds-visually-hidden" type="checkbox" name="indicators[cek_rem]" value="1" {{ !empty($stepData['cek_rem']) ? 'checked' : '' }} />
                         <div class="driver-check-box">
-                            <svg class="driver-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
+                            <x-icon name="check" class="driver-check-icon" />
                         </div>
                         <div class="driver-check-info">
                             <span class="driver-check-title">Cek rem pada kendaraan</span>
@@ -91,11 +85,9 @@
 
                     <!-- Item 3 -->
                     <label class="driver-check-card {{ !empty($stepData['cek_oli']) ? 'is-checked' : '' }}">
-                        <input type="checkbox" name="indicators[cek_oli]" value="1" {{ !empty($stepData['cek_oli']) ? 'checked' : '' }} style="display: none;" />
+                        <input class="ds-visually-hidden" type="checkbox" name="indicators[cek_oli]" value="1" {{ !empty($stepData['cek_oli']) ? 'checked' : '' }} />
                         <div class="driver-check-box">
-                            <svg class="driver-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
+                            <x-icon name="check" class="driver-check-icon" />
                         </div>
                         <div class="driver-check-info">
                             <span class="driver-check-title">Cek oli pada kendaraan</span>
@@ -105,11 +97,9 @@
 
                     <!-- Item 4 -->
                     <label class="driver-check-card {{ !empty($stepData['cek_ban']) ? 'is-checked' : '' }}">
-                        <input type="checkbox" name="indicators[cek_ban]" value="1" {{ !empty($stepData['cek_ban']) ? 'checked' : '' }} style="display: none;" />
+                        <input class="ds-visually-hidden" type="checkbox" name="indicators[cek_ban]" value="1" {{ !empty($stepData['cek_ban']) ? 'checked' : '' }} />
                         <div class="driver-check-box">
-                            <svg class="driver-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
+                            <x-icon name="check" class="driver-check-icon" />
                         </div>
                         <div class="driver-check-info">
                             <span class="driver-check-title">Cek ban pada kendaraan</span>
@@ -119,11 +109,9 @@
 
                     <!-- Item 5 -->
                     <label class="driver-check-card {{ !empty($stepData['cek_lampu']) ? 'is-checked' : '' }}">
-                        <input type="checkbox" name="indicators[cek_lampu]" value="1" {{ !empty($stepData['cek_lampu']) ? 'checked' : '' }} style="display: none;" />
+                        <input class="ds-visually-hidden" type="checkbox" name="indicators[cek_lampu]" value="1" {{ !empty($stepData['cek_lampu']) ? 'checked' : '' }} />
                         <div class="driver-check-box">
-                            <svg class="driver-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
+                            <x-icon name="check" class="driver-check-icon" />
                         </div>
                         <div class="driver-check-info">
                             <span class="driver-check-title">Cek lampu pada kendaraan</span>
@@ -133,11 +121,9 @@
 
                     <!-- Item 6 -->
                     <label class="driver-check-card {{ !empty($stepData['lapor_kerusakan']) ? 'is-checked' : '' }}">
-                        <input type="checkbox" name="indicators[lapor_kerusakan]" value="1" {{ !empty($stepData['lapor_kerusakan']) ? 'checked' : '' }} style="display: none;" />
+                        <input class="ds-visually-hidden" type="checkbox" name="indicators[lapor_kerusakan]" value="1" {{ !empty($stepData['lapor_kerusakan']) ? 'checked' : '' }} />
                         <div class="driver-check-box">
-                            <svg class="driver-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
+                            <x-icon name="check" class="driver-check-icon" />
                         </div>
                         <div class="driver-check-info">
                             <span class="driver-check-title">Melaporkan kerusakan sebelum parah</span>
@@ -157,11 +143,9 @@
                 <div style="display: flex; flex-direction: column; gap: 10px;">
                     <!-- Item 1 -->
                     <label class="driver-check-card {{ !empty($stepData['tidak_boros_bbm']) ? 'is-checked' : '' }}">
-                        <input type="checkbox" name="indicators[tidak_boros_bbm]" value="1" {{ !empty($stepData['tidak_boros_bbm']) ? 'checked' : '' }} style="display: none;" />
+                        <input class="ds-visually-hidden" type="checkbox" name="indicators[tidak_boros_bbm]" value="1" {{ !empty($stepData['tidak_boros_bbm']) ? 'checked' : '' }} />
                         <div class="driver-check-box">
-                            <svg class="driver-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
+                            <x-icon name="check" class="driver-check-icon" />
                         </div>
                         <div class="driver-check-info">
                             <span class="driver-check-title">Tidak boros BBM</span>
@@ -171,11 +155,9 @@
 
                     <!-- Item 2 -->
                     <label class="driver-check-card {{ !empty($stepData['tidak_pribadi']) ? 'is-checked' : '' }}">
-                        <input type="checkbox" name="indicators[tidak_pribadi]" value="1" {{ !empty($stepData['tidak_pribadi']) ? 'checked' : '' }} style="display: none;" />
+                        <input class="ds-visually-hidden" type="checkbox" name="indicators[tidak_pribadi]" value="1" {{ !empty($stepData['tidak_pribadi']) ? 'checked' : '' }} />
                         <div class="driver-check-box">
-                            <svg class="driver-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
+                            <x-icon name="check" class="driver-check-icon" />
                         </div>
                         <div class="driver-check-info">
                             <span class="driver-check-title">Tidak menggunakan kendaraan untuk kepentingan pribadi</span>
@@ -185,11 +167,9 @@
 
                     <!-- Item 3 -->
                     <label class="driver-check-card {{ !empty($stepData['rute_efektif']) ? 'is-checked' : '' }}">
-                        <input type="checkbox" name="indicators[rute_efektif]" value="1" {{ !empty($stepData['rute_efektif']) ? 'checked' : '' }} style="display: none;" />
+                        <input class="ds-visually-hidden" type="checkbox" name="indicators[rute_efektif]" value="1" {{ !empty($stepData['rute_efektif']) ? 'checked' : '' }} />
                         <div class="driver-check-box">
-                            <svg class="driver-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
+                            <x-icon name="check" class="driver-check-icon" />
                         </div>
                         <div class="driver-check-info">
                             <span class="driver-check-title">Menggunakan rute efektif</span>
@@ -201,11 +181,7 @@
 
             <!-- 5. Dashed Notice Bottom Box Sesuai Figma -->
             <div class="driver-notice-dashed">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="16" x2="12" y2="12"></line>
-                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                </svg>
+                <x-icon name="info-empty" width="18" height="18" />
                 <span>Ketuk baris untuk menandai ceklis selesai dikerjakan.</span>
             </div>
 
@@ -220,7 +196,7 @@
                 </button>
             </div>
 
-            <div style="text-align: center; margin-top: 12px; margin-bottom: 24px; font-size: 0.78rem; color: #a8a29e;">
+            <div style="text-align: center; margin-top: 12px; margin-bottom: 24px; font-size: var(--fs-12); color: var(--neutral-400);">
                 Langkah 3 dari 4
             </div>
         </form>

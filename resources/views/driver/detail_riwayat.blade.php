@@ -7,10 +7,11 @@
     <title>Detail Riwayat Driver | Capaian.id - KPI Wonosari</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/driver.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/design-system.css') }}" />
 </head>
 
 <body>
@@ -18,10 +19,7 @@
         <!-- 1. Header Bar Sesuai Desain Figma (Tombol Panah Kembali + Judul Detail Riwayat) -->
         <header class="fl-riwayat-header">
             <a href="{{ route('driver.riwayat') }}" class="fl-step-close-btn" aria-label="Kembali ke Daftar Riwayat Driver">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="19" y1="12" x2="5" y2="12"></line>
-                    <polyline points="12 19 5 12 12 5"></polyline>
-                </svg>
+                <x-icon name="arrow-left" />
             </a>
 
             <div class="fl-riwayat-header-text">
@@ -35,17 +33,14 @@
             <div class="fl-dr-summary-top">
                 <h2 class="fl-dr-summary-title">{{ $detailRiwayat['title'] ?? 'Riwayat — 24 Okt' }}</h2>
                 @if(!empty($isRevision))
-                    <span class="fl-history-badge badge-revisi" style="font-size: 0.72rem; padding: 4px 10px; text-transform: uppercase;">PERLU REVISI</span>
+                    <span class="fl-history-badge badge-revisi" style="font-size: var(--fs-12); padding: 4px 10px; text-transform: uppercase;">PERLU REVISI</span>
                 @else
-                    <span class="fl-history-badge badge-disetujui" style="font-size: 0.72rem; padding: 4px 10px; text-transform: uppercase;">DISETUJUI</span>
+                    <span class="fl-history-badge badge-disetujui" style="font-size: var(--fs-12); padding: 4px 10px; text-transform: uppercase;">DISETUJUI</span>
                 @endif
             </div>
 
             <div class="fl-dr-summary-time">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polyline points="12 6 12 12 16 14"></polyline>
-                </svg>
+                <x-icon name="clock" width="16" height="16" aria-hidden="true" />
                 <span>{{ $detailRiwayat['sent_at'] ?? 'Dikirim 24 Okt 2026, 21:05 WIB' }}</span>
             </div>
         </section>
@@ -91,34 +86,16 @@
                             <div class="driver-cat-icon-box {{ $cat['is_highlighted'] ? 'is-orange' : '' }}">
                                 @if($cat['icon'] === 'box')
                                     <!-- Icon Box / Package (Ketepatan Pengiriman & Keamanan) -->
-                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                                    </svg>
+                                    <x-icon name="box-iso" width="22" height="22" />
                                 @elseif($cat['icon'] === 'document')
                                     <!-- Icon Document (SOP Administrasi) -->
-                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                        <polyline points="14 2 14 8 20 8"></polyline>
-                                        <line x1="16" y1="13" x2="8" y2="13"></line>
-                                        <line x1="16" y1="17" x2="8" y2="17"></line>
-                                        <polyline points="10 9 9 9 8 9"></polyline>
-                                    </svg>
+                                    <x-icon name="page" width="22" height="22" />
                                 @elseif($cat['icon'] === 'truck')
                                     <!-- Icon Delivery Truck (Kendaraan & BBM) -->
-                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <rect x="1" y="3" width="15" height="13"></rect>
-                                        <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
-                                        <circle cx="5.5" cy="18.5" r="2.5"></circle>
-                                        <circle cx="18.5" cy="18.5" r="2.5"></circle>
-                                    </svg>
+                                    <x-icon name="truck" width="22" height="22" />
                                 @else
                                     <!-- Icon Headset (Disiplin & Pelayanan) -->
-                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                                        <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-                                    </svg>
+                                    <x-icon name="headset-help" width="22" height="22" />
                                 @endif
                             </div>
 
@@ -142,11 +119,7 @@
         <!-- 5. KARTU NOTIFIKASI BAWAH (Hanya jika perlu perbaikan) -->
         @if(!empty($isRevision))
         <aside class="fl-dr-notice-card" role="note">
-            <svg class="fl-dr-notice-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="16" x2="12" y2="12"></line>
-                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-            </svg>
+            <x-icon name="info-empty" class="fl-dr-notice-icon" width="20" height="20" aria-hidden="true" />
             <p class="fl-dr-notice-text">
                 {{ $detailRiwayat['notice'] ?? 'Catatan: Laporan ini perlu direvisi sesuai catatan Store Manager. Perubahan hanya dibuka untuk kategori yang membutuhkan perbaikan.' }}
             </p>
@@ -154,13 +127,13 @@
         @endif
 
         <!-- Toggle Preview Status (Untuk Pengujian Status Disetujui vs Revisi) -->
-        <div style="text-align: center; margin-top: 10px; margin-bottom: 24px; font-size: 0.78rem;">
+        <div style="text-align: center; margin-top: 10px; margin-bottom: 24px; font-size: var(--fs-12);">
             @if(empty($isRevision))
-                <a href="{{ request()->fullUrlWithQuery(['status' => 'revisi']) }}" style="color: #ea580c; text-decoration: none; font-weight: 600;">
+                <a href="{{ request()->fullUrlWithQuery(['status' => 'revisi']) }}" style="color: var(--primary-600); text-decoration: none; font-weight: 600;">
                     &bull; Lihat Tampilan State: Perlu Perbaikan (Revisi) &bull;
                 </a>
             @else
-                <a href="{{ request()->fullUrlWithQuery(['status' => 'disetujui']) }}" style="color: #22c55e; text-decoration: none; font-weight: 600;">
+                <a href="{{ request()->fullUrlWithQuery(['status' => 'disetujui']) }}" style="color: var(--success-500); text-decoration: none; font-weight: 600;">
                     &bull; Lihat Tampilan State: Disetujui &bull;
                 </a>
             @endif

@@ -7,10 +7,11 @@
     <title>Dashboard Produksi | Capaian.id - KPI Wonosari</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/produksi.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/design-system.css') }}" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 </head>
 
@@ -20,9 +21,7 @@
         <header class="fl-header">
             <a href="{{ route('produksi.profile') }}" class="fl-profile-group" style="text-decoration: none; color: inherit;" aria-label="Lihat Profil Produksi">
                 <div class="fl-avatar-circle" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
-                    </svg>
+                    <x-icon name="user" />
                 </div>
                 <div class="fl-profile-info">
                     <h1 class="fl-profile-name">Halo, {{ $user['name'] ?? 'User' }}</h1>
@@ -106,18 +105,12 @@
                 <div class="fl-task-banner-content">
                     <span class="fl-task-banner-title">{{ $dailyTask['banner_title'] }}</span>
                     <div class="fl-task-banner-meta">
-                        <svg class="fl-task-clock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
+                        <x-icon name="clock" class="fl-task-clock-icon" aria-hidden="true" />
                         <span>{{ $dailyTask['banner_sub'] }}</span>
                     </div>
                 </div>
                 <div class="fl-task-arrow-btn" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                        <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
+                    <x-icon name="arrow-right" />
                 </div>
             </a>
 
@@ -146,15 +139,15 @@
         <section class="fl-section-group" aria-labelledby="terbaru-heading">
             <div class="fl-section-header" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
                 <h2 id="terbaru-heading">Capaian Terbaru</h2>
-                <a href="{{ route('produksi.riwayat') }}" style="font-size: 0.78rem; font-weight: 600; color: #f97316; text-decoration: none;">Lihat Semua &rarr;</a>
+                <a href="{{ route('produksi.riwayat') }}" style="font-size: var(--fs-12); font-weight: 600; color: var(--primary-500); text-decoration: none;">Lihat Semua &rarr;</a>
             </div>
 
             <div class="fl-recent-list">
                 @foreach ($recentAchievements as $item)
                     <a href="{{ $item['url'] }}" class="fl-recent-card" style="text-decoration: none; color: inherit;">
                         <div class="fl-recent-left">
-                            <span class="fl-recent-title" style="font-size: 0.92rem; font-weight: 700;">{{ $item['title'] }}</span>
-                            <span class="fl-recent-date" style="font-size: 0.78rem; color: #78716c;">{{ $item['sub'] }}</span>
+                            <span class="fl-recent-title" style="font-size: var(--fs-14); font-weight: var(--fw-semibold);">{{ $item['title'] }}</span>
+                            <span class="fl-recent-date" style="font-size: var(--fs-12); color: var(--neutral-500);">{{ $item['sub'] }}</span>
                         </div>
                         <span class="fl-status-badge {{ $item['badge_class'] }}">{{ $item['status_label'] }}</span>
                     </a>

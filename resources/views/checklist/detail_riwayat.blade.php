@@ -6,10 +6,7 @@
 @section('content')
     <header class="fl-riwayat-header">
         <a href="{{ route($r . '.riwayat') }}" class="fl-step-close-btn" aria-label="Kembali ke daftar riwayat">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
+            <x-icon name="arrow-left" />
         </a>
         <div class="fl-riwayat-header-text">
             <h1 class="fl-riwayat-title">Detail Riwayat</h1>
@@ -24,7 +21,7 @@
         </div>
         <div class="fl-dr-summary-time">
             @include('checklist.partials.icon', ['name' => 'clock', 'size' => 16])
-            <span>Dikirim {{ $item['full_date'] }}, 21:05 WIB</span>
+            <span>{{ $item['sent_label'] ?? 'Dikirim ' . $item['full_date'] . ', 21:05 WIB' }}</span>
         </div>
     </section>
 
@@ -76,11 +73,7 @@
 
     @if ($isRevision)
         <aside class="fl-dr-notice-card" role="note">
-            <svg class="fl-dr-notice-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="16" x2="12" y2="12"></line>
-                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-            </svg>
+            <x-icon name="info-empty" class="fl-dr-notice-icon" width="20" height="20" aria-hidden="true" />
             <p class="fl-dr-notice-text">Catatan: Laporan ini perlu direvisi sesuai catatan Store Manager. Perubahan hanya dibuka untuk kategori yang membutuhkan perbaikan.</p>
         </aside>
     @endif

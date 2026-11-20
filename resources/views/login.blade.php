@@ -7,9 +7,10 @@
     <title>Masuk | Capaian.id</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/login.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/design-system.css') }}" />
 </head>
 
 <body>
@@ -71,14 +72,8 @@
                         aria-label="Tampilkan kata sandi"
                         aria-pressed="false"
                     >
-                        <svg class="eye-open" viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M2.5 12 C4.5 8.4 8 6 12 6 C16 6 21.5 9.6 21.5 12 C19.5 15.6 16 18 12 18 C8 18 4.5 15.6 2.5 12 Z" />
-                            <circle cx="12" cy="12" r="2.5" />
-                        </svg>
-                        <svg class="eye-closed" viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M3 3l18 18M10.6 6.2A10.7 10.7 0 0 1 12 6c6.1 0 9.5 6 9.5 6a16 16 0 0 1-3 3.6M6.2 6.8C3.8 8.3 2.5 12 2.5 12s3.4 6 9.5 6c1.2 0 2.3-.2 3.3-.6" />
-                            <path d="M9.9 9.9a3 3 0 0 0 4.2 4.2" />
-                        </svg>
+                        <x-icon name="eye-empty" class="eye-open" aria-hidden="true" />
+                        <x-icon name="eye-off" class="eye-closed" aria-hidden="true" />
                     </button>
                 </div>
                 <span class="field-error @error('password') is-visible @enderror" id="password-error" aria-live="polite">
@@ -88,39 +83,37 @@
             <p class="login-feedback" role="status" aria-live="polite"></p>
             <button class="submit-btn" id="submit-btn" type="submit">
                 <span>Masuk</span>
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M5 12h14M13 6l6 6-6 6" />
-                </svg>
+                <x-icon name="arrow-right" aria-hidden="true" />
             </button>
         </form>
         <p class="login-footer">Gunakan akun yang telah didaftarkan oleh admin.</p>
 
         <!-- Shortcut Cepat Akun Demo -->
-        <div style="margin-top: 20px; padding: 14px; background: #fffdfa; border: 1.5px dashed #ebdcd0; border-radius: 14px; text-align: left;">
+        <div style="margin-top: 20px; padding: 14px; background: var(--neutral-50); border: 1.5px dashed var(--secondary-100); border-radius: 14px; text-align: left;">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                <span style="font-size: 0.76rem; font-weight: 800; color: #1c1917; letter-spacing: 0.02em;">PILIH AKUN DEMO:</span>
-                <span style="font-size: 0.7rem; color: #78716c;">Password: <strong style="color: #1c1917;">12345678</strong></span>
+                <span style="font-size: var(--fs-12); font-weight: var(--fw-semibold); color: var(--neutral-900); letter-spacing: 0.02em;">PILIH AKUN DEMO:</span>
+                <span style="font-size: var(--fs-12); color: var(--neutral-500);">Password: <strong style="color: var(--neutral-900);">12345678</strong></span>
             </div>
             <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-                <button type="button" class="demo-fill-btn" data-email="sm@gmail.com" style="padding: 5px 10px; border-radius: 8px; border: 1px solid #fed7aa; background: #fff7ed; color: #c2410c; font-size: 0.72rem; font-weight: 700; cursor: pointer;">
+                <button type="button" class="demo-fill-btn ds-btn ds-btn--outline ds-btn--small" data-email="sm@gmail.com">
                     Store Manager
                 </button>
-                <button type="button" class="demo-fill-btn" data-email="frontliner@gmail.com" style="padding: 5px 10px; border-radius: 8px; border: 1px solid #e2e8f0; background: #f8fafc; color: #334155; font-size: 0.72rem; font-weight: 700; cursor: pointer;">
+                <button type="button" class="demo-fill-btn ds-btn ds-btn--outline ds-btn--small" data-email="frontliner@gmail.com">
                     Frontliner
                 </button>
-                <button type="button" class="demo-fill-btn" data-email="produksi@gmail.com" style="padding: 5px 10px; border-radius: 8px; border: 1px solid #e2e8f0; background: #f8fafc; color: #334155; font-size: 0.72rem; font-weight: 700; cursor: pointer;">
+                <button type="button" class="demo-fill-btn ds-btn ds-btn--outline ds-btn--small" data-email="produksi@gmail.com">
                     Produksi
                 </button>
-                <button type="button" class="demo-fill-btn" data-email="driver@gmail.com" style="padding: 5px 10px; border-radius: 8px; border: 1px solid #e2e8f0; background: #f8fafc; color: #334155; font-size: 0.72rem; font-weight: 700; cursor: pointer;">
+                <button type="button" class="demo-fill-btn ds-btn ds-btn--outline ds-btn--small" data-email="driver@gmail.com">
                     Driver
                 </button>
-                <button type="button" class="demo-fill-btn" data-email="sales@capaian.id" style="padding: 5px 10px; border-radius: 8px; border: 1px solid #e2e8f0; background: #f8fafc; color: #334155; font-size: 0.72rem; font-weight: 700; cursor: pointer;">
+                <button type="button" class="demo-fill-btn ds-btn ds-btn--outline ds-btn--small" data-email="sales@capaian.id">
                     Sales &amp; Marketing
                 </button>
-                <button type="button" class="demo-fill-btn" data-email="supervisor@capaian.id" style="padding: 5px 10px; border-radius: 8px; border: 1px solid #e2e8f0; background: #f8fafc; color: #334155; font-size: 0.72rem; font-weight: 700; cursor: pointer;">
+                <button type="button" class="demo-fill-btn ds-btn ds-btn--outline ds-btn--small" data-email="supervisor@capaian.id">
                     Supervisor
                 </button>
-                <button type="button" class="demo-fill-btn" data-email="admin@gmail.com" style="padding: 5px 10px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f1f5f9; color: #0f172a; font-size: 0.72rem; font-weight: 700; cursor: pointer;">
+                <button type="button" class="demo-fill-btn ds-btn ds-btn--outline ds-btn--small" data-email="admin@gmail.com">
                     Admin
                 </button>
             </div>

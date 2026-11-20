@@ -7,9 +7,10 @@
     <title>Approve Laporan | Capaian.id - KPI Wonosari</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/design-system.css') }}" />
 </head>
 
 <body>
@@ -18,10 +19,7 @@
         <header class="revisi-header-bar">
             <div class="header-title-wrapper">
                 <a href="{{ route('admin.dashboard') }}" class="back-btn" aria-label="Kembali ke beranda">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="19" y1="12" x2="5" y2="12"></line>
-                        <polyline points="12 19 5 12 12 5"></polyline>
-                    </svg>
+                    <x-icon name="arrow-left" width="20" height="20" />
                 </a>
                 <div class="header-titles">
                     <h1 class="header-page-title">Approve Laporan</h1>
@@ -80,12 +78,7 @@
         <div class="account-summary-card">
             <div class="summary-card-left">
                 <div class="approval-summary-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="9" cy="7" r="4" />
-                        <path d="M2 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2" />
-                        <circle cx="19" cy="11" r="3" />
-                        <path d="m17.5 11 1 1 2-2" />
-                    </svg>
+                    <x-icon name="verified-user" width="20" height="20" />
                 </div>
                 <div class="approval-summary-text">
                     <strong class="approval-summary-count" id="reportsCountText">6 Laporan</strong>
@@ -106,9 +99,7 @@
                         <span class="approval-division-tag">Frontliner</span>
                     </div>
                     <span class="approval-status-badge">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
+                        <x-icon name="check" width="12" height="12" />
                         <span>Disetujui SM</span>
                     </span>
                 </div>
@@ -117,9 +108,7 @@
 
                 <!-- Info Approval SM -->
                 <div class="approval-meta-row">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 6L9 17l-5-5"></path>
-                    </svg>
+                    <x-icon name="check" width="14" height="14" style="color: var(--primary-600);" />
                     <span>Disetujui oleh <strong>Siti (Store Manager)</strong> &middot; 24 Okt, 09:15</span>
                 </div>
 
@@ -127,11 +116,7 @@
                 <div class="approval-attachment-card">
                     <div class="attachment-left">
                         <div class="attachment-thumb-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                                <polyline points="21 15 16 10 5 21"></polyline>
-                            </svg>
+                            <x-icon name="media-image" width="20" height="20" />
                         </div>
                         <div class="attachment-meta">
                             <strong>Foto Bukti (2 File)</strong>
@@ -154,9 +139,7 @@
                         <!-- Item 1: Checked -->
                         <div class="checklist-item-entry">
                             <div class="checklist-checkbox is-checked" aria-hidden="true">
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
+                                <x-icon name="check" width="13" height="13" />
                             </div>
                             <div class="checklist-entry-info">
                                 <div class="checklist-entry-title">Kebersihan Kasir & Display Roti</div>
@@ -195,12 +178,7 @@
                     <!-- Catatan Store Manager Bubble -->
                     <div class="sm-note-bubble">
                         <div class="sm-note-header">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                <polyline points="14 2 14 8 20 8"></polyline>
-                                <line x1="16" y1="13" x2="8" y2="13"></line>
-                                <line x1="16" y1="17" x2="8" y2="17"></line>
-                            </svg>
+                            <x-icon name="page" width="14" height="14" />
                             <span>CATATAN STORE MANAGER</span>
                         </div>
                         <p class="sm-note-text">
@@ -218,16 +196,11 @@
                 <!-- Tombol Aksi: Tolak & Approve Final -->
                 <div class="approval-card-actions">
                     <button type="button" class="btn-reject-action" onclick="rejectReport(1, 'Budi Santoso')">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                        </svg>
+                        <x-icon name="cancel" width="14" height="14" />
                         <span>Tolak (Revisi)</span>
                     </button>
                     <button type="button" class="btn-approve-action" onclick="approveReport(1, 'Budi Santoso')">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
+                        <x-icon name="check" width="15" height="15" />
                         <span>Approve Final</span>
                     </button>
                 </div>
@@ -241,9 +214,7 @@
                         <span class="approval-division-tag">Produksi</span>
                     </div>
                     <span class="approval-status-badge">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
+                        <x-icon name="check" width="12" height="12" />
                         <span>Disetujui SM</span>
                     </span>
                 </div>
@@ -251,17 +222,11 @@
                 
                 <div class="approval-summary-row">
                     <div class="approval-time-info">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
+                        <x-icon name="clock" width="14" height="14" />
                         <span>Disetujui Siti &middot; 10:30 WIB</span>
                     </div>
                     <span class="approval-proof-pill" onclick="previewAttachment('Joko Prasetyo - 1 Foto Bukti')">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                            <circle cx="12" cy="13" r="4"></circle>
-                        </svg>
+                        <x-icon name="camera" width="12" height="12" />
                         <span>1 Foto Bukti</span>
                     </span>
                 </div>
@@ -271,9 +236,7 @@
                         <span>Tolak (Revisi)</span>
                     </button>
                     <button type="button" class="btn-approve-action" onclick="approveReport(2, 'Joko Prasetyo')">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
+                        <x-icon name="check" width="15" height="15" />
                         <span>Approve Final</span>
                     </button>
                 </div>
@@ -287,9 +250,7 @@
                         <span class="approval-division-tag">Frontliner</span>
                     </div>
                     <span class="approval-status-badge">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
+                        <x-icon name="check" width="12" height="12" />
                         <span>Disetujui SM</span>
                     </span>
                 </div>
@@ -297,17 +258,11 @@
                 
                 <div class="approval-summary-row">
                     <div class="approval-time-info">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
+                        <x-icon name="clock" width="14" height="14" />
                         <span>Disetujui Siti &middot; 11:00 WIB</span>
                     </div>
                     <span class="approval-proof-pill" onclick="previewAttachment('Dewi Lestari - 3 Foto Bukti')">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                            <circle cx="12" cy="13" r="4"></circle>
-                        </svg>
+                        <x-icon name="camera" width="12" height="12" />
                         <span>3 Foto Bukti</span>
                     </span>
                 </div>
@@ -317,9 +272,7 @@
                         <span>Tolak (Revisi)</span>
                     </button>
                     <button type="button" class="btn-approve-action" onclick="approveReport(3, 'Dewi Lestari')">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
+                        <x-icon name="check" width="15" height="15" />
                         <span>Approve Final</span>
                     </button>
                 </div>
@@ -333,9 +286,7 @@
                         <span class="approval-division-tag">Driver</span>
                     </div>
                     <span class="approval-status-badge">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
+                        <x-icon name="check" width="12" height="12" />
                         <span>Disetujui SM</span>
                     </span>
                 </div>
@@ -343,17 +294,11 @@
                 
                 <div class="approval-summary-row">
                     <div class="approval-time-info">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
+                        <x-icon name="clock" width="14" height="14" />
                         <span>Disetujui Siti &middot; 11:45 WIB</span>
                     </div>
                     <span class="approval-proof-pill" onclick="previewAttachment('Agus Hermawan - 1 Foto Bukti')">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                            <circle cx="12" cy="13" r="4"></circle>
-                        </svg>
+                        <x-icon name="camera" width="12" height="12" />
                         <span>1 Foto Bukti</span>
                     </span>
                 </div>
@@ -363,9 +308,7 @@
                         <span>Tolak (Revisi)</span>
                     </button>
                     <button type="button" class="btn-approve-action" onclick="approveReport(4, 'Agus Hermawan')">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
+                        <x-icon name="check" width="15" height="15" />
                         <span>Approve Final</span>
                     </button>
                 </div>
@@ -379,9 +322,7 @@
                         <span class="approval-division-tag">Sales & Marketing</span>
                     </div>
                     <span class="approval-status-badge">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
+                        <x-icon name="check" width="12" height="12" />
                         <span>Disetujui SM</span>
                     </span>
                 </div>
@@ -389,17 +330,11 @@
                 
                 <div class="approval-summary-row">
                     <div class="approval-time-info">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
+                        <x-icon name="clock" width="14" height="14" />
                         <span>Disetujui Siti &middot; 24 Okt, 08:30 WIB</span>
                     </div>
                     <span class="approval-proof-pill" onclick="previewAttachment('Rian Hidayat - 2 Foto Bukti')">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                            <circle cx="12" cy="13" r="4"></circle>
-                        </svg>
+                        <x-icon name="camera" width="12" height="12" />
                         <span>2 Foto Bukti</span>
                     </span>
                 </div>
@@ -409,9 +344,7 @@
                         <span>Tolak (Revisi)</span>
                     </button>
                     <button type="button" class="btn-approve-action" onclick="approveReport(5, 'Rian Hidayat')">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
+                        <x-icon name="check" width="15" height="15" />
                         <span>Approve Final</span>
                     </button>
                 </div>
@@ -425,10 +358,7 @@
                         <span class="approval-division-tag">Store Manager</span>
                     </div>
                     <span class="approval-status-badge is-self">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <path d="m9 12 2 2 4-4"></path>
-                        </svg>
+                        <x-icon name="check-circle" width="12" height="12" />
                         <span>Self-Review SM</span>
                     </span>
                 </div>
@@ -436,17 +366,11 @@
                 
                 <div class="approval-summary-row">
                     <div class="approval-time-info">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
+                        <x-icon name="clock" width="14" height="14" />
                         <span>Disubmit Siti &middot; 23 Okt, 21:00 WIB</span>
                     </div>
                     <span class="approval-proof-pill" onclick="previewAttachment('Siti Rahma - 4 Foto Bukti')">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                            <circle cx="12" cy="13" r="4"></circle>
-                        </svg>
+                        <x-icon name="camera" width="12" height="12" />
                         <span>4 Foto Bukti</span>
                     </span>
                 </div>
@@ -456,9 +380,7 @@
                         <span>Tolak (Revisi)</span>
                     </button>
                     <button type="button" class="btn-approve-action" onclick="approveReport(6, 'Siti Rahma')">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
+                        <x-icon name="check" width="15" height="15" />
                         <span>Approve Final</span>
                     </button>
                 </div>
@@ -469,11 +391,7 @@
         <!-- 5. Info / Disclaimer Sinkronisasi Rapor Bulanan -->
         <footer class="approval-sync-disclaimer">
             <div class="disclaimer-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="16" x2="12" y2="12"></line>
-                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                </svg>
+                <x-icon name="info-empty" width="18" height="18" />
             </div>
             <div class="disclaimer-text">
                 Laporan yang disetujui final akan langsung disinkronisasi ke <strong>Rapor Bulanan</strong> dan menjadi basis kalkulasi bonus KPI karyawan secara otomatis.
@@ -490,11 +408,7 @@
                 <div class="proof-modal-body">
                     <div class="proof-photo-box">
                         <div class="photo-placeholder-card">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                                <polyline points="21 15 16 10 5 21"></polyline>
-                            </svg>
+                            <x-icon name="media-image" width="40" height="40" style="color: var(--primary-600);" />
                             <span class="photo-title" id="proofPhotoName">Foto Display Kasir & Setoran</span>
                             <small class="photo-sub">Diambil melalui kamera aplikasi &middot; Geotag Outlet Malioboro</small>
                         </div>

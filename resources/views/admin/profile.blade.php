@@ -7,9 +7,10 @@
     <title>Profil Saya | Capaian.id - KPI Wonosari</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/design-system.css') }}" />
 </head>
 
 <body>
@@ -17,10 +18,7 @@
         <!-- 1. Header Profil (Kembali, Judul, Hamburger Menu) -->
         <header class="profile-header-bar">
             <a href="{{ route('admin.dashboard') }}" class="back-btn" aria-label="Kembali ke beranda">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="19" y1="12" x2="5" y2="12"></line>
-                    <polyline points="12 19 5 12 12 5"></polyline>
-                </svg>
+                <x-icon name="arrow-left" width="20" height="20" />
             </a>
 
             <h1 class="header-page-title">Profil</h1>
@@ -35,10 +33,7 @@
         <!-- 2. Kartu Ringkasan Profil Utama -->
         <section class="profile-card">
             <div class="profile-avatar-large">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
+                <x-icon name="user" />
             </div>
 
             <h2 class="profile-display-name">{{ $user['name'] ?? 'User' }}</h2>
@@ -59,10 +54,7 @@
                 <div class="info-row">
                     <div class="info-label-group">
                         <div class="info-icon-box">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                                <polyline points="22,6 12,13 2,6"></polyline>
-                            </svg>
+                            <x-icon name="mail" />
                         </div>
                         <span class="info-label">Email</span>
                     </div>
@@ -75,11 +67,7 @@
         <form action="{{ route('logout') }}" method="POST" class="logout-form-wrapper">
             @csrf
             <button type="submit" class="logout-action-btn">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                    <polyline points="16 17 21 12 16 7"></polyline>
-                    <line x1="21" y1="12" x2="9" y2="12"></line>
-                </svg>
+                <x-icon name="log-out" width="20" height="20" />
                 <span>Keluar (Logout)</span>
             </button>
         </form>

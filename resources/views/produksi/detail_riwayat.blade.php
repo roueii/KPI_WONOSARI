@@ -7,10 +7,11 @@
     <title>Detail Riwayat Produksi | Capaian.id - KPI Wonosari</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/produksi.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/design-system.css') }}" />
 </head>
 
 <body>
@@ -18,10 +19,7 @@
         <!-- 1. Header Bar Sesuai Desain Figma (Tombol Panah Kembali + Judul Detail Riwayat) -->
         <header class="fl-riwayat-header">
             <a href="{{ route('produksi.riwayat') }}" class="fl-step-close-btn" aria-label="Kembali ke Daftar Riwayat Produksi">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="19" y1="12" x2="5" y2="12"></line>
-                    <polyline points="12 19 5 12 12 5"></polyline>
-                </svg>
+                <x-icon name="arrow-left" />
             </a>
 
             <div class="fl-riwayat-header-text">
@@ -35,17 +33,14 @@
             <div class="fl-dr-summary-top">
                 <h2 class="fl-dr-summary-title">{{ $detailRiwayat['title'] ?? 'Riwayat — 24 Okt' }}</h2>
                 @if(!empty($isRevision))
-                    <span class="fl-history-badge badge-revisi" style="font-size: 0.72rem; padding: 4px 10px; text-transform: uppercase;">PERLU REVISI</span>
+                    <span class="fl-history-badge badge-revisi" style="font-size: var(--fs-12); padding: 4px 10px; text-transform: uppercase;">PERLU REVISI</span>
                 @else
-                    <span class="fl-history-badge badge-disetujui" style="font-size: 0.72rem; padding: 4px 10px; text-transform: uppercase;">DISETUJUI</span>
+                    <span class="fl-history-badge badge-disetujui" style="font-size: var(--fs-12); padding: 4px 10px; text-transform: uppercase;">DISETUJUI</span>
                 @endif
             </div>
 
             <div class="fl-dr-summary-time">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polyline points="12 6 12 12 16 14"></polyline>
-                </svg>
+                <x-icon name="clock" width="16" height="16" aria-hidden="true" />
                 <span>{{ $detailRiwayat['sent_at'] ?? 'Dikirim 24 Okt 2026, 21:05 WIB' }}</span>
             </div>
         </section>
@@ -91,35 +86,19 @@
                             <div class="produksi-cat-icon-box {{ $cat['is_highlighted'] ? 'is-orange' : '' }}">
                                 @if($cat['icon'] === 'box')
                                     <!-- Icon Box / 3D Cube (Hasil Produksi) -->
-                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                                    </svg>
+                                    <x-icon name="box-iso" width="22" height="22" />
                                 @elseif($cat['icon'] === 'timer')
                                     <!-- Icon Stopwatch / Timer (Waktu & Alat) -->
-                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <circle cx="12" cy="14" r="8"></circle>
-                                        <line x1="12" y1="2" x2="12" y2="6"></line>
-                                        <line x1="12" y1="14" x2="12" y2="10"></line>
-                                    </svg>
+                                    <x-icon name="timer" width="22" height="22" />
                                 @elseif($cat['icon'] === 'user')
                                     <!-- Icon User / Person (Kehadiran & Disiplin) -->
-                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                        <circle cx="12" cy="7" r="4"></circle>
-                                    </svg>
+                                    <x-icon name="user" width="22" height="22" />
                                 @elseif($cat['icon'] === 'shield')
                                     <!-- Icon Shield (Kepatuhan SOP) -->
-                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                                        <polyline points="9 12 11 14 15 10"></polyline>
-                                    </svg>
+                                    <x-icon name="shield-check" width="22" height="22" />
                                 @else
                                     <!-- Icon Sparkles (Kebersihan Area Kerja) -->
-                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
-                                    </svg>
+                                    <x-icon name="sparks" width="22" height="22" />
                                 @endif
                             </div>
 
@@ -143,11 +122,7 @@
         <!-- 5. KARTU NOTIFIKASI BAWAH (Hanya jika perlu perbaikan) -->
         @if(!empty($isRevision))
         <aside class="fl-dr-notice-card" role="note">
-            <svg class="fl-dr-notice-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="16" x2="12" y2="12"></line>
-                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-            </svg>
+            <x-icon name="info-empty" class="fl-dr-notice-icon" width="20" height="20" aria-hidden="true" />
             <p class="fl-dr-notice-text">
                 {{ $detailRiwayat['notice'] ?? 'Catatan: Laporan ini perlu direvisi sesuai catatan Store Manager. Perubahan hanya dibuka untuk kategori yang membutuhkan perbaikan.' }}
             </p>
@@ -155,13 +130,13 @@
         @endif
 
         <!-- Toggle Preview Status (Untuk Pengujian Status Disetujui vs Revisi) -->
-        <div style="text-align: center; margin-top: 10px; margin-bottom: 24px; font-size: 0.78rem;">
+        <div style="text-align: center; margin-top: 10px; margin-bottom: 24px; font-size: var(--fs-12);">
             @if(empty($isRevision))
-                <a href="{{ request()->fullUrlWithQuery(['status' => 'revisi']) }}" style="color: #ea580c; text-decoration: none; font-weight: 600;">
+                <a href="{{ request()->fullUrlWithQuery(['status' => 'revisi']) }}" style="color: var(--primary-600); text-decoration: none; font-weight: 600;">
                     &bull; Lihat Tampilan State: Perlu Revisi &bull;
                 </a>
             @else
-                <a href="{{ request()->fullUrlWithQuery(['status' => 'disetujui']) }}" style="color: #22c55e; text-decoration: none; font-weight: 600;">
+                <a href="{{ request()->fullUrlWithQuery(['status' => 'disetujui']) }}" style="color: var(--success-500); text-decoration: none; font-weight: 600;">
                     &bull; Lihat Tampilan State: Disetujui &bull;
                 </a>
             @endif

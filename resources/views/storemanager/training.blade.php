@@ -7,37 +7,38 @@
     <title>Training Karyawan | Capaian.id - Store Manager</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/storemanager.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/design-system.css') }}" />
     <style>
-        .tr-header { display: flex; align-items: center; justify-content: space-between; margin: 0 -16px 20px; padding: 0 16px 14px; border-bottom: 1px solid #ebe5df; }
-        .tr-title { font-size: 1.45rem; font-weight: 800; color: #1c1917; margin: 0; letter-spacing: -0.02em; }
-        .tr-sub { font-size: 0.84rem; color: #78716c; margin: 4px 0 14px; }
-        .tr-card { background: #fbf8f5; border: 2px solid #f97316; border-radius: 16px; padding: 16px; margin-bottom: 16px; }
+        .tr-header { display: flex; align-items: center; justify-content: space-between; margin: 0 -16px 20px; padding: 0 16px 14px; border-bottom: 1px solid var(--secondary-100); }
+        .tr-title { font-size: var(--fs-22); font-weight: var(--fw-semibold); color: var(--neutral-900); margin: 0; letter-spacing: -0.02em; }
+        .tr-sub { font-size: var(--fs-14); color: var(--neutral-500); margin: 4px 0 14px; }
+        .tr-card { background: var(--secondary-50); border: 2px solid var(--primary-500); border-radius: 16px; padding: 16px; margin-bottom: 16px; }
         .tr-card-head { display: flex; align-items: center; justify-content: space-between; }
-        .tr-card-label { font-size: 0.9rem; font-weight: 700; color: #1c1917; }
-        .tr-tag { border: 1.5px solid #c2410c; background: #fff7ed; color: #9a3412; font-size: 0.66rem; font-weight: 800; letter-spacing: 0.04em; padding: 2px 8px; border-radius: 5px; }
-        .tr-count { font-size: 2.2rem; font-weight: 800; color: #1c1917; margin: 10px 0 6px; letter-spacing: -0.02em; }
-        .tr-count.is-met { color: #16a34a; }
-        .tr-target { font-size: 0.78rem; color: #78716c; }
-        .tr-divider { border: none; border-top: 1px solid #e7ddd3; margin: 0 0 12px; }
-        .tr-btn { width: 100%; padding: 14px; border-radius: 14px; border: none; background: #f97316; color: #ffffff; font: inherit; font-size: 0.92rem; font-weight: 800; cursor: pointer; box-shadow: 0 4px 14px rgba(249, 115, 22, 0.28); margin-bottom: 16px; }
-        .tr-list-title { font-size: 0.95rem; font-weight: 700; color: #1c1917; margin: 0 0 6px; }
-        .tr-row { display: grid; grid-template-columns: 1fr 1.25fr auto; gap: 10px; align-items: center; padding: 10px 0; font-size: 0.84rem; color: #1c1917; border-bottom: 1px solid #e7ddd3; }
+        .tr-card-label { font-size: var(--fs-14); font-weight: var(--fw-semibold); color: var(--neutral-900); }
+        .tr-tag { border: 1.5px solid var(--primary-700); background: var(--primary-50); color: var(--primary-800); font-size: var(--fs-10); font-weight: var(--fw-semibold); letter-spacing: 0.04em; padding: 2px 8px; border-radius: 5px; }
+        .tr-count { font-size: var(--fs-38); font-weight: var(--fw-semibold); color: var(--neutral-900); margin: 10px 0 6px; letter-spacing: -0.02em; }
+        .tr-count.is-met { color: var(--success-700); }
+        .tr-target { font-size: var(--fs-12); color: var(--neutral-500); }
+        .tr-divider { border: none; border-top: 1px solid var(--secondary-100); margin: 0 0 12px; }
+        .tr-btn { width: 100%; padding: 14px; border-radius: 14px; border: none; background: var(--primary-500); color: var(--white); font: inherit; font-size: var(--fs-14); font-weight: var(--fw-semibold); cursor: pointer; box-shadow: 0 4px 14px rgba(249, 115, 22, 0.28); margin-bottom: 16px; }
+        .tr-list-title { font-size: var(--fs-16); font-weight: var(--fw-semibold); color: var(--neutral-900); margin: 0 0 6px; }
+        .tr-row { display: grid; grid-template-columns: 1fr 1.25fr auto; gap: 10px; align-items: center; padding: 10px 0; font-size: var(--fs-14); color: var(--neutral-900); border-bottom: 1px solid var(--secondary-100); }
         .tr-row:last-child { border-bottom: none; }
         .tr-row span:last-child { text-align: right; white-space: nowrap; }
-        .tr-form { background: #fbf8f5; border: 1px solid #ebdcd0; border-radius: 16px; padding: 16px; margin-bottom: 16px; box-shadow: 0 6px 18px rgba(50, 30, 20, 0.06); }
+        .tr-form { background: var(--secondary-50); border: 1px solid var(--secondary-100); border-radius: 16px; padding: 16px; margin-bottom: 16px; box-shadow: 0 6px 18px rgba(50, 30, 20, 0.06); }
         .tr-form[hidden] { display: none; }
-        .tr-form h2 { font-size: 0.95rem; font-weight: 800; margin: 0 0 12px; color: #1c1917; }
+        .tr-form h2 { font-size: var(--fs-16); font-weight: var(--fw-semibold); margin: 0 0 12px; color: var(--neutral-900); }
         .tr-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
-        .tr-field label { font-size: 0.78rem; font-weight: 600; color: #57534e; }
-        .tr-field input { font: inherit; font-size: 0.92rem; padding: 12px; border: 1px solid #e7ddd3; border-radius: 10px; background: #ffffff; color: #1c1917; }
-        .tr-field input:focus { outline: 2px solid #f97316; outline-offset: 1px; }
-        .tr-error { font-size: 0.74rem; color: #b91c1c; }
-        .tr-flash { background: #ecfdf5; border: 1px solid #86efac; color: #15803d; border-radius: 12px; padding: 10px 14px; font-size: 0.82rem; font-weight: 600; margin-bottom: 14px; }
-        .tr-empty { font-size: 0.8rem; color: #a8a29e; padding: 8px 0; }
+        .tr-field label { font-size: var(--fs-12); font-weight: 600; color: var(--neutral-600); }
+        .tr-field input { font: inherit; font-size: var(--fs-14); padding: 12px; border: 1px solid var(--secondary-100); border-radius: 10px; background: var(--white); color: var(--neutral-900); }
+        .tr-field input:focus { outline: 2px solid var(--primary-500); outline-offset: 1px; }
+        .tr-error { font-size: var(--fs-12); color: var(--error-700); }
+        .tr-flash { background: var(--success-100); border: 1px solid var(--success-500); color: var(--success-700); border-radius: 12px; padding: 10px 14px; font-size: var(--fs-14); font-weight: 600; margin-bottom: 14px; }
+        .tr-empty { font-size: var(--fs-12); color: var(--neutral-400); padding: 8px 0; }
     </style>
 </head>
 
@@ -45,12 +46,9 @@
     <div class="app-container">
         <header class="tr-header">
             <a href="{{ route('storemanager.operasional_sdm') }}" class="fl-step-close-btn" aria-label="Kembali ke Operasional & SDM">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="19" y1="12" x2="5" y2="12"></line>
-                    <polyline points="12 19 5 12 12 5"></polyline>
-                </svg>
+                <x-icon name="arrow-left" />
             </a>
-            <span class="fl-step-badge" style="background: #fff7ed; border: 1px solid #fed7aa; color: #c2410c; font-size: 0.72rem; font-weight: 800; padding: 4px 10px; border-radius: 6px;">STORE MANAGER</span>
+            <span class="fl-step-badge" style="background: var(--primary-50); border: 1px solid var(--primary-200); color: var(--primary-700); font-size: var(--fs-12); font-weight: var(--fw-semibold); padding: 4px 10px; border-radius: 6px;">STORE MANAGER</span>
         </header>
 
         @if (session('status'))

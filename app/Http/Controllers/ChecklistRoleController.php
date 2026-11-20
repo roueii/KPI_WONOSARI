@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\BackendApiService;
+use App\Services\KpiHistoryService;
 
 /**
  * Controller dasar untuk role KPI berbasis checklist multi-langkah
@@ -33,6 +35,77 @@ abstract class ChecklistRoleController extends Controller
     protected function sessionKey(string $suffix = ''): string
     {
         return $this->config()['key'] . '_capaian' . ($suffix !== '' ? '.' . $suffix : '');
+    }
+
+    // =========================================================================
+    // INTEGRASI BACKEND: kirim capaian ke POST /api/my-kpis/submissions
+    // =========================================================================
+
+    /**
+     * Pemetaan item checklist Frontend -> NAMA indikator Backend (seeder Backend).
+     * Hanya diisi untuk role yang itemnya 1:1 dengan indikator Backend.
+     * Kosong = capaian role ini belum dikirim ke Backend (tetap disimpan di session).
+     */
+    protected function backendIndicators(): array
+    {
+        return [];
+    }
+
+    /**
+     * KPI jabatan user dari GET /api/my-kpis untuk item yang dipetakan.
+     *
+     * @return array<string, array>|null  item key => position KPI Backend; null jika tidak terhubung / tidak dipetakan
+     */
+    protected function backendKpis(): ?array
+    {
+        $map = $this->backendIndicators();
+        if (! $map || ! BackendApiService::connected()) {
+            return null;
+        }
+
+        $items = BackendApiService::fetch('my-kpis')['data'] ?? null;
+        if (! is_array($items)) {
+            return null;
+        }
+
+        $byName = collect($items)->keyBy(fn ($pk) => $pk['indicator']['name'] ?? '');
+        $result = [];
+        foreach ($map as $key => $name) {
+            if (isset($byName[$name])) {
+                $result[$key] = $byName[$name];
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Kirim jawaban ya/tidak untuk $keys ke Backend. Item yang periodenya sudah dikirim/disetujui dilewati.
+     *
+     * @return array|null  hasil BackendApiService::send, atau null jika role/sesi tidak terhubung ke Backend
+     */
+    protected function sendToBackend(array $checkedKeys, array $keys, bool $submit): ?array
+    {
+        $kpis = $keys ? $this->backendKpis() : null;
+        if ($kpis === null || ! array_intersect_key($kpis, array_flip($keys))) {
+            return null;
+        }
+
+        $items = [];
+        foreach ($keys as $key) {
+            $pk = $kpis[$key] ?? null;
+            $status = $pk['submission']['status'] ?? null;
+            if (! $pk || ($pk['input_type'] ?? null) !== 'YES_NO' || in_array($status, ['SUBMITTED', 'APPROVED'], true)) {
+                continue;
+            }
+            $items[] = ['position_kpi_id' => $pk['id'], 'answer_yes_no' => in_array($key, $checkedKeys, true)];
+        }
+
+        if (! $items) {
+            return ['ok' => false, 'message' => 'Capaian periode ini sudah dikirim ke Backend dan menunggu/selesai direview.', 'first_error' => null];
+        }
+
+        return BackendApiService::send('POST', 'my-kpis/submissions', ['items' => $items, 'submit' => $submit]);
     }
 
     protected function currentUser(): array
@@ -152,6 +225,17 @@ abstract class ChecklistRoleController extends Controller
         $saved = session($this->sessionKey($step), []);
         $draft = session($this->sessionKey('draft.' . $step), []);
 
+        // Belum ada isian di sesi ini: pakai jawaban yang sudah tersimpan di Backend (draft/terkirim)
+        if (! isset($saved['indicators']) && ! isset($draft['indicators']) && ($kpis = $this->backendKpis())) {
+            $fromBackend = array_filter(
+                array_intersect_key($kpis, $cfg['steps'][$step]['items']),
+                fn ($pk) => ($pk['submission']['answer_yes_no'] ?? false) === true
+            );
+            if ($fromBackend) {
+                $draft = ['indicators' => array_map(fn () => true, $fromBackend)];
+            }
+        }
+
         return view('checklist.step', $this->viewData([
             'slug' => $step,
             'step' => $cfg['steps'][$step],
@@ -212,6 +296,17 @@ abstract class ChecklistRoleController extends Controller
             }
         }
 
+        // Kirim ke Backend (hanya role yang itemnya dipetakan 1:1 ke indikator Backend)
+        $checkedKeys = [];
+        foreach ($slugs as $slug) {
+            $checkedKeys = array_merge($checkedKeys, array_keys($saved[$slug]['indicators'] ?? []));
+        }
+        $res = $this->sendToBackend($checkedKeys, array_keys($this->backendIndicators()), true);
+        if ($res && ! $res['ok']) {
+            return redirect()->route($cfg['route'] . '.step', $step)
+                ->withErrors(['step' => $res['first_error'] ?? $res['message']]);
+        }
+
         session([$this->sessionKey('_completed_at') => now()->toDateTimeString()]);
 
         return redirect()->route($cfg['route'] . '.dashboard')
@@ -237,6 +332,20 @@ abstract class ChecklistRoleController extends Controller
             'drafted_at' => now()->toDateTimeString(),
         ]]);
 
+        // Simpan juga sebagai DRAFT di Backend (jika role dipetakan & login lewat Backend)
+        $res = $this->sendToBackend(
+            array_keys($indicators),
+            array_values(array_intersect(array_keys($this->backendIndicators()), array_keys($cfg['steps'][$step]['items']))),
+            false
+        );
+        if ($res && ! $res['ok']) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Draf tersimpan di perangkat ini, tetapi gagal disimpan ke Backend: ' . ($res['first_error'] ?? $res['message']),
+                'redirect' => route($cfg['route'] . '.dashboard'),
+            ]);
+        }
+
         return response()->json([
             'success' => true,
             'message' => 'Capaian berhasil disimpan sebagai draf sementara!',
@@ -257,6 +366,12 @@ abstract class ChecklistRoleController extends Controller
             'semua' => count($list),
         ];
 
+        // Data nyata dari Backend (GET /api/my-kpis/history) jika login lewat Backend
+        if ($history = KpiHistoryService::list()) {
+            $list = $history['items'];
+            $summaryCounts = $history['summary'];
+        }
+
         $filter = in_array($request->query('status'), ['semua', 'disetujui', 'menunggu', 'revisi'], true)
             ? $request->query('status')
             : 'semua';
@@ -271,6 +386,12 @@ abstract class ChecklistRoleController extends Controller
     public function detailRiwayat(Request $request, $id)
     {
         $cfg = $this->config();
+
+        // Data nyata dari Backend (GET /api/my-kpis/history/{date}); id = tanggal laporan (Ymd)
+        if (($date = KpiHistoryService::dateFromId($id)) && ($live = KpiHistoryService::detail($date))) {
+            return $this->liveDetailView($live);
+        }
+
         $item = collect($cfg['dummy']['riwayat'])->firstWhere('id', (int) $id);
         abort_unless($item, 404);
 
@@ -302,6 +423,45 @@ abstract class ChecklistRoleController extends Controller
             'revision' => array_merge($cfg['dummy']['revision'], [
                 'repair_url' => route($cfg['route'] . '.step', $revisedSlug),
             ]),
+        ]));
+    }
+
+    /**
+     * Detail riwayat dari Backend. Kategori mengikuti Backend (bukan langkah form Figma),
+     * jadi tautan kategori / "Perbaiki Capaian" diarahkan ke langkah pertama form.
+     */
+    protected function liveDetailView(array $live)
+    {
+        $cfg = $this->config();
+        $formUrl = route($cfg['route'] . '.step', array_key_first($cfg['steps']));
+
+        // Nama ikon KpiHistoryService -> alias ikon di checklist/partials/icon.blade.php
+        $iconAlias = ['cash' => 'chart', 'dollar' => 'chart', 'sparkles' => 'sparkle', 'shield-check' => 'clipboard', 'truck' => 'box', 'document' => 'clipboard'];
+
+        $categories = array_map(fn ($c) => [
+            'title' => $c['name'],
+            'icon' => $iconAlias[$c['icon']] ?? $c['icon'],
+            'is_highlighted' => $c['needs_revision'],
+            'badge' => $c['needs_revision'] ? 'PERLU REVISI' : null,
+            'subtitle' => $c['subtitle'],
+            'url' => $formUrl,
+        ], $live['categories']);
+
+        return view('checklist.detail_riwayat', $this->viewData([
+            'item' => [
+                'short_date' => $live['short_date'],
+                'full_date' => $live['full_date'],
+                'sent_label' => $live['sent_label'],
+            ],
+            'isRevision' => $live['is_revision'],
+            'categories' => $categories,
+            'revision' => [
+                'requested_by' => $live['revision']['requested_by'] ?? '-',
+                'requested_at' => $live['revision']['requested_at'] ?? '',
+                'message' => $live['revision']['message'] ?? '',
+                'short' => 'Perlu Revisi',
+                'repair_url' => $formUrl,
+            ],
         ]));
     }
 

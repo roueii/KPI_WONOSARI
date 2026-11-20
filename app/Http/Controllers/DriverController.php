@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\KpiHistoryService;
 use App\Services\KpiDashboardService;
 
 class DriverController extends Controller
@@ -431,6 +432,14 @@ class DriverController extends Controller
             ],
         ];
 
+        // Data nyata dari Backend (GET /api/my-kpis/history) jika login lewat Backend
+        if ($history = KpiHistoryService::list()) {
+            $summaryCounts = $history['summary'];
+            $riwayatList = array_map(fn ($r) => $r + [
+                'detail_url' => route('driver.riwayat.detail', ['id' => $r['id']]),
+            ], $history['items']);
+        }
+
         $filter = $request->query('status', 'disetujui');
 
         return view('driver.riwayat', compact('user', 'summaryCounts', 'riwayatList', 'filter'));
@@ -504,6 +513,12 @@ class DriverController extends Controller
             ],
             'notice' => 'Catatan: Laporan ini perlu direvisi sesuai catatan Store Manager. Perubahan hanya dibuka untuk kategori yang membutuhkan perbaikan.',
         ];
+
+        // Data nyata dari Backend (GET /api/my-kpis/history/{date}); id = tanggal laporan (Ymd)
+        if (($date = KpiHistoryService::dateFromId($id)) && ($live = KpiHistoryService::detail($date))) {
+            $isRevision = $live['is_revision'];
+            $detailRiwayat = $this->liveDetailRiwayat($live, route('driver.pengiriman'));
+        }
 
         return view('driver.detail_riwayat', compact('user', 'detailRiwayat', 'isRevision'));
     }

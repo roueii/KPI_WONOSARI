@@ -12,10 +12,7 @@
     <header class="ck-step-header">
         <div class="ck-step-top">
             <a href="{{ route($r . '.dashboard') }}" class="fl-step-close-btn" aria-label="Batal dan kembali ke dashboard">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
+                <x-icon name="cancel" />
             </a>
             <span class="fl-step-badge">{{ $cfg['badge'] }}</span>
         </div>
@@ -58,9 +55,7 @@
                     <label class="driver-check-card {{ !empty($checked[$key]) ? 'is-checked' : '' }}">
                         <input type="checkbox" class="ck-check-input" name="indicators[{{ $key }}]" value="1" @checked(!empty($checked[$key])) />
                         <span class="driver-check-box" aria-hidden="true">
-                            <svg class="driver-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
+                            <x-icon name="check" class="driver-check-icon" />
                         </span>
                         <span class="driver-check-info">
                             <span class="driver-check-title">{{ $title }}</span>
@@ -83,10 +78,7 @@
                 <label class="ck-upload-zone" for="attachmentInput">
                     <input type="file" id="attachmentInput" name="attachments[]" multiple accept="image/jpeg,image/png,application/pdf" class="ck-visually-hidden" />
                     <span class="ck-upload-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
-                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                            <circle cx="12" cy="13" r="4"></circle>
-                        </svg>
+                        <x-icon name="camera" width="24" height="24" />
                     </span>
                     <span class="ck-upload-title">Ketuk untuk unggah foto</span>
                     <span class="ck-upload-hint">{{ $upload['hint'] }}</span>
@@ -99,10 +91,7 @@
                 </div>
 
                 <button type="button" class="ck-example-link" onclick="alert(@js($upload['example']))">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                        <circle cx="12" cy="12" r="3"></circle>
-                    </svg>
+                    <x-icon name="eye-empty" width="16" height="16" aria-hidden="true" />
                     <span>Lihat contoh foto yang benar</span>
                 </button>
             </section>
@@ -111,11 +100,7 @@
         {{-- 5. Catatan --}}
         @if (!empty($step['notice']))
             <div class="driver-notice-dashed">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="16" x2="12" y2="12"></line>
-                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                </svg>
+                <x-icon name="info-empty" width="18" height="18" aria-hidden="true" />
                 <span>{!! $step['notice'] !!}</span>
             </div>
         @endif

@@ -9,6 +9,29 @@ namespace App\Http\Controllers;
  */
 class SalesMarketingController extends ChecklistRoleController
 {
+    /**
+     * 12 item checklist Sales = 12 indikator jabatan "Sales" di Backend (kategori Marketing & Promosi), 1:1.
+     * Nilai = nama indikator di Backend (KpiIndicatorSeeder). Backend belum mengirim `code` indikator,
+     * jadi pencocokan memakai nama.
+     */
+    protected function backendIndicators(): array
+    {
+        return [
+            'omset_program' => 'Pencapaian Omzet Program Marketing',
+            'customer_baru' => 'Customer Baru',
+            'repeat_order' => 'Repeat Order Customer',
+            'promo_efektif' => 'Efektivitas Promo',
+            'upload_konten' => 'Konten Sosmed Diunggah',
+            'engagement' => 'Engagement Sosmed',
+            'leads_baru' => 'Leads Customer Baru',
+            'kerjasama_baru' => 'Mitra Kerjasama Baru',
+            'aktivasi' => 'Aktivasi Marketing',
+            'analisa_kompetitor' => 'Laporan Analisa Kompetitor',
+            'budget_sesuai' => 'Efisiensi Budget Marketing',
+            'riset_npd' => 'Evaluasi Produk Baru (NPD)',
+        ];
+    }
+
     protected function roleConfig(): array
     {
         $subtitle = 'Input Harian Divisi Sales & Marketing';

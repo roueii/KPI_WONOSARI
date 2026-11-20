@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Services\KpiHistoryService;
 use App\Services\KpiDashboardService;
 use App\Services\BackendApiService;
 
@@ -256,8 +258,42 @@ class StoreManagerController extends Controller
             ], $live['groups']);
         }
 
-        // Tab KPI Tim: laporan yang menunggu persetujuan (GET /api/reviews/reports)
-        if ($pending = $this->pendingReports()) {
+        // Tab KPI Tim: rekap laporan seluruh tim hari ini (GET /api/dashboard/team)
+        $team = BackendApiService::fetch('dashboard/team')['data'] ?? null;
+        if (is_array($team) && isset($team['summary'], $team['members'])) {
+            $s = $team['summary'];
+            $percent = (float) ($s['reported_percent'] ?? 0);
+            $teamSummary = array_merge($teamSummary, [
+                'shift_label' => Carbon::parse($team['date'] ?? now())->locale('id')->translatedFormat('l, d M Y'),
+                'reported_text' => ($s['reported'] ?? 0) . ' dari ' . ($s['total'] ?? 0) . ' karyawan sudah lapor',
+                'percentage' => rtrim(rtrim(number_format($percent, 1, '.', ''), '0'), '.') . '%',
+                'percent_val' => $percent,
+                'pending_count' => (int) ($s['pending'] ?? 0),
+                'approved_count' => (int) ($s['approved'] ?? 0),
+                'not_reported_count' => (int) ($s['not_reported'] ?? 0),
+            ]);
+
+            $badges = [
+                'PENDING' => ['approval', 'Approval', 'badge-orange'],
+                'APPROVED' => ['disetujui', 'Disetujui', 'badge-green'],
+                'REJECTED' => ['revisi', 'Revisi', 'badge-red'],
+                'NOT_REPORTED' => ['belum_lapor', 'Belum Lapor', 'badge-gray'],
+            ];
+            $teamMembers = array_map(function ($m) use ($badges) {
+                [$status, $label, $badge] = $badges[$m['status'] ?? ''] ?? ['belum_lapor', 'Belum Lapor', 'badge-gray'];
+
+                return [
+                    'id' => $m['user']['id'] ?? null,
+                    'name' => $m['user']['name'] ?? '-',
+                    'role' => trim(($m['user']['position'] ?? '-') . (! empty($m['user']['position_detail']) ? ' (' . $m['user']['position_detail'] . ')' : '')),
+                    'status' => $status,
+                    'status_label' => $label,
+                    'badge_class' => $badge,
+                    'link' => ! empty($m['can_review']) ? route('storemanager.approval') : '#',
+                ];
+            }, $team['members']);
+        } elseif ($pending = $this->pendingReports()) {
+            // Cadangan: hanya laporan yang menunggu persetujuan (GET /api/reviews/reports)
             $teamSummary = array_merge($teamSummary, [
                 'pending_count' => $pending['total'],
                 // Rekap laporan seluruh tim belum ada endpoint-nya di Backend
@@ -1069,6 +1105,12 @@ class StoreManagerController extends Controller
             ],
         ];
 
+        // Data nyata dari Backend (GET /api/my-kpis/history) jika login lewat Backend
+        if ($history = KpiHistoryService::list()) {
+            $summary = $history['summary'];
+            $historyList = $history['items'];
+        }
+
         return view('storemanager.riwayat', compact('user', 'summary', 'historyList'));
     }
 
@@ -1139,6 +1181,11 @@ class StoreManagerController extends Controller
                 'url' => route('storemanager.promosi_event'),
             ],
         ];
+
+        // Data nyata dari Backend (GET /api/my-kpis/history/{date}); id = tanggal laporan (Ymd)
+        if (($date = KpiHistoryService::dateFromId($id)) && ($live = KpiHistoryService::detail($date))) {
+            [$reportMeta, $revisionNote, $categories] = $this->liveReportDetail($live, route('storemanager.penjualan'));
+        }
 
         return view('storemanager.detail_riwayat', compact('user', 'reportMeta', 'revisionNote', 'categories'));
     }

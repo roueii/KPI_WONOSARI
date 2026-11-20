@@ -7,10 +7,11 @@
     <title>Profil Produksi | Capaian.id - KPI Wonosari</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/produksi.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/design-system.css') }}" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 </head>
 
@@ -20,10 +21,7 @@
         <header class="fl-profile-header-bar">
             <div class="fl-profile-header-left">
                 <a href="{{ route('produksi.dashboard') }}" class="fl-step-close-btn" aria-label="Kembali ke Dashboard Produksi">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="19" y1="12" x2="5" y2="12"></line>
-                        <polyline points="12 19 5 12 12 5"></polyline>
-                    </svg>
+                    <x-icon name="arrow-left" />
                 </a>
                 <h1 class="fl-profile-header-title">Profil</h1>
             </div>
@@ -39,10 +37,7 @@
         <section class="fl-user-profile-card" aria-label="Profil Karyawan Produksi">
             <!-- Lingkaran Avatar Siluet Garis -->
             <div class="fl-user-profile-avatar" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="7" r="4.5"></circle>
-                    <path d="M20 21v-1.5a6.5 6.5 0 0 0-13 0V21"></path>
-                </svg>
+                <x-icon name="user" />
             </div>
 
             <!-- Nama Pengguna -->
@@ -66,10 +61,7 @@
                 <!-- Baris 1: Email -->
                 <div class="fl-account-info-row">
                     <div class="fl-account-info-left">
-                        <svg class="fl-account-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                            <path d="M22 7l-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-                        </svg>
+                        <x-icon name="mail" class="fl-account-info-icon" aria-hidden="true" />
                         <span>Email</span>
                     </div>
                     <span class="fl-account-info-val">{{ $user['email'] ?? 'User@capaian.id' }}</span>
@@ -78,12 +70,7 @@
                 <!-- Baris 2: Bergabung Sejak -->
                 <div class="fl-account-info-row">
                     <div class="fl-account-info-left">
-                        <svg class="fl-account-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                            <line x1="16" y1="2" x2="16" y2="6"></line>
-                            <line x1="8" y1="2" x2="8" y2="6"></line>
-                            <line x1="3" y1="10" x2="21" y2="10"></line>
-                        </svg>
+                        <x-icon name="calendar" class="fl-account-info-icon" aria-hidden="true" />
                         <span>Bergabung Sejak</span>
                     </div>
                     <span class="fl-account-info-val">{{ $user['joined_at'] ?? 'Jan 2024' }}</span>
@@ -95,11 +82,7 @@
         <form action="{{ route('logout') }}" method="POST" id="logoutFormProduksi">
             @csrf
             <button type="submit" class="fl-btn-logout">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                    <polyline points="16 17 21 12 16 7"></polyline>
-                    <line x1="21" y1="12" x2="9" y2="12"></line>
-                </svg>
+                <x-icon name="log-out" width="20" height="20" aria-hidden="true" />
                 <span>Keluar (Logout)</span>
             </button>
         </form>

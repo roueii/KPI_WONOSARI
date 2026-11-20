@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\KpiHistoryService;
 use App\Services\KpiDashboardService;
 
 class FrontlinerController extends Controller
@@ -735,6 +736,12 @@ class FrontlinerController extends Controller
             ],
         ];
 
+        // Data nyata dari Backend (GET /api/my-kpis/history) jika login lewat Backend
+        if ($history = KpiHistoryService::list()) {
+            $summary = $history['summary'];
+            $historyList = $history['items'];
+        }
+
         return view('staff.riwayat', compact('user', 'summary', 'historyList'));
     }
 
@@ -812,6 +819,11 @@ class FrontlinerController extends Controller
                 'url' => route('frontliner.kepatuhan'),
             ],
         ];
+
+        // Data nyata dari Backend (GET /api/my-kpis/history/{date}); id = tanggal laporan (Ymd)
+        if (($date = KpiHistoryService::dateFromId($id)) && ($live = KpiHistoryService::detail($date))) {
+            [$reportMeta, $revisionNote, $categories] = $this->liveReportDetail($live, route('frontliner.penjualan'));
+        }
 
         return view('staff.detail_riwayat', compact('user', 'reportMeta', 'revisionNote', 'categories'));
     }

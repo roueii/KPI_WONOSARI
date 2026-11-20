@@ -7,10 +7,11 @@
     <title>Riwayat Capaian Harian | Capaian.id - KPI Wonosari</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/frontliner.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/design-system.css') }}" />
 </head>
 
 <body>
@@ -18,10 +19,7 @@
         <!-- 1. Header Bar Sesuai Desain Figma (Tombol Panah Kembali + Judul Riwayat) -->
         <header class="fl-riwayat-header">
             <a href="{{ route('frontliner.dashboard') }}" class="fl-step-close-btn" aria-label="Kembali ke Beranda Dashboard">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="19" y1="12" x2="5" y2="12"></line>
-                    <polyline points="12 19 5 12 12 5"></polyline>
-                </svg>
+                <x-icon name="arrow-left" />
             </a>
 
             <div class="fl-riwayat-header-text">
@@ -114,12 +112,9 @@
 
             <!-- Empty State jika filter tidak menemukan data -->
             <div class="fl-history-empty" id="emptyState" style="display: none;">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 8px;">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="8" y1="12" x2="16" y2="12"></line>
-                </svg>
-                <p style="margin: 0; font-weight: 600; color: #57534e;">Tidak ada capaian dengan status ini</p>
-                <p style="margin: 4px 0 0; font-size: 0.78rem; color: #a8a29e;">Pilih filter lain untuk melihat riwayat pengisian Anda.</p>
+                <x-icon name="minus-circle" width="40" height="40" style="margin-bottom: 8px; color: var(--neutral-400);" />
+                <p style="margin: 0; font-weight: 600; color: var(--neutral-600);">Tidak ada capaian dengan status ini</p>
+                <p style="margin: 4px 0 0; font-size: var(--fs-12); color: var(--neutral-400);">Pilih filter lain untuk melihat riwayat pengisian Anda.</p>
             </div>
         </main>
 
